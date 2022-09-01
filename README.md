@@ -1,29 +1,41 @@
 # vue-admin-template
 
-## Project setup
+## 项目安装
 
 ```
 pnpm install
 ```
 
-### Compiles and hot-reloads for development
+### 开发环境
 
 ```
-pnpm run serve
+pnpm run dev
 ```
 
-### Compiles and minifies for production
+### mock 环境
+
+```
+pnpm run dev:mock
+```
+
+### 生产打包
 
 ```
 pnpm run build
 ```
 
-### Lints and fixes files
+### 格式化
 
 ```
 pnpm run lint
 ```
 
-### Customize configuration
+### el-icon 、svg 及 iconify 图标的使用使用
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### el-icon
+
+#### svg
+
+#### iconify
+
+### 路由添加方式
