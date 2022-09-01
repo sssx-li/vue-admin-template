@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
+    "dev:local": "vue-cli-service serve --mode mock",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint src --fix",
     "prepare": "husky install",
@@ -16,6 +17,7 @@
     ]
   },
   "dependencies": {
+    "axios": "0.21.1",
     "core-js": "^3.8.3",
     "dayjs": "^1.11.5",
     "element-plus": "^2.2.14",
@@ -38,6 +40,7 @@
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-typescript": "^9.1.0",
+    "axios-mock-adapter": "^1.21.2",
     "commitizen": "^4.2.5",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.32.0",
