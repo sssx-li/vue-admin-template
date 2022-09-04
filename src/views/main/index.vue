@@ -8,7 +8,10 @@
         <el-aside :width="isCollapse ? '60px' : '200px'">
           <NavMenu />
         </el-aside>
-        <el-main>main</el-main>
+        <el-main>
+          main
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>

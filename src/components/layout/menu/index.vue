@@ -3,28 +3,40 @@
     active-text-color="#0a60bd"
     background-color="#001529"
     class="menu-container"
-    default-active="2"
+    default-active="/main/home"
     text-color="#b7bdc3"
   >
-    <el-menu-item index="2">
-      <span>Navigator Two</span>
-    </el-menu-item>
-    <el-sub-menu index="1">
-      <template #title>
-        <span>Navigator One</span>
-      </template>
-      <el-menu-item index="1-1">item one</el-menu-item>
-    </el-sub-menu>
+    <template v-for="menu in menuList" :key="menu.path">
+      <el-menu-item
+        :index="menu.path"
+        v-if="!menu.children || menu.children.length === 0"
+      >
+        <el-icon><component :is="menu.meta.icon" /></el-icon>
+        <span>{{ menu.meta.title }}</span>
+      </el-menu-item>
+      <sub-menu :menuInfo="menu" v-else />
+    </template>
   </el-menu>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-
+import { useStore } from '@/store';
+import { computed, defineComponent } from 'vue';
+import SubMenu from './subMenu.vue';
 export default defineComponent({
   name: 'menuComp',
+  components: {
+    SubMenu
+  },
   setup() {
-    return {};
+    const store = useStore();
+    const menuList = computed(() => {
+      console.log('store.state.user.userMenus', store.state.user.userMenus);
+      return store.state.user.userMenus;
+    });
+    return {
+      menuList
+    };
   }
 });
 </script>
@@ -32,9 +44,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .menu-container {
   height: 100%;
-  .el-menu {
-    border-right: none;
-  }
+  width: 100%;
   .el-sub-menu {
     background-color: #001529 !important;
     // 二级菜单 ( 默认背景 )
@@ -53,5 +63,8 @@ export default defineComponent({
     color: #fff !important;
     background-color: #0a60bd !important;
   }
+}
+.el-menu {
+  border-right: none;
 }
 </style>
