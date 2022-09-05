@@ -1,4 +1,4 @@
 import { globalConfig } from '@/config';
-const catchName = `${globalConfig.projectName}_${process.env.BASE_ENV}`;
+const prefix = `${globalConfig.projectName}_${process.env.BASE_ENV}`;
 
-export const tokenKey = `${catchName}_token`;
+export const tokenKey = `${prefix}_token`;

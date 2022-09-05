@@ -15,7 +15,7 @@ pnpm run dev
 ### mock 环境
 
 ```
-pnpm run dev:mock
+pnpm run dev:lock
 ```
 
 ### 生产打包
