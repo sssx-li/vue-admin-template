@@ -29,6 +29,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .header-container {
   display: flex;
+  height: 48px;
+  line-height: 48px;
   justify-content: space-between;
   .icon-title {
     display: flex;

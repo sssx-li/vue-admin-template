@@ -1,20 +1,20 @@
 <template>
-  <a-sub-menu :key="menuInfo.url">
-    <template #icon v-if="menuInfo.icon">
-      <component :is="menuInfo.icon"></component>
+  <a-sub-menu :key="route.path">
+    <template #icon v-if="route.meta.icon">
+      <component :is="route.meta.icon"></component>
     </template>
-    <template #title>{{ menuInfo.name }}</template>
-    <template v-for="item in menuInfo.children" :key="item.url">
+    <template #title>{{ route.meta.title }}</template>
+    <template v-for="item in route.children" :key="item.path">
       <template v-if="!item.children || item.children.length === 0">
-        <a-menu-item :key="item.url">
-          <template #icon v-if="item.icon">
-            <component :is="item.icon"></component>
+        <a-menu-item :key="item.path">
+          <template #icon v-if="item.meta.icon">
+            <component :is="item.meta.icon"></component>
           </template>
-          {{ item.name }}
+          {{ item.meta.title }}
         </a-menu-item>
       </template>
       <template v-else>
-        <sub-menu :menu-info="item" :key="item.url" />
+        <sub-menu :route="item" :key="item.path" />
       </template>
     </template>
   </a-sub-menu>
@@ -26,9 +26,9 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'SubMenu',
   props: {
-    menuInfo: {
+    route: {
       type: Object,
-      default: () => ({})
+      required: true
     }
   }
 });

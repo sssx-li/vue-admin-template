@@ -60,6 +60,10 @@ export default defineComponent({
 .info-container {
   color: #fff;
   min-width: 192px;
+  :deep(.ant-space) {
+    height: 48px;
+    line-height: 48px;
+  }
   :deep(.ant-space-item) {
     display: flex;
     align-items: center;
