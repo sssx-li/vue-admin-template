@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import { mainStaticRoutes } from './modules';
 import localCache from '@/utils/catch';
 import { tokenKey } from '@/common';
+import { firstMenuPath } from '@/utils/mapMenus';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,7 +12,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/main',
     name: 'main',
-    redirect: '/main/home',
     component: () =>
       import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
     children: [...mainStaticRoutes]
@@ -42,7 +42,7 @@ router.beforeEach((to) => {
     !isToLogin && router.push('/login');
   }
   if (to.path === '/main') {
-    // return firstMenu.url;
+    return firstMenuPath;
   }
 });
 

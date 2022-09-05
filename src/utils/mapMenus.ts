@@ -2,6 +2,7 @@ import { mainStaticRoutes } from '@/router/modules';
 
 import { RouteRecord } from 'vue-router';
 
+let firstMenuPath = '';
 export function mapMenusToRoutes(userMenus: any[]): RouteRecord[] {
   const routes: any[] = [];
   // 加载所有菜单路由
@@ -33,5 +34,10 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecord[] {
   // 静态路由(白名单路由) 与 权限路由 集合
   Object.assign(routes, [...mainStaticRoutes, ...permissionRoutes]);
   routes.sort((a, b) => a.meta.sort - b.meta.sort);
+  if (routes && routes.length > 0) {
+    firstMenuPath = routes[0].redirect ?? routes[0].path;
+  }
   return routes;
 }
+
+export { firstMenuPath };
