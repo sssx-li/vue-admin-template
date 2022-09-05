@@ -4,7 +4,7 @@ const path = require('path');
 // 按需导入-自动引入组件
 const AutoImport = require('unplugin-auto-import/webpack');
 const Components = require('unplugin-vue-components/webpack');
-const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
+// const { ElementPlusResolver } = require('unplugin-vue-components/resolvers');
 
 // 按需导入-自动引入icon
 const Icons = require('unplugin-icons/webpack');
@@ -23,8 +23,8 @@ module.exports = defineConfig({
     },
     plugins: [
       AutoImport({
-        dts: false,
-        resolvers: [ElementPlusResolver()]
+        dts: false
+        // resolvers: [ElementPlusResolver()]
       }),
       Components({
         dts: false,
@@ -32,8 +32,8 @@ module.exports = defineConfig({
           IconsResolver({
             componentPrefix: 'icon',
             customCollections: ['custom']
-          }),
-          ElementPlusResolver()
+          })
+          // ElementPlusResolver()
         ]
       }),
       Icons({
