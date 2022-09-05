@@ -30,7 +30,21 @@ pnpm run build
 pnpm run lint
 ```
 
-### svg 及 iconify 图标的使用使用
+### antdIcon、svg 及 iconify 图标的使用使用
+
+### antdIcon
+
+```
+  1. 引入图标(该项目在registers/registerIcon.ts中全局引入并注册)
+  import { LoginOutlined } from '@ant-design/icons-vue';
+
+  2. 使用
+    <!-- 直接使用 -->
+    <LoginOutlined :style="{color: '#f60'}" />
+
+    <!-- 通过vue自带component组件使用 -->
+    <component :is="`LoginOutlined`" />
+```
 
 #### svg
 
