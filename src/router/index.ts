@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { mainStaticRoutes } from './modules';
 import localCache from '@/utils/catch';
 import { tokenKey } from '@/common';
@@ -29,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
   }
 ];
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 });
 
