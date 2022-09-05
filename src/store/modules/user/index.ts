@@ -26,7 +26,6 @@ const userModel: Module<IUserState, IRootState> = {
     changeUserMenus(state, userMenus: any) {
       const routes = mapMenusToRoutes(userMenus);
       state.userMenus = routes;
-      console.log('---routes---', routes);
       routes.length > 0 &&
         routes.forEach((route) => {
           router.addRoute('main', route);

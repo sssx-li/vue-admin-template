@@ -12,7 +12,9 @@
         v-if="!menu.children || menu.children.length === 0"
         @click="handleClickMenu(menu)"
       >
-        <el-icon><component :is="menu.meta.icon" /></el-icon>
+        <el-icon v-if="menu.meta.icon">
+          <component :is="menu.meta.icon" />
+        </el-icon>
         <span>{{ menu.meta.title }}</span>
       </el-menu-item>
       <sub-menu :menuInfo="menu" @handleClickMenu="handleClickMenu" v-else />
@@ -36,7 +38,6 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const defaultActive = computed(() => route.path);
-    console.log('----cur-route----', route.path);
     const menuList = computed(() => store.state.user.userMenus);
 
     // --- 方法 ---

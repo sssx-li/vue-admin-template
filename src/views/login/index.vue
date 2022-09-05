@@ -48,10 +48,7 @@ export default defineComponent({
 
     // --- 方法 ---
     const loginAction = async () => {
-      console.log(2223456);
-
       await loginRuleFormRef.value?.validate((valid) => {
-        console.log(1234546, loginForm);
         if (!valid) return;
         store.dispatch('user/loginAction', { ...loginForm });
       });

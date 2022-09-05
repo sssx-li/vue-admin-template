@@ -5,6 +5,8 @@ specifiers:
   '@commitlint/config-conventional': ^17.0.3
   '@iconify-json/gridicons': ^1.1.2
   '@iconify-json/ic': ^1.1.9
+  '@iconify-json/mdi': ^1.1.31
+  '@iconify-json/ph': ^1.1.2
   '@typescript-eslint/eslint-plugin': ^5.4.0
   '@typescript-eslint/parser': ^5.4.0
   '@vue/cli-plugin-babel': ~5.0.0
@@ -53,6 +55,8 @@ devDependencies:
   '@commitlint/config-conventional': 17.0.3
   '@iconify-json/gridicons': 1.1.2
   '@iconify-json/ic': 1.1.9
+  '@iconify-json/mdi': 1.1.31
+  '@iconify-json/ph': 1.1.2
   '@typescript-eslint/eslint-plugin': 5.34.0_723f3ffb5db53a1439efd67f33024cfe
   '@typescript-eslint/parser': 5.34.0_eslint@7.32.0+typescript@4.5.5
   '@vue/cli-plugin-babel': 5.0.8_d490e35fafdcbe72bda74b8b424628d1
@@ -1554,6 +1558,18 @@ packages:
 
   /@iconify-json/ic/1.1.9:
     resolution: {integrity: sha512-yRHx4AnNNf5kpWVnNMaeXGYnLmaR2tkGsjSc//FaI7LhljUaDkiawUvmnYbjh6M61O78EeEoNk8HgYJVqb+y8A==}
+    dependencies:
+      '@iconify/types': 1.1.0
+    dev: true
+
+  /@iconify-json/mdi/1.1.31:
+    resolution: {integrity: sha512-2lUKoj6tqvVQ6q8XmhxfeqWdC34IhUpjz6eYMvwLLEgF+0cIL0ANLqBL7+/Vklt7Ugv5vJ0btJBHvW5Ij9Ikyw==}
+    dependencies:
+      '@iconify/types': 1.1.0
+    dev: true
+
+  /@iconify-json/ph/1.1.2:
+    resolution: {integrity: sha512-NuTdtt/UmuxIHS4hfdyv3BP5JiWikNkr81hFHXDScXlH0GUMdRSY/B5T9vDvbXDY/esMLFnIAXoFVDLsGinhpw==}
     dependencies:
       '@iconify/types': 1.1.0
     dev: true

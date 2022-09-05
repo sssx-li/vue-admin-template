@@ -6,7 +6,7 @@
       </el-icon>
       <span class="system-name">后台管理系统</span>
     </div>
-    <el-dropdown class="right-action-info">
+    <el-dropdown class="right-action-info" @command="handleCommand">
       <span class="el-dropdown-link">
         <el-avatar :icon="UserFilled" :size="34" />
         <span class="user-name">超级管理员</span>
@@ -14,7 +14,7 @@
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item icon="Avatar">用户信息</el-dropdown-item>
-          <el-dropdown-item divided icon="CircleClose"
+          <el-dropdown-item divided icon="CircleClose" command="logout"
             >退出登录</el-dropdown-item
           >
         </el-dropdown-menu>
@@ -26,11 +26,21 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { UserFilled } from '@element-plus/icons-vue';
+import localCache from '@/utils/catch';
+import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'layoutHeaderComp',
   setup() {
+    const router = useRouter();
+    const handleCommand = (key: string) => {
+      if (key === 'logout') {
+        localCache.clearCache();
+        router.push({ path: '/login', replace: true });
+      }
+    };
     return {
-      UserFilled
+      UserFilled,
+      handleCommand
     };
   }
 });
