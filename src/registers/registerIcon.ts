@@ -1,14 +1,23 @@
 import { App } from 'vue';
 import {
-  Avatar,
-  CircleClose,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  LoginOutlined,
+  UserOutlined,
   HomeFilled,
-  Menu,
-  Tools,
-  Promotion
-} from '@element-plus/icons-vue';
+  SkinFilled,
+  FileFilled
+} from '@ant-design/icons-vue';
 
-const components = [Avatar, CircleClose, HomeFilled, Menu, Tools, Promotion];
+const components = [
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  LoginOutlined,
+  UserOutlined,
+  HomeFilled,
+  SkinFilled,
+  FileFilled
+];
 
 export default function (app: App): void {
   for (const icon of components) {
