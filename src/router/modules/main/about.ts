@@ -5,21 +5,21 @@ const aboutRoutes: Array<RouteRecordRaw> = [
     path: '/main/about',
     name: 'about',
     redirect: '/main/about/first',
-    meta: { title: '关于', icon: 'UserFilled', url: '/main/about', sort: 2 },
+    meta: { title: '关于', icon: 'Promotion', url: '/main/about', sort: 2 },
     children: [
       {
         path: '/main/about/first',
         name: 'aboutFirst',
         component: () => import('@/views/main/about/index.vue'),
-        meta: { title: '关于1-1', icon: 'UserFilled', url: '/main/about/first' }
+        meta: { title: '关于1-1', icon: 'Menu', url: '/main/about/first' }
       },
       {
         path: '/main/about/secound',
         name: 'aboutSecound',
-        component: () => import('@/views/main/about/index.vue'),
+        component: () => import('@/views/main/about/secound.vue'),
         meta: {
           title: '关于1-2',
-          icon: 'UserFilled',
+          icon: 'Menu',
           url: '/main/about/secound'
         }
       }

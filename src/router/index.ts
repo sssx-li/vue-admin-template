@@ -11,6 +11,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/main',
     name: 'main',
+    redirect: '/main/home',
     component: () =>
       import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
     children: [...mainStaticRoutes]

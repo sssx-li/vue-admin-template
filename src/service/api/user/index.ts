@@ -26,3 +26,9 @@ export function login(data: IAccount) {
     }
   });
 }
+
+export function getUserMenu() {
+  return Reqiest.get<IDataModel>({
+    url: User.USEMENU
+  });
+}

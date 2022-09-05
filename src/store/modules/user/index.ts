@@ -5,7 +5,7 @@ import localCache from '@/utils/catch';
 
 import { IUserState } from './types';
 import { IRootState } from '@/store/types';
-import { login } from '@/service/api/user';
+import { getUserMenu, login } from '@/service/api/user';
 import { tokenKey } from '@/common';
 import { IAccount } from '@/service/api/user/types';
 import { mapMenusToRoutes } from '@/utils/mapMenus';
@@ -26,7 +26,7 @@ const userModel: Module<IUserState, IRootState> = {
     changeUserMenus(state, userMenus: any) {
       const routes = mapMenusToRoutes(userMenus);
       state.userMenus = routes;
-      console.log('routes', routes);
+      console.log('---routes---', routes);
       routes.length > 0 &&
         routes.forEach((route) => {
           router.addRoute('main', route);
@@ -39,6 +39,9 @@ const userModel: Module<IUserState, IRootState> = {
       const { token } = res.data;
       localCache.setCatch(tokenKey, token);
       commit('changeToken', token);
+      const userMenus = await getUserMenu();
+      commit('changeUserMenus', userMenus.data);
+      localCache.setCatch('userMenus', userMenus.data);
       router.push('/');
     },
     loadLocalLogin({ commit }) {

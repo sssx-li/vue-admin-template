@@ -1,5 +1,6 @@
 enum User {
-  LOGIN = '/login'
+  LOGIN = '/login',
+  USEMENU = '/use/menu'
 }
 
 export { User };

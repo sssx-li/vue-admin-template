@@ -1,23 +1,14 @@
 import { App } from 'vue';
 import {
-  Edit,
   Avatar,
-  Search,
-  Delete,
-  Refresh,
-  UserFilled,
-  CircleClose
+  CircleClose,
+  HomeFilled,
+  Menu,
+  Tools,
+  Promotion
 } from '@element-plus/icons-vue';
 
-const components = [
-  Edit,
-  Avatar,
-  Search,
-  Delete,
-  Refresh,
-  UserFilled,
-  CircleClose
-];
+const components = [Avatar, CircleClose, HomeFilled, Menu, Tools, Promotion];
 
 export default function (app: App): void {
   for (const icon of components) {

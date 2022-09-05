@@ -34,8 +34,14 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
-    return {};
+  emits: ['handleClickMenu'],
+  setup(props, { emit }) {
+    const handleMenuItemClick = (menu: any) => {
+      emit('handleClickMenu', menu);
+    };
+    return {
+      handleMenuItemClick
+    };
   }
 });
 </script>

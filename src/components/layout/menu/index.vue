@@ -3,24 +3,26 @@
     active-text-color="#0a60bd"
     background-color="#001529"
     class="menu-container"
-    default-active="/main/home"
+    :default-active="defaultActive"
     text-color="#b7bdc3"
   >
     <template v-for="menu in menuList" :key="menu.path">
       <el-menu-item
         :index="menu.path"
         v-if="!menu.children || menu.children.length === 0"
+        @click="handleClickMenu(menu)"
       >
         <el-icon><component :is="menu.meta.icon" /></el-icon>
         <span>{{ menu.meta.title }}</span>
       </el-menu-item>
-      <sub-menu :menuInfo="menu" v-else />
+      <sub-menu :menuInfo="menu" @handleClickMenu="handleClickMenu" v-else />
     </template>
   </el-menu>
 </template>
 
 <script lang="ts">
 import { useStore } from '@/store';
+import { useRoute, useRouter } from 'vue-router';
 import { computed, defineComponent } from 'vue';
 import SubMenu from './subMenu.vue';
 export default defineComponent({
@@ -29,13 +31,22 @@ export default defineComponent({
     SubMenu
   },
   setup() {
+    // --- 属性 ---
     const store = useStore();
-    const menuList = computed(() => {
-      console.log('store.state.user.userMenus', store.state.user.userMenus);
-      return store.state.user.userMenus;
-    });
+    const route = useRoute();
+    const router = useRouter();
+    const defaultActive = computed(() => route.path);
+    console.log('----cur-route----', route.path);
+    const menuList = computed(() => store.state.user.userMenus);
+
+    // --- 方法 ---
+    const handleClickMenu = (menu: any) => {
+      router.push({ path: menu.path });
+    };
     return {
-      menuList
+      defaultActive,
+      menuList,
+      handleClickMenu
     };
   }
 });
@@ -58,6 +69,10 @@ export default defineComponent({
   }
   .el-menu-item:hover {
     color: #fff !important; // 菜单
+  }
+  :deep(.el-menu-item.is-active) {
+    color: #fff !important;
+    background-color: #0a60bd !important;
   }
   .el-menu-item.is-active {
     color: #fff !important;

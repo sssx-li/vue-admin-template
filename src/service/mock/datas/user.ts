@@ -1,5 +1,5 @@
 import { User } from '@/service/api';
-import { ILoginResult } from '@/service/api/user/types';
+import { ILoginResult, IMenuData } from '@/service/api/user/types';
 const loginData: ILoginResult = {
   nickname: '管理员',
   token: Date.now().toString(),
@@ -9,6 +9,29 @@ const loginData: ILoginResult = {
   }
 };
 
+const useMenuData: IMenuData[] = [
+  {
+    id: 1,
+    pid: 0,
+    path: '/main/about'
+  },
+  {
+    id: 2,
+    pid: 1,
+    path: '/main/about/first'
+  },
+  {
+    id: 3,
+    pid: 1,
+    path: '/main/about/secound'
+  },
+  {
+    id: 4,
+    pid: 0,
+    path: '/main/config'
+  }
+];
+
 const loginDataMoke = {
   [`onPost::${User.LOGIN}`]: () => {
     return {
@@ -17,6 +40,13 @@ const loginDataMoke = {
       data: {
         ...loginData
       }
+    };
+  },
+  [`onGet::${User.USEMENU}`]: () => {
+    return {
+      message: '成功',
+      code: 0,
+      data: useMenuData
     };
   }
 };
