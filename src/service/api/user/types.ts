@@ -9,7 +9,6 @@ export interface IAccount {
 }
 
 export interface IMenuData {
-  pid: number | string;
   path: string;
   id: number | string;
   [propName: string]: any;

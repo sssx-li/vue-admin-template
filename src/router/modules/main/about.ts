@@ -8,7 +8,6 @@ const aboutRoutes: Array<RouteRecordRaw> = [
     meta: {
       title: '关于',
       icon: 'FolderOutlined',
-      url: '/main/about',
       sort: 2
     },
     children: [
@@ -18,8 +17,7 @@ const aboutRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/main/about/index.vue'),
         meta: {
           title: '关于1-1',
-          icon: 'SnippetsOutlined',
-          url: '/main/about/first'
+          icon: 'SnippetsOutlined'
         }
       },
       {
@@ -28,8 +26,7 @@ const aboutRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/main/about/secound.vue'),
         meta: {
           title: '关于1-2',
-          icon: 'SnippetsOutlined',
-          url: '/main/about/secound'
+          icon: 'SnippetsOutlined'
         }
       }
     ]
