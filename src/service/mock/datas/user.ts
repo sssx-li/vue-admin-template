@@ -12,22 +12,18 @@ const loginData: ILoginResult = {
 const useMenuData: IMenuData[] = [
   {
     id: 1,
-    pid: 0,
     path: '/main/about'
   },
   {
     id: 2,
-    pid: 1,
     path: '/main/about/first'
   },
   {
     id: 3,
-    pid: 1,
     path: '/main/about/secound'
   },
   {
     id: 4,
-    pid: 0,
     path: '/main/config'
   }
 ];
