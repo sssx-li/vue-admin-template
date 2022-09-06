@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-import { mainStaticRoutes } from './modules';
+import mainStaticRoute from './modules';
 import localCache from '@/utils/catch';
 import { tokenKey } from '@/common';
 import { firstMenuPath } from '@/utils/mapMenus';
@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'main',
     component: () =>
       import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
-    children: [...mainStaticRoutes]
+    children: [mainStaticRoute]
   },
   {
     path: '/login',
