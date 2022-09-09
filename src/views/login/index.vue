@@ -67,8 +67,8 @@ export default defineComponent({
 .login-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 100%;
-  padding: 220px 0 24px;
   background: #f0f2f5;
   background-position: center 110px;
   background-size: 100%;
