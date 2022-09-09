@@ -12,7 +12,7 @@ export const rules = reactive<FormRules>({
   password: [
     {
       required: true,
-      message: '密码是必传内容~',
+      message: '请输入密码',
       trigger: 'blur'
     }
   ]
