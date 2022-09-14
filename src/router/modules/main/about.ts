@@ -16,7 +16,8 @@ const aboutRoute: RouteRecordRaw = {
       component: () => import('@/views/main/about/index.vue'),
       meta: {
         title: '关于1-1',
-        icon: 'Menu'
+        icon: 'Menu',
+        isHidden: true
       }
     },
     {

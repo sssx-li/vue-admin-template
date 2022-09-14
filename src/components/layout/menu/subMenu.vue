@@ -1,5 +1,5 @@
 <template>
-  <el-sub-menu :index="menuInfo.path">
+  <el-sub-menu :index="menuInfo.path" v-if="!menuInfo.meta.isHidden">
     <template #title>
       <el-icon :size="20" v-if="menuInfo.meta.icon">
         <component :is="menuInfo.meta.icon"></component>
@@ -11,7 +11,7 @@
       <el-menu-item
         :index="menu.path"
         @click="handleMenuItemClick(menu)"
-        v-if="!menu.children || menu.children === 0"
+        v-if="!menu.meta.isHidden && (!menu.children || menu.children === 0)"
       >
         <el-icon :size="20" v-if="menu.meta.icon">
           <component :is="menu.meta.icon"></component>
