@@ -7,7 +7,12 @@
       mode="inline"
     >
       <template v-for="route in menuInfo" :key="route.path">
-        <template v-if="!route.children || route.children.length === 0">
+        <template
+          v-if="
+            !route.meta.isHidden &&
+            (!route.children || route.children.length === 0)
+          "
+        >
           <a-menu-item :key="route.path">
             <template #icon v-if="route.meta.icon">
               <component :is="route.meta.icon"></component>

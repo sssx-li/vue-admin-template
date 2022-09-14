@@ -19,7 +19,8 @@ const aboutRoutes: Array<RouteRecordRaw> = [
         meta: {
           title: '关于1-1',
           icon: 'SnippetsOutlined',
-          url: '/main/about/first'
+          url: '/main/about/first',
+          isHidden: true
         }
       },
       {
