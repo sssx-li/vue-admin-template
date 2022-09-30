@@ -1,6 +1,6 @@
 import { message } from 'ant-design-vue';
 
-function useMessage() {
+export function useMessage() {
   // duration 单位为 s
   const success = (msg: string, duration?: number) => {
     message.success(msg, duration);
@@ -30,5 +30,3 @@ function useMessage() {
     loading
   };
 }
-
-export default useMessage;

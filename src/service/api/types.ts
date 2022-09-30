@@ -3,3 +3,14 @@ export interface IDataModel<T = any> {
   message: string;
   data: T;
 }
+
+export interface IPagination {
+  count: number;
+  pageNo: number;
+  pageSize: number;
+}
+
+export interface ITableList {
+  list: any[];
+  page: IPagination;
+}
