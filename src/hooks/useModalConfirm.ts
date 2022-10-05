@@ -20,17 +20,17 @@ interface IModalConfirm {
   okType?: ButtonType;
 }
 
-export function useModalConfirm(): () => Promise<any> {
-  return (
+export function useModalConfirm() {
+  const modalConfirm = (
     params: IModalConfirm = {
-      title: '删除',
-      content: '删除之后无法恢复哦，确定删除吗?',
+      title: '提示',
+      content: '提示信息',
       okText: '确认',
       cancelText: '取消',
-      okType: 'danger'
+      okType: 'default'
     }
-  ) =>
-    new Promise((resolve) => {
+  ) => {
+    return new Promise((resolve, reject) => {
       const { title, content, okText, cancelText, okType } = params;
       Modal.confirm({
         title,
@@ -43,8 +43,10 @@ export function useModalConfirm(): () => Promise<any> {
           resolve(true);
         },
         onCancel: () => {
-          resolve(false);
+          reject(false);
         }
       });
     });
+  };
+  return modalConfirm;
 }

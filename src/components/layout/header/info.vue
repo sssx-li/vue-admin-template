@@ -3,7 +3,7 @@
     <a-space :size="8">
       <a-button type="text" shape @click="logout">
         <template #icon>
-          <LoginOutlined style="color: #fff" />
+          <LoginOutlined />
         </template>
       </a-button>
       <span class="avatar" @click="showUserInfo">
@@ -17,31 +17,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, createVNode, reactive } from 'vue';
-import { Modal, message } from 'ant-design-vue';
-import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { defineComponent, reactive } from 'vue';
 import localCache from '@/utils/catch';
+import { useMessage } from '@/hooks/useMessage';
+import { useModalConfirm } from '@/hooks/useModalConfirm';
 
 export default defineComponent({
   name: 'infoComp',
   setup() {
-    // --- 属性 ---
+    const message = useMessage();
+    const confirm = useModalConfirm();
     const userInfo = reactive({
       nickname: '超级管理员',
       avatar: 'http://minio-test.epshealth.com:7070/uurm/_public/userPic/1'
     });
-
-    // --- 方法 ---
     const logout = () => {
-      Modal.confirm({
-        title: '提示',
-        icon: createVNode(ExclamationCircleOutlined),
-        content: '确定退出登录?',
-        onOk() {
+      confirm({ content: '确定要退出登录吗' })
+        .then(() => {
           localCache.clearCache();
           window.location.reload();
-        }
-      });
+        })
+        .catch(() => {});
     };
     const showUserInfo = () => {
       message.info('个人信息');
@@ -58,7 +54,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .info-container {
-  color: #fff;
   min-width: 192px;
   :deep(.ant-space) {
     height: 48px;
@@ -70,12 +65,6 @@ export default defineComponent({
     cursor: pointer;
     padding: 0px 10px;
     font-size: 18px;
-    &:hover {
-      background: #252a3d;
-    }
-    &:hover {
-      background: #252a3d;
-    }
     .avatar {
       .user-name {
         padding-left: 10px;

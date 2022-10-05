@@ -1,27 +1,43 @@
 <template>
   <div class="header-container">
-    <div class="icon-title">
-      <img
-        src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-        alt="log"
-        height="28"
-      />
-      <span class="title">后台管理系统</span>
-    </div>
+    <component
+      :is="isCollapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'"
+      @click="changeCollapsed"
+    />
     <Info />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import Info from './info.vue';
 export default defineComponent({
   name: 'headerComp',
   components: {
     Info
   },
-  setup() {
-    return {};
+  props: {
+    collapsed: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['update:collapsed'],
+  setup(props, { emit }) {
+    const isCollapsed = ref(props.collapsed);
+    watch(
+      () => props.collapsed,
+      (val) => {
+        isCollapsed.value = val;
+      }
+    );
+    const changeCollapsed = () => {
+      emit('update:collapsed', !isCollapsed.value);
+    };
+    return {
+      isCollapsed,
+      changeCollapsed
+    };
   }
 });
 </script>
@@ -32,6 +48,7 @@ export default defineComponent({
   height: 48px;
   line-height: 48px;
   justify-content: space-between;
+  align-items: center;
   .icon-title {
     display: flex;
     align-items: center;

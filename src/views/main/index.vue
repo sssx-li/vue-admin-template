@@ -1,25 +1,32 @@
 <template>
-  <div class="main-container">
+  <a-layout class="main-container">
+    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+      <div class="logo-box">
+        <img
+          :src="logo"
+          alt="log"
+          :class="[collapsed ? 'small-logo' : 'logo']"
+        />
+        <h2 class="title" v-show="!collapsed">后台管理系统</h2>
+      </div>
+      <LayoutMenu />
+    </a-layout-sider>
     <a-layout>
-      <a-layout-header :style="{ height: '48px' }" class="header">
-        <LayoutHeader />
+      <a-layout-header class="header">
+        <LayoutHeader v-model:collapsed="collapsed" />
       </a-layout-header>
-      <a-layout class="content">
-        <a-layout-sider width="200" style="background: #fff">
-          <LayoutMenu />
-        </a-layout-sider>
-        <a-layout-content class="content-view">
-          <router-view></router-view>
-        </a-layout-content>
-      </a-layout>
+      <a-layout-content>
+        <router-view></router-view>
+      </a-layout-content>
     </a-layout>
-  </div>
+  </a-layout>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import LayoutHeader from '@/components/layout/header/index.vue';
 import LayoutMenu from '@/components/layout/menu/index.vue';
+import logo from '@/assets/images/logo.png';
 export default defineComponent({
   name: 'mainView',
   components: {
@@ -27,9 +34,10 @@ export default defineComponent({
     LayoutMenu
   },
   setup() {
-    const isCollapse = ref(false);
+    const collapsed = ref(false);
     return {
-      isCollapse
+      logo,
+      collapsed
     };
   }
 });
@@ -38,23 +46,32 @@ export default defineComponent({
 <style lang="scss" scoped>
 .main-container {
   height: 100%;
-  & > .ant-layout {
-    height: 100%;
-  }
   .header {
-    background: #001529;
+    height: 50px;
+    background: #fff;
     box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
     transition: all 0.3s;
     padding: 0 16px;
   }
-  .content {
-    height: calc(100% - 48px);
-    .content-view {
-      padding: 20px 20px 0;
+  .logo-box {
+    margin: 14px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .logo {
+      height: 50px;
     }
-    .ant-layout-content {
-      border-radius: 14px;
+    .small-logo {
+      height: 30px;
     }
+    .title {
+      margin: 14px 0 20px;
+      font-size: 18px;
+      color: #fff !important;
+    }
+  }
+  .ant-layout-content {
+    padding: 20px;
   }
 }
 </style>
