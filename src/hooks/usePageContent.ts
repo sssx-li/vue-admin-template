@@ -1,9 +1,8 @@
 import { ref, reactive, watch } from 'vue';
+import { message } from 'ant-design-vue';
+
 import Request from '@/service';
-
-import { useMessage } from './useMessage';
 import { useModalConfirm } from './useModalConfirm';
-
 import { IDataModel, ITableList } from '@/service/api/types';
 
 /**
@@ -12,7 +11,6 @@ import { IDataModel, ITableList } from '@/service/api/types';
  * @param curPageQuery 当前页面请求参数(除pageNo、pageSize)
  */
 const usePageContent = function (url: string, curPageQuery: any = {}) {
-  const message = useMessage();
   const confirm = useModalConfirm();
 
   const pageInfo = reactive({ pageNo: 1, pageSize: 10 });
@@ -48,16 +46,33 @@ const usePageContent = function (url: string, curPageQuery: any = {}) {
 
   // 编辑
   const handleEdit = async (row: any) => {
+    const id = row.id;
+    delete row.id;
     try {
       await Request.put<IDataModel>({
-        // TODO 这里mock接口无法匹配到动态的路由，需按实际接口来做修改
-        // url: `${url}/${row.id}`,
-        url,
+        url: `${url}/${id}`,
         data: row
       });
-      message.success('操作成功');
+      message.success('修改成功');
+      pageInfo.pageNo = 1;
+      getPageData();
     } catch (error) {
-      message.error('操作失败, 请稍后再试');
+      message.error('修改失败, 请稍后再试');
+    }
+  };
+
+  // 新增
+  const handleCreate = async (params: any) => {
+    try {
+      await Request.post({
+        url,
+        data: params
+      });
+      message.success('添加成功');
+      pageInfo.pageNo = 1;
+      getPageData();
+    } catch (error) {
+      message.error('添加失败, 请稍后再试');
     }
   };
 
@@ -72,11 +87,9 @@ const usePageContent = function (url: string, curPageQuery: any = {}) {
       .then(async () => {
         try {
           await Request.delete({
-            // TODO 这里mock接口无法匹配到动态的路由，需按实际接口来做修改
-            // url: `${url}/${row.id}`,
-            url,
-            data: id
+            url: `${url}/${id}`
           });
+          message.success('删除成功');
         } catch (error) {
           message.error('删除失败，请稍后再试');
         }
@@ -99,7 +112,8 @@ const usePageContent = function (url: string, curPageQuery: any = {}) {
     refresh,
     handleSizeChange,
     handleDelete,
-    handleEdit
+    handleEdit,
+    handleCreate
   };
 };
 

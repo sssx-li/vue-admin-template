@@ -24,15 +24,14 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import localCache from '@/utils/catch';
-import { useMessage } from '@/hooks/useMessage';
 import { useModalConfirm } from '@/hooks/useModalConfirm';
 import { useStore } from '@/store';
+import { message } from 'ant-design-vue';
 
 export default defineComponent({
   name: 'infoComp',
   setup() {
     const store = useStore();
-    const message = useMessage();
     const confirm = useModalConfirm();
     const userInfo = computed(() => store.state.user.userInfo);
     const logout = () => {
