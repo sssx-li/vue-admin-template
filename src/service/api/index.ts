@@ -4,4 +4,8 @@ enum User {
   USEMENU = '/use/menu'
 }
 
-export { User };
+enum ContentApis {
+  DASHBOARD = '/dashboard'
+}
+
+export { User, ContentApis };

@@ -19,6 +19,7 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-empty-function': 'off',
-    'linebreak-style': [0, 'error', 'windows']
+    'linebreak-style': [0, 'error', 'windows'],
+    '@typescript-eslint/no-non-null-assertion': 'off'
   }
 };

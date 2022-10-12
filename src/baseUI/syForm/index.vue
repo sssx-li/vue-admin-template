@@ -119,11 +119,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, PropType, watch, toRaw } from 'vue';
+import { defineComponent, reactive, ref, PropType, watch } from 'vue';
 
 import { useFormValidate } from '@/hooks/useFormValidate';
 import { IFormItem } from './types';
 import dayjs from 'dayjs';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 
 const dateType = ['datepicker', 'monthpicker', 'rangepicker', 'weekpicker'];
 
@@ -176,32 +177,35 @@ export default defineComponent({
     watch(
       () => props.modelValue,
       (val) => {
-        formData.value = toRaw(val);
+        const _val: any = JSON.parse(JSON.stringify(val));
         // 对日期格式做处理
-        props.formItems.forEach((item: any) => {
-          const { type, field, dateFormat = 'YYYY-MM-DD', showTime } = item;
-          const dateValue: any = (formData.value as any)[field];
-          if (dateType.includes(type) && Object.keys(formData.value).includes(field) && dateValue) {
+        for (let index = 0; index < props.formItems.length; index++) {
+          const { type, field, dateFormat = 'YYYY-MM-DD', showTime } = props.formItems[index];
+          if (!dateType.includes(type)) continue;
+          const dateValue: any = _val[field];
+          if (dateValue) {
             let startTime = '';
             let endTime = '';
+            let week = null;
             switch (type) {
               case 'datepicker':
               case 'monthpicker':
-                (formData.value as any)[field] = dayjs(dateValue, dateFormat);
+                _val[field] = dayjs(dateValue, dateFormat);
                 break;
               case 'rangepicker':
                 startTime = `${dateValue[0]}${!showTime && '00:00:00'}`;
                 endTime = `${dateValue[1]}${!showTime && '59:59:59'}`;
-                (formData.value as any)[field] = [
-                  dayjs(startTime, dateFormat),
-                  dayjs(endTime, dateFormat)
-                ];
+                _val[field] = [dayjs(startTime, dateFormat), dayjs(endTime, dateFormat)];
                 break;
-              default:
+              case 'weekpicker':
+                dayjs.extend(weekOfYear);
+                week = parseInt(dateValue.split('-')[1]);
+                _val[field] = dayjs(dateValue.split('-')[0]).week(week);
                 break;
             }
           }
-        });
+        }
+        formData.value = _val;
       },
       {
         immediate: true,
@@ -231,12 +235,14 @@ export default defineComponent({
       })
     );
     const onSubmit = () => {
-      validate().then(() => {
-        emit('onSubmit');
-      });
+      validate()
+        .then(() => {
+          emit('onSubmit');
+        })
+        .catch(() => {});
     };
     const handleValueChange = (event: any, item: any, other?: any) => {
-      const { field, type, dateFormat } = item;
+      const { field, type } = item;
       let value: any = '';
       switch (type) {
         case 'input':
@@ -245,8 +251,7 @@ export default defineComponent({
           value = event.target.value;
           break;
         case 'datepicker':
-          console.log('other', other);
-          value = dayjs(other, dateFormat);
+          value = other;
           break;
         case 'select':
         case 'cascader':
