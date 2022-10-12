@@ -10,7 +10,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecord[] {
   const routeFiles = require.context(`../router/modules/main`, true, /\.ts$/);
   routeFiles.keys().forEach((key) => {
     const route = require(`../router/modules/main` + key.split('.')[1]).default;
-    allRoutes.push(route);
+    allRoutes.push(...route);
   });
   // 根据权限菜单获取routes
   const _filterPermissionRoutes = (routes: any[]) => {
@@ -31,7 +31,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecord[] {
   };
   const permissionRoutes: any[] = _filterPermissionRoutes(allRoutes);
   // 静态路由(白名单路由) 与 权限路由 集合
-  Object.assign(routes, [mainStaticRoute, ...permissionRoutes]);
+  Object.assign(routes, [...mainStaticRoute, ...permissionRoutes]);
   routes.sort((a, b) => a.meta.sort - b.meta.sort);
   if (routes && routes.length > 0) {
     firstMenuPath = routes[0].redirect ?? routes[0].path;

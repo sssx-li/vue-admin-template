@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/main',
     name: 'main',
     component: () => import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
-    children: [mainStaticRoute]
+    children: [...mainStaticRoute]
   },
   {
     path: '/login',

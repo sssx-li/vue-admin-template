@@ -44,7 +44,7 @@ const userModel: Module<IUserState, IRootState> = {
         localCache.setCatch(tokenKey, token);
         commit('changeToken', token);
         const userMenus = await getUserMenu();
-        commit('changeUserMenus', []);
+        commit('changeUserMenus', userMenus.data);
         localCache.setCatch('userMenus', userMenus.data);
         dispatch('getUserInfo');
         router.push('/');
