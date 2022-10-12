@@ -21,7 +21,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import localCache from '@/utils/catch';
-import { useModalConfirm } from '@/hooks/useModalConfirm';
+import { useConfirm } from '@/hooks/useConfirm';
 import { useStore } from '@/store';
 import { message } from 'ant-design-vue';
 
@@ -29,7 +29,7 @@ export default defineComponent({
   name: 'infoComp',
   setup() {
     const store = useStore();
-    const confirm = useModalConfirm();
+    const confirm = useConfirm();
     const userInfo = computed(() => store.state.user.userInfo);
     const logout = () => {
       confirm({ content: '确定要退出登录吗' })

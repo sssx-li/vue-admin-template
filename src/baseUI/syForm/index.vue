@@ -7,7 +7,6 @@
     :wrapperCol="wrapperCol"
     :labelCol="labelCol"
     ref="formRef"
-    class="sy-form"
   >
     <template v-for="item in formItems" :key="item.label">
       <a-form-item
@@ -16,30 +15,54 @@
       >
         <template v-if="item.type === 'input'">
           <a-input
+            :maxlength="item.maxlength"
+            :readonly="item.readonly"
+            :disabled="item.disabled"
             v-model:value="formData[item.field]"
             :size="size"
             :placeholder="item.placeholder"
-            :disabled="item.disabled"
-            :readonly="item.readonly"
             @change="handleValueChange($event, item)"
-          />
+          >
+            <template v-if="item.beforeContent" #addonBefore>
+              <slot :name="`beforeContent-${item.field}`" :content="item.beforeContent">
+                {{ item.beforeContent }}
+              </slot>
+            </template>
+            <template v-if="item.afterContent" #addonAfter>
+              <slot :name="`afterContent-${item.field}`" :content="item.afterContent">
+                {{ item.afterContent }}
+              </slot>
+            </template>
+          </a-input>
         </template>
         <template v-else-if="item.type === 'password'">
           <a-input-password
-            :size="size"
-            :disabled="item.disabled"
             :readonly="item.readonly"
+            :disabled="item.disabled"
+            :size="size"
             v-model:value="formData[item.field]"
             :placeholder="item.placeholder"
             @change="handleValueChange($event, item)"
+          />
+        </template>
+        <template v-else-if="item.type === 'datepicker'">
+          <a-date-picker
+            :show-time="item.showTime"
+            :size="size"
+            :disabled="item.disabled"
+            v-model:value="formData[item.field]"
+            :readonly="item.readonly"
+            :placeholder="item.placeholder"
+            :format="item.dateFormat"
+            @change="(val, str) => handleValueChange(val, item, str)"
           />
         </template>
         <template v-else-if="item.type === 'textarea'">
           <a-textarea
+            :readonly="item.readonly"
+            :disabled="item.disabled"
             v-model:value="formData[item.field]"
             :size="size"
-            :disabled="item.disabled"
-            :readonly="item.readonly"
             :show-count="item.showCount"
             :maxlength="item.maxlength"
             @change="handleValueChange($event, item)"
@@ -47,43 +70,69 @@
         </template>
         <template v-else-if="item.type === 'select'">
           <a-select
+            :readonly="item.readonly"
+            :disabled="item.disabled"
             v-model:value="formData[item.field]"
             :size="size"
-            :disabled="item.disabled"
-            :readonly="item.readonly"
             :placeholder="item.placeholder"
             :options="item.options"
             @change="handleValueChange($event, item)"
           >
           </a-select>
         </template>
+        <template v-else-if="item.type === 'cascader'">
+          <a-cascader
+            :readonly="item.readonly"
+            :disabled="item.disabled"
+            v-model:value="formData[item.field]"
+            :size="size"
+            :placeholder="item.placeholder"
+            :options="item.options"
+            @change="handleValueChange($event, item)"
+          >
+          </a-cascader>
+        </template>
         <template v-else-if="item.type === 'switch'">
           <a-switch
+            :disabled="item.disabled"
             v-model:checked="formData[item.field]"
             :size="size"
-            :disabled="item.disabled"
             @change="handleValueChange($event, item)"
           />
         </template>
+        <template v-else-if="item.type === 'other'">
+          <slot :name="`other-${item.field}`" :content="formData">
+            {{ formData[item.field] }}
+          </slot>
+        </template>
       </a-form-item>
     </template>
-    <a-form-item>
-      <slot name="footer"> </slot>
+    <a-form-item :wrapperCol="footerWrapperCol">
+      <slot name="form-footer">
+        <div class="form-btn">
+          <a-button>取消</a-button>
+          <a-button type="primary" @click="onSubmit">确定</a-button>
+        </div>
+      </slot>
     </a-form-item>
   </a-form>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, PropType, watch } from 'vue';
+import { defineComponent, reactive, ref, PropType, watch, toRaw } from 'vue';
 
 import { useFormValidate } from '@/hooks/useFormValidate';
 import { IFormItem } from './types';
+import dayjs from 'dayjs';
+
+const dateType = ['datepicker', 'monthpicker', 'rangepicker', 'weekpicker'];
+
 export default defineComponent({
   name: 'syForm',
   props: {
     layout: {
       type: String,
-      default: 'inline'
+      default: 'horizontal'
     },
     autocomplete: {
       type: String,
@@ -107,6 +156,10 @@ export default defineComponent({
       type: Object,
       default: () => ({ style: { width: '100px' } })
     },
+    footerWrapperCol: {
+      type: Object,
+      default: () => ({ span: 14, offset: 4 })
+    },
     size: {
       type: String,
       default: 'default'
@@ -118,33 +171,58 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'onSubmit'],
   setup(props, { emit, expose }) {
-    // --- 属性 ---
-    // 初始化表单数据(因为antd表单组件底层封装方式不同，在表单元素上使用model-value代替v-model时无法达到双向绑定的效果)
     const formData = ref({});
     const formRef = ref();
     watch(
       () => props.modelValue,
       (val) => {
-        formData.value = JSON.parse(JSON.stringify(val));
+        formData.value = toRaw(val);
+        // 对日期格式做处理
+        props.formItems.forEach((item: any) => {
+          const { type, field, dateFormat = 'YYYY-MM-DD', showTime } = item;
+          const dateValue: any = (formData.value as any)[field];
+          if (dateType.includes(type) && Object.keys(formData.value).includes(field) && dateValue) {
+            let startTime = '';
+            let endTime = '';
+            switch (type) {
+              case 'datepicker':
+              case 'monthpicker':
+                (formData.value as any)[field] = dayjs(dateValue, dateFormat);
+                break;
+              case 'rangepicker':
+                startTime = `${dateValue[0]}${!showTime && '00:00:00'}`;
+                endTime = `${dateValue[1]}${!showTime && '59:59:59'}`;
+                (formData.value as any)[field] = [
+                  dayjs(startTime, dateFormat),
+                  dayjs(endTime, dateFormat)
+                ];
+                break;
+              default:
+                break;
+            }
+          }
+        });
       },
       {
         immediate: true,
         deep: true
       }
     );
-
-    // 获取校验规则及初始化赋值
+    // 获取校验规则及参数默认值
     const rulesList = {};
     props.formItems.forEach((item) => {
       const { rules, field } = item;
-      const value = (formData.value as any)[field];
-      if (item.defaultValue !== undefined && !(value || value === 0)) {
+      const hsaValue = (formData.value as any)[field] || (formData.value as any)[field] === 0;
+      if (item.defaultValue !== undefined && !hsaValue) {
         (formData.value as any)[field] = item.defaultValue;
+      } else {
+        (formData.value as any)[field] = hsaValue ? (formData.value as any)[field] : '';
       }
       if (rules && rules.length > 0) {
         (rulesList as any)[field] = rules;
       }
     });
+    // 赋默认值时 更新 modelValue
     emit('update:modelValue', formData.value);
     const { validate, validateInfos } = useFormValidate(
       formData,
@@ -152,15 +230,13 @@ export default defineComponent({
         ...rulesList
       })
     );
-
-    // --- 方法 ---
     const onSubmit = () => {
       validate().then(() => {
         emit('onSubmit');
       });
     };
-    const handleValueChange = (event: any, item: any) => {
-      const { field, type } = item;
+    const handleValueChange = (event: any, item: any, other?: any) => {
+      const { field, type, dateFormat } = item;
       let value: any = '';
       switch (type) {
         case 'input':
@@ -168,10 +244,17 @@ export default defineComponent({
         case 'textarea':
           value = event.target.value;
           break;
+        case 'datepicker':
+          console.log('other', other);
+          value = dayjs(other, dateFormat);
+          break;
         case 'select':
+        case 'cascader':
         case 'switch':
           value = event;
           break;
+        default:
+          value = event.target.value;
       }
       emit('update:modelValue', {
         ...props.modelValue,
@@ -195,7 +278,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.ant-form-inline .ant-form-item-with-help {
-  margin-bottom: 0;
+.ant-form-horizontal {
+  max-width: 600px;
+}
+.form-btn {
+  .ant-btn {
+    margin-right: 14px;
+  }
 }
 </style>

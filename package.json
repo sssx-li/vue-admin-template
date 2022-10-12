@@ -31,8 +31,6 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@iconify-json/mdi": "^1.1.31",
-    "@iconify-json/ph": "^1.1.2",
     "@types/node": "^18.8.2",
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",

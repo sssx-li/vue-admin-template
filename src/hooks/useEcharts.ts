@@ -1,6 +1,6 @@
 import * as echarts from 'echarts';
 
-export function useEcharts(el: HTMLElement) {
+const useEcharts = function (el: HTMLElement) {
   const echartInstance = echarts.init(el);
   const setOptions = (options: echarts.EChartsOption) => {
     echartInstance.setOption(options);
@@ -16,4 +16,6 @@ export function useEcharts(el: HTMLElement) {
     setOptions,
     updateSize
   };
-}
+};
+
+export { useEcharts };

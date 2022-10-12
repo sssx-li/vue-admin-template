@@ -28,7 +28,7 @@ import { useRoute, useRouter } from 'vue-router';
 import SubMenu from './subMenu.vue';
 
 export default defineComponent({
-  name: 'navMenuView',
+  name: 'navMenu',
   components: {
     'sub-menu': SubMenu
   },

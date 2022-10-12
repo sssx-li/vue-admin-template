@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'SubMenu',
+  name: 'subMenu',
   props: {
     route: {
       type: Object,

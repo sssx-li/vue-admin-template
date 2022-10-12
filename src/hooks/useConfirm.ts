@@ -5,7 +5,7 @@ import { createVNode } from 'vue';
 
 type ButtonType = 'link' | 'default' | 'primary' | 'ghost' | 'dashed' | 'text' | 'danger';
 
-interface IModalConfirm {
+export interface IConfirm {
   title?: string;
   content?: string;
   okText?: string;
@@ -13,18 +13,16 @@ interface IModalConfirm {
   okType?: ButtonType;
 }
 
-export function useModalConfirm() {
-  const modalConfirm = (
-    params: IModalConfirm = {
-      title: '提示',
-      content: '提示信息',
-      okText: '确认',
-      cancelText: '取消',
-      okType: 'default'
-    }
-  ) => {
-    return new Promise((resolve, reject) => {
-      const { title, content, okText, cancelText, okType } = params;
+const useConfirm = function (): (obj?: IConfirm) => Promise<any> {
+  return (params = {}) => {
+    const {
+      title = '提示',
+      content = '这是一个提示信息',
+      cancelText = '取消',
+      okText = '确认',
+      okType = 'default'
+    } = params;
+    return new Promise((resolve) => {
       Modal.confirm({
         title,
         icon: createVNode(ExclamationCircleOutlined),
@@ -35,11 +33,10 @@ export function useModalConfirm() {
         onOk: () => {
           resolve(true);
         },
-        onCancel: () => {
-          reject(false);
-        }
+        onCancel: () => {}
       });
     });
   };
-  return modalConfirm;
-}
+};
+
+export { useConfirm };

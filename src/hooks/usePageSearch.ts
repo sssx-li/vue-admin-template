@@ -8,8 +8,7 @@ const usePageSearch = function () {
     if (resizePageInfo) {
       params = {
         ...queryInfo,
-        pageNo: 1,
-        pageSize: 10
+        pageNo: 1
       };
     }
     pageContentRef.value?.getPageData(params);

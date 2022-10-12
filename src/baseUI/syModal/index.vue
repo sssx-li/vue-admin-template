@@ -10,7 +10,7 @@
     :afterClose="afterClose"
     @ok="handleOk"
   >
-    <div class="modal-contetn">
+    <div class="modal-content">
       <slot />
     </div>
   </a-modal>

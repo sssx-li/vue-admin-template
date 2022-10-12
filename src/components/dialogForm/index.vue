@@ -15,6 +15,14 @@
       <template #footer>
         <slot />
       </template>
+      <!-- other 类型插槽 -->
+      <template
+        v-for="item in otherSloteNameList"
+        :key="item.field"
+        #[`other-${item.field}`]="scope"
+      >
+        <slot :name="`other-${item.field}`" :content="scope.content"></slot>
+      </template>
     </SyForm>
   </SyModal>
 </template>
@@ -56,16 +64,16 @@ export default defineComponent({
     // 表单数据处理
     const formState = ref<any>({});
     const formCompRef = ref<InstanceType<typeof SyForm>>();
-    const formItems = props.formConfig.formItems as any[];
-    const formOriginData: any = {};
-    for (const item of formItems) {
-      formOriginData[item.field] = item.defaultValue || '';
-    }
     // 初始化表单数据
-    Object.assign(formState.value, { ...formOriginData, ...props.row });
+    Object.assign(formState.value, { ...props.row });
+    // other 类型插槽
+    let otherSloteNameList = JSON.parse(JSON.stringify(props.formConfig.formItems || []));
+    otherSloteNameList = props.formConfig.formItems.filter((item: any) => {
+      return item.type === 'other';
+    });
 
     const close = () => {
-      formState.value = formOriginData;
+      formState.value = {};
       emit('update:visible', false);
       emit('update:show', false);
       emit('onClose');
@@ -86,13 +94,13 @@ export default defineComponent({
     };
 
     expose({
-      handleCloseDialog,
-      loading
+      handleCloseDialog
     });
 
     return {
       ...props,
       loading,
+      otherSloteNameList,
       formState,
       dialogRef,
       formCompRef,
@@ -105,8 +113,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.ant-form-inline .ant-form-item-with-help {
-  margin-bottom: 0;
-}
-</style>
+<style lang="scss" scoped></style>

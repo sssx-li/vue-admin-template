@@ -1,7 +1,17 @@
-type IFormType = 'input' | 'password' | 'textarea' | 'select' | 'switch';
+type IFormType =
+  | 'input'
+  | 'password'
+  | 'textarea'
+  | 'datepicker'
+  | 'monthpicker'
+  | 'rangepicker'
+  | 'weekpicker'
+  | 'select'
+  | 'switch'
+  | 'cascader'
+  | 'other';
 type ILayoutType = 'horizontal' | 'vertical' | 'inline';
 type ISizeType = 'large' | 'default' | 'small';
-
 interface IOptions {
   label: string | number;
   value: string | number;
@@ -16,8 +26,13 @@ export interface IFormItem {
   defaultValue?: any; // 参数默认值
   options?: IOptions[]; // 选择框选项数据
   otherOptions?: any; // 针对特殊的属性
-  readonly?: boolean; // 是否只读
+  maxlength?: number; // 最大长度
   disabled?: boolean; // 是否禁用
+  readonly?: boolean; // 是否只读
+  beforeContent?: any; // 输入框前置内容
+  afterContent?: any; // 输入框后置内容
+  dateFormat?: string | []; // 日期格式(用于日期时间选择器)
+  showTime?: boolean; // 是否增加时间选择功能
 }
 
 export interface IForm {

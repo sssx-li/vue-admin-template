@@ -3,10 +3,11 @@
     <a-table
       :data-source="dataSource"
       :columns="columns"
-      size="middle"
+      :size="size"
       :scroll="scroll"
       :pagination="false"
       :bordered="bordered"
+      :rowClassName="rowClassName"
     >
       <!-- 表头 -->
       <template #headerCell="{ column }">
@@ -93,6 +94,11 @@ export default defineComponent({
     scroll: {
       type: Object,
       default: () => ({ x: 600 })
+    },
+    rowClassName: Function,
+    size: {
+      type: String,
+      default: 'middle'
     }
   },
   emits: ['handleSizeChange'],
@@ -108,7 +114,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.eps-table {
+.sy-table {
   .table-footer {
     margin-top: 20px;
     text-align: right;

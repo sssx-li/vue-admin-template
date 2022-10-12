@@ -2,10 +2,10 @@
   <a-drawer
     v-model:visible="defVisible"
     :title="title"
-    placement="right"
     :width="drawerWidth"
+    :destroyOnClose="destroyOnClose"
     @after-visible-change="afterVisibleChange"
-    destroyOnClose
+    placement="right"
   >
     <div class="drawer-body">
       <div class="content">
@@ -45,11 +45,15 @@ export default defineComponent({
     showFooter: {
       type: Boolean,
       default: true
+    },
+    destroyOnClose: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['onSubmit', 'update:visible', 'close'],
   setup(props, { emit, expose }) {
-    const defVisible = ref<boolean>(false);
+    const defVisible = ref(false);
     watch(
       () => props.visible,
       (val) => {
@@ -79,8 +83,8 @@ export default defineComponent({
     });
 
     return {
-      defVisible,
       ...props,
+      defVisible,
       loadingText,
       afterVisibleChange,
       emit,
