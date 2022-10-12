@@ -12,9 +12,7 @@
     <template v-for="item in formItems" :key="item.label">
       <a-form-item
         :label="item.label"
-        v-bind="
-          item.rules && item.rules.length > 0 && validateInfos[item.field]
-        "
+        v-bind="item.rules && item.rules.length > 0 && validateInfos[item.field]"
       >
         <template v-if="item.type === 'input'">
           <a-input

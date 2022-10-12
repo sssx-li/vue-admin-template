@@ -6,12 +6,7 @@
     @onSubmit="onSubmit"
     ref="drawerRef"
   >
-    <SyForm
-      ref="formCompRef"
-      v-bind="formConfig"
-      v-model="formState"
-      @onSubmit="onSubmit"
-    >
+    <SyForm ref="formCompRef" v-bind="formConfig" v-model="formState" @onSubmit="onSubmit">
       <template #footer>
         <slot />
       </template>

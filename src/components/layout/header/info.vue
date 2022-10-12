@@ -8,10 +8,7 @@
       </a-button>
       <span class="avatar" @click="showUserInfo">
         <a-avatar
-          :src="
-            userInfo.avatar ||
-            'http://minio-test.epshealth.com:7070/uurm/_public/userPic/1'
-          "
+          :src="userInfo.avatar || 'http://minio-test.epshealth.com:7070/uurm/_public/userPic/1'"
         >
           <template #icon><UserOutlined /></template>
         </a-avatar>

@@ -2,11 +2,7 @@
   <a-layout class="main-container">
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <div class="logo-box">
-        <img
-          :src="logo"
-          alt="log"
-          :class="[collapsed ? 'small-logo' : 'logo']"
-        />
+        <img :src="logo" alt="log" :class="[collapsed ? 'small-logo' : 'logo']" />
         <h2 class="title" v-show="!collapsed">后台管理系统</h2>
       </div>
       <LayoutMenu />

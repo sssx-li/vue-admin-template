@@ -5,11 +5,7 @@
     </template>
     <template #title>{{ route.meta.title }}</template>
     <template v-for="item in route.children" :key="item.path">
-      <template
-        v-if="
-          !item.meta.isHidden && (!item.children || item.children.length === 0)
-        "
-      >
+      <template v-if="!item.meta.isHidden && (!item.children || item.children.length === 0)">
         <a-menu-item :key="item.path">
           <template #icon v-if="item.meta.icon">
             <component :is="item.meta.icon"></component>

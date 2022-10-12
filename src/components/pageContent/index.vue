@@ -16,19 +16,8 @@
     <template #body-handler="scope">
       <slot name="handler" :row="scope.row">
         <a-space>
-          <a-button
-            type="primary"
-            size="small"
-            @click="emit('edit', scope.row)"
-          >
-            编辑
-          </a-button>
-          <a-button
-            type="primary"
-            danger
-            size="small"
-            @click="emit('delete', scope.row)"
-          >
+          <a-button type="primary" size="small" @click="emit('edit', scope.row)"> 编辑 </a-button>
+          <a-button type="primary" danger size="small" @click="emit('delete', scope.row)">
             删除
           </a-button>
         </a-space>
@@ -36,11 +25,7 @@
     </template>
 
     <!-- 其他插槽 -->
-    <template
-      v-for="item in otherPropSlots"
-      :key="item.key"
-      #[`body-${item.slotName}`]="scope"
-    >
+    <template v-for="item in otherPropSlots" :key="item.key" #[`body-${item.slotName}`]="scope">
       <template v-if="item.slotName">
         <slot :name="`body-${item.slotName}`" :row="scope.row"></slot>
       </template>
@@ -88,12 +73,10 @@ export default defineComponent({
     // 获取其他的动态插槽名称
     let filterSlotNameList = props.contentTableConfig?.filterSlotNameList || [];
     filterSlotNameList = filterSlotNameList.concat(['handler']);
-    const otherPropSlots = props.contentTableConfig?.columns.filter(
-      (item: any) => {
-        if (filterSlotNameList.includes(item.slotName)) return false;
-        return item.slotName;
-      }
-    );
+    const otherPropSlots = props.contentTableConfig?.columns.filter((item: any) => {
+      if (filterSlotNameList.includes(item.slotName)) return false;
+      return item.slotName;
+    });
 
     getPageData();
 

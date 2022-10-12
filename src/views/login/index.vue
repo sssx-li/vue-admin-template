@@ -10,25 +10,14 @@
         autocomplete="off"
         @finish="onFinish"
       >
-        <a-form-item
-          name="username"
-          :rules="[{ required: true, message: '请输入用户名' }]"
-        >
+        <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名' }]">
           <a-input size="large" v-model:value="formState.username" />
         </a-form-item>
-        <a-form-item
-          name="password"
-          :rules="[{ required: true, message: '请输入密码' }]"
-        >
+        <a-form-item name="password" :rules="[{ required: true, message: '请输入密码' }]">
           <a-input-password size="large" v-model:value="formState.password" />
         </a-form-item>
         <a-form-item :wrapper-col="{ style: { width: '330px' } }">
-          <a-button
-            size="large"
-            type="primary"
-            html-type="submit"
-            class="login-btn"
-          >
+          <a-button size="large" type="primary" html-type="submit" class="login-btn">
             登录
           </a-button>
         </a-form-item>

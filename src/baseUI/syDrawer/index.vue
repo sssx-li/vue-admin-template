@@ -13,12 +13,7 @@
       </div>
       <div class="floor-container" v-if="showFooter">
         <a-button :disabled="loading" block @click="close"> 取消 </a-button>
-        <a-button
-          :loading="loading"
-          type="primary"
-          block
-          @click="emit('onSubmit')"
-        >
+        <a-button :loading="loading" type="primary" block @click="emit('onSubmit')">
           {{ loadingText }}
         </a-button>
       </div>

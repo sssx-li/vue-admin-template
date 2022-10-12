@@ -3,14 +3,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import { Modal } from 'ant-design-vue';
 import { createVNode } from 'vue';
 
-type ButtonType =
-  | 'link'
-  | 'default'
-  | 'primary'
-  | 'ghost'
-  | 'dashed'
-  | 'text'
-  | 'danger';
+type ButtonType = 'link' | 'default' | 'primary' | 'ghost' | 'dashed' | 'text' | 'danger';
 
 interface IModalConfirm {
   title?: string;

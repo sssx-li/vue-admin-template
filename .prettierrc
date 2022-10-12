@@ -3,7 +3,7 @@
   "stylelintIntegration": true,
   "useTabs": false,
   "tabWidth": 2,
-  "printWidth": 80,
+  "printWidth": 100,
   "singleQuote": true,
   "trailingComma": "none",
   "endOfLine": "auto"

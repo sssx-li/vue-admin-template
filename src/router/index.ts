@@ -12,15 +12,13 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/main',
     name: 'main',
-    component: () =>
-      import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
+    component: () => import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
     children: [mainStaticRoute]
   },
   {
     path: '/login',
     name: 'login',
-    component: () =>
-      import(/* webpackChunkName: "login" */ '@/views/login/index.vue')
+    component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue')
   },
   {
     path: '/:pathMatch(.*)',
