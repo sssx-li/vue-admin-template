@@ -24,18 +24,10 @@ export const contentTableConfig: ITableConfig<IColumnsConfig> = {
       align: 'center'
     },
     {
-      title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
-      slotName: 'createTime',
-      align: 'center',
-      width: '170px'
-    },
-    {
-      title: '更新时间',
-      dataIndex: 'updateTime',
-      key: 'updateTime',
-      slotName: 'updateTime',
+      title: '开始时间',
+      dataIndex: 'dateTime',
+      key: 'dateTime',
+      slotName: 'dateTime',
       align: 'center',
       width: '170px'
     },

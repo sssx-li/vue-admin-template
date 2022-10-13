@@ -1,5 +1,5 @@
 <template>
-  <SyCard class="eps-page-content">
+  <SyCard class="sy-page-content">
     <template #cardHeader>
       <div class="page-content-head">
         <div class="header-left">
@@ -86,7 +86,7 @@ export default defineComponent({
       type: String,
       default: 'officeID'
     },
-    curPageQuery: {
+    pageQuery: {
       type: Object,
       default: () => {}
     },
@@ -109,7 +109,7 @@ export default defineComponent({
       handleDelete,
       handleEdit,
       handleCreate
-    } = usePageContent(props.contentTableConfig as ITableConfig, props.curPageQuery);
+    } = usePageContent(props.contentTableConfig as ITableConfig, props.pageQuery);
 
     // 获取其他的动态插槽名称
     let filterSlotNameList = JSON.parse(

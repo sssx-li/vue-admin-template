@@ -8,10 +8,10 @@
     :okType="okType"
     :width="width"
     @onSubmit="onSubmit"
-    @close="close"
-    ref="dialogRef"
+    @onClose="onClose"
+    ref="syModalRef"
   >
-    <SyForm ref="formCompRef" v-bind="formConfig" v-model="formState" @onSubmit="onSubmit">
+    <SyForm ref="syFormRef" v-bind="formConfig" v-model="formState" :showFormFooter="false">
       <template #footer>
         <slot />
       </template>
@@ -33,7 +33,7 @@ import { defineComponent, ref } from 'vue';
 import { SyModal, SyForm } from '@/baseUI';
 
 export default defineComponent({
-  name: 'dialogForm',
+  name: 'modalForm',
   components: {
     SyModal,
     SyForm
@@ -58,12 +58,12 @@ export default defineComponent({
   },
   emits: ['update:visible', 'update:show', 'onSubmit', 'onClose'],
   setup(props, { emit, expose }) {
-    const dialogRef = ref();
+    const syModalRef = ref();
     const loading = ref(false);
     const defVisible = ref(props.visible);
     // 表单数据处理
     const formState = ref<any>({});
-    const formCompRef = ref<InstanceType<typeof SyForm>>();
+    const syFormRef = ref<InstanceType<typeof SyForm>>();
     // 初始化表单数据
     Object.assign(formState.value, { ...props.row });
     // other 类型插槽
@@ -72,14 +72,14 @@ export default defineComponent({
       return item.type === 'other';
     });
 
-    const close = () => {
+    const onClose = () => {
       formState.value = {};
       emit('update:visible', false);
       emit('update:show', false);
       emit('onClose');
     };
     const onSubmit = () => {
-      formCompRef.value
+      syFormRef.value
         ?.validate()
         .then(() => {
           loading.value = true;
@@ -88,13 +88,13 @@ export default defineComponent({
         .catch(() => {});
     };
 
-    const handleCloseDialog = () => {
+    const onCloseDialog = () => {
       loading.value = false;
-      dialogRef.value.close();
+      syModalRef.value.onClose();
     };
 
     expose({
-      handleCloseDialog
+      onCloseDialog
     });
 
     return {
@@ -102,12 +102,12 @@ export default defineComponent({
       loading,
       otherSloteNameList,
       formState,
-      dialogRef,
-      formCompRef,
+      syModalRef,
+      syFormRef,
       defVisible,
       onSubmit,
-      close,
-      handleCloseDialog
+      onClose,
+      onCloseDialog
     };
   }
 });

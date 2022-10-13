@@ -268,7 +268,7 @@ export default defineComponent({
 #### syForm 配置示例(具体使用请查看 components/drawerForm)
 
 ```js
-import { IForm } from '@/baseUI/epsForm/types';
+import { IForm } from '@/baseUI/syForm/types';
 import { credTypes, followStatus, sexList } from './index';
 
 const formConfig: IForm = {

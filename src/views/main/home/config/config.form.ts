@@ -6,6 +6,12 @@ export const formConfig: IForm = {
   wrapperCol: { span: 14 },
   formItems: [
     {
+      field: 'otherType',
+      type: 'other',
+      label: '标题',
+      defaultValue: '这是一个标题'
+    },
+    {
       field: 'name',
       type: 'input',
       label: '名称',
@@ -45,13 +51,29 @@ export const formConfig: IForm = {
       rules: [{ required: true, message: '请选择性别' }]
     },
     {
-      field: 'startTime',
+      field: 'dateTime',
       type: 'datepicker',
       label: '开始时间',
-      placeholder: '请输入年龄',
-      dateFormat: 'YYYY-MM-DD HH:mm:ss',
       showTime: true,
-      rules: [{ required: true, message: '请输入开始时间' }]
+      dateFormat: 'YYYY-MM-DD HH:mm:ss',
+      placeholder: '请选择开始时间'
+    },
+    {
+      field: 'monthTime',
+      type: 'monthpicker',
+      label: '月份',
+      placeholder: '请选择月份'
+    },
+    {
+      field: 'rangeTime',
+      type: 'rangepicker',
+      defaultValue: [],
+      label: '日期范围'
+    },
+    {
+      field: 'weekTime',
+      type: 'weekpicker',
+      label: '周'
     },
     {
       field: 'realonly',
@@ -73,13 +95,25 @@ export const formConfig: IForm = {
       label: '前置/后置',
       beforeContent: 'https://',
       afterContent: '.com',
-      defaultValue: 'epshelth'
+      defaultValue: 'syhelth'
     },
     {
       field: 'remark',
       type: 'textarea',
       label: '备注信息',
       placeholder: '请输入内容'
+    }
+  ]
+};
+
+export const searchFormConfig: IForm = {
+  layout: 'inline',
+  formItems: [
+    {
+      field: 'name',
+      type: 'input',
+      label: '姓名',
+      placeholder: '请输入姓名'
     }
   ]
 };

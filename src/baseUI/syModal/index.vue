@@ -42,7 +42,7 @@ export default defineComponent({
       default: true
     }
   },
-  emits: ['update:visible', 'close', 'onSubmit'],
+  emits: ['update:visible', 'onClose', 'onSubmit'],
   setup(props, { emit, expose }) {
     const defVisible = ref(false);
     watch(
@@ -57,10 +57,10 @@ export default defineComponent({
 
     const afterClose = () => {
       emit('update:visible', false);
-      emit('close');
+      emit('onClose');
     };
 
-    const close = () => {
+    const onClose = () => {
       defVisible.value = false;
     };
 
@@ -69,7 +69,7 @@ export default defineComponent({
     };
 
     expose({
-      close
+      onClose
     });
 
     return {

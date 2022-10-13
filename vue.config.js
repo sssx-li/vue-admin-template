@@ -31,7 +31,7 @@ module.exports = defineConfig({
         resolvers: [
           IconsResolver({
             componentPrefix: 'icon',
-            customCollections: ['custom']
+            customCollections: ['sy']
           }),
           AntDesignVueResolver()
         ]
@@ -40,7 +40,7 @@ module.exports = defineConfig({
         compiler: 'vue3',
         autoInstall: true,
         customCollections: {
-          custom: FileSystemIconLoader('src/assets/svgs', (svg) =>
+          sy: FileSystemIconLoader('src/assets/svgs', (svg) =>
             svg.replace(/^<svg /, '<svg fill="currentColor" ')
           )
         }

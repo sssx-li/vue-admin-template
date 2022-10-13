@@ -4,7 +4,7 @@
       <template #title>
         <span>密度</span>
       </template>
-      <icon-eps-line class="icon" />
+      <icon-sy-line class="icon" />
     </a-tooltip>
     <template #overlay>
       <a-menu :selectedKeys="selectedKeys">

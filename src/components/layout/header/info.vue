@@ -1,9 +1,7 @@
 <template>
   <a-dropdown class="info-container" :overlayStyle="{ width: '150px' }">
     <span class="avatar" @click="showUserInfo" @click.prevent>
-      <a-avatar
-        :src="userInfo.avatar || 'http://minio-test.epshealth.com:7070/uurm/_public/userPic/1'"
-      >
+      <a-avatar :src="userInfo.avatar">
         <template #icon><UserOutlined /></template>
       </a-avatar>
       <span class="user-name">{{ userInfo.username }}</span>

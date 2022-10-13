@@ -68,6 +68,7 @@ export default defineComponent({
   }
   .ant-layout-content {
     padding: 20px;
+    overflow-y: auto;
   }
 }
 </style>

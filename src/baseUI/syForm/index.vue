@@ -2,7 +2,6 @@
   <a-form
     :layout="layout"
     :autocomplete="autocomplete"
-    @finish="onSubmit"
     :model="formData"
     :wrapperCol="wrapperCol"
     :labelCol="labelCol"
@@ -50,7 +49,43 @@
             :show-time="item.showTime"
             :size="size"
             :disabled="item.disabled"
-            v-model:value="formData[item.field]"
+            v-model:value="dateValues[item.field]"
+            :readonly="item.readonly"
+            :placeholder="item.placeholder"
+            :format="item.dateFormat"
+            @change="(val, str) => handleValueChange(val, item, str)"
+          />
+        </template>
+        <template v-else-if="item.type === 'monthpicker'">
+          <a-month-picker
+            :show-time="item.showTime"
+            :size="size"
+            :disabled="item.disabled"
+            v-model:value="dateValues[item.field]"
+            :readonly="item.readonly"
+            :placeholder="item.placeholder"
+            :format="item.dateFormat"
+            @change="(val, str) => handleValueChange(val, item, str)"
+          />
+        </template>
+        <template v-else-if="item.type === 'rangepicker'">
+          <a-range-picker
+            :show-time="item.showTime"
+            :size="size"
+            :disabled="item.disabled"
+            v-model:value="dateValues[item.field]"
+            :readonly="item.readonly"
+            :placeholder="item.placeholder"
+            :format="item.dateFormat"
+            @change="(val, str) => handleValueChange(val, item, str)"
+          />
+        </template>
+        <template v-else-if="item.type === 'weekpicker'">
+          <a-week-picker
+            :show-time="item.showTime"
+            :size="size"
+            :disabled="item.disabled"
+            v-model:value="dateValues[item.field]"
             :readonly="item.readonly"
             :placeholder="item.placeholder"
             :format="item.dateFormat"
@@ -107,10 +142,10 @@
         </template>
       </a-form-item>
     </template>
-    <a-form-item :wrapperCol="footerWrapperCol">
+    <a-form-item :wrapperCol="footerWrapperCol" v-if="showFormFooter">
       <slot name="form-footer">
         <div class="form-btn">
-          <a-button>取消</a-button>
+          <a-button @click="onCancel">取消</a-button>
           <a-button type="primary" @click="onSubmit">确定</a-button>
         </div>
       </slot>
@@ -119,7 +154,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, PropType, watch } from 'vue';
+import { defineComponent, reactive, ref, PropType, watch, toRaw } from 'vue';
 
 import { useFormValidate } from '@/hooks/useFormValidate';
 import { IFormItem } from './types';
@@ -165,47 +200,52 @@ export default defineComponent({
       type: String,
       default: 'default'
     },
-    optionsObj: {
-      type: Object,
-      default: () => {}
+    showFormFooter: {
+      type: Boolean,
+      default: true
     }
   },
-  emits: ['update:modelValue', 'onSubmit'],
+  emits: ['update:modelValue', 'onSubmit', 'onCancel'],
   setup(props, { emit, expose }) {
     const formData = ref({});
     const formRef = ref();
+    const dateValues = reactive<any>({});
     watch(
       () => props.modelValue,
       (val) => {
-        const _val: any = JSON.parse(JSON.stringify(val));
+        formData.value = toRaw(val);
         // 对日期格式做处理
         for (let index = 0; index < props.formItems.length; index++) {
           const { type, field, dateFormat = 'YYYY-MM-DD', showTime } = props.formItems[index];
           if (!dateType.includes(type)) continue;
-          const dateValue: any = _val[field];
+          const dateValue: any = val[field];
           if (dateValue) {
             let startTime = '';
             let endTime = '';
             let week = null;
+            let formatValue: any = null;
             switch (type) {
               case 'datepicker':
+                formatValue = dayjs(dateValue, dateFormat);
+                break;
               case 'monthpicker':
-                _val[field] = dayjs(dateValue, dateFormat);
+                formatValue = dayjs(dateValue);
                 break;
               case 'rangepicker':
+                if (dateValue.length !== 2) break;
                 startTime = `${dateValue[0]}${!showTime && '00:00:00'}`;
                 endTime = `${dateValue[1]}${!showTime && '59:59:59'}`;
-                _val[field] = [dayjs(startTime, dateFormat), dayjs(endTime, dateFormat)];
+                formatValue = [dayjs(startTime, dateFormat), dayjs(endTime, dateFormat)];
                 break;
               case 'weekpicker':
                 dayjs.extend(weekOfYear);
                 week = parseInt(dateValue.split('-')[1]);
-                _val[field] = dayjs(dateValue.split('-')[0]).week(week);
+                formatValue = dayjs(dateValue.split('-')[0]).week(week);
                 break;
             }
+            dateValues[field] = formatValue;
           }
         }
-        formData.value = _val;
       },
       {
         immediate: true,
@@ -241,6 +281,10 @@ export default defineComponent({
         })
         .catch(() => {});
     };
+    const onCancel = () => {
+      emit('update:modelValue', {});
+      emit('onCancel');
+    };
     const handleValueChange = (event: any, item: any, other?: any) => {
       const { field, type } = item;
       let value: any = '';
@@ -251,6 +295,9 @@ export default defineComponent({
           value = event.target.value;
           break;
         case 'datepicker':
+        case 'monthpicker':
+        case 'rangepicker':
+        case 'weekpicker':
           value = other;
           break;
         case 'select':
@@ -272,8 +319,10 @@ export default defineComponent({
     });
     return {
       formRef,
+      dateValues,
       validate,
       validateInfos,
+      onCancel,
       onSubmit,
       formData,
       handleValueChange

@@ -12,7 +12,7 @@
         <slot />
       </div>
       <div class="floor-container" v-if="showFooter">
-        <a-button :disabled="loading" block @click="close"> 取消 </a-button>
+        <a-button :disabled="loading" block @click="onClose"> 取消 </a-button>
         <a-button :loading="loading" type="primary" block @click="emit('onSubmit')">
           {{ loadingText }}
         </a-button>
@@ -51,7 +51,7 @@ export default defineComponent({
       default: true
     }
   },
-  emits: ['onSubmit', 'update:visible', 'close'],
+  emits: ['update:visible', 'onSubmit', 'onClose'],
   setup(props, { emit, expose }) {
     const defVisible = ref(false);
     watch(
@@ -67,19 +67,19 @@ export default defineComponent({
     const afterVisibleChange = (bool: boolean) => {
       if (!bool) {
         emit('update:visible', false);
-        emit('close');
+        emit('onClose');
       }
     };
     const loadingText = computed(() => {
       return props.loading ? '提交中...' : '提交';
     });
 
-    const close = () => {
+    const onClose = () => {
       defVisible.value = false;
     };
 
     expose({
-      close
+      onClose
     });
 
     return {
@@ -88,7 +88,7 @@ export default defineComponent({
       loadingText,
       afterVisibleChange,
       emit,
-      close
+      onClose
     };
   }
 });

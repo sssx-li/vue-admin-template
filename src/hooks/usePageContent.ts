@@ -13,10 +13,10 @@ import { ITableConfig } from '@/baseUI/syTable/types';
  *    url: 请求地址
  *    columns: 表格数据
  *    showFooter: 是否分页
- * @param curPageQuery 当前页面请求参数(除pageNo、pageSize)
+ * @param pageQuery 当前页面请求参数
  *
  */
-function usePageContent(config: ITableConfig, curPageQuery: any = {}) {
+function usePageContent(config: ITableConfig, pageQuery: any = {}) {
   const { url, columns, showFooter } = config;
   const confirm = useConfirm();
 
@@ -50,13 +50,13 @@ function usePageContent(config: ITableConfig, curPageQuery: any = {}) {
   const getPageData = async (query?: any) => {
     query = query ?? {};
     let params: any = {
-      ...curPageQuery,
+      ...pageQuery,
       ...pageInfo,
       ...query
     };
     if (!showFooter) {
       params = {
-        ...curPageQuery,
+        ...pageQuery,
         ...query
       };
     }

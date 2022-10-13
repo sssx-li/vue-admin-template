@@ -3,11 +3,11 @@
     v-model:visible="defVisible"
     :title="title"
     :loading="loading"
-    @close="close"
+    @onClose="onClose"
     @onSubmit="onSubmit"
-    ref="drawerRef"
+    ref="syDrawerRef"
   >
-    <SyForm ref="formCompRef" v-bind="formConfig" v-model="formState" @onSubmit="onSubmit">
+    <SyForm ref="syFormRef" v-bind="formConfig" v-model="formState" :showFormFooter="false">
       <template #footer>
         <slot />
       </template>
@@ -47,14 +47,14 @@ export default defineComponent({
       default: () => {}
     }
   },
-  emits: ['onSubmit', 'update:visible', 'update:show', 'onClose'],
+  emits: ['update:visible', 'update:show', 'onSubmit', 'onClose'],
   setup(props, { emit, expose }) {
-    const drawerRef = ref();
+    const syDrawerRef = ref();
     const loading = ref(false);
     const defVisible = ref(props.visible);
     // 表单数据处理
     const formState = ref<any>({});
-    const formCompRef = ref<InstanceType<typeof SyForm>>();
+    const syFormRef = ref<InstanceType<typeof SyForm>>();
     // 初始化表单数据
     Object.assign(formState.value, { ...props.row });
     // other 类型插槽
@@ -63,14 +63,14 @@ export default defineComponent({
       return item.type === 'other';
     });
 
-    const close = () => {
+    const onClose = () => {
       formState.value = {};
       emit('update:visible', false);
       emit('update:show', false);
       emit('onClose');
     };
     const onSubmit = () => {
-      formCompRef.value
+      syFormRef.value
         ?.validate()
         .then(() => {
           loading.value = true;
@@ -78,13 +78,13 @@ export default defineComponent({
         })
         .catch(() => {});
     };
-    const handleCloseDrawer = () => {
+    const onCloseDialog = () => {
       loading.value = false;
-      drawerRef.value.close();
+      syDrawerRef.value.onClose();
     };
 
     expose({
-      handleCloseDrawer,
+      onCloseDialog,
       loading
     });
 
@@ -93,12 +93,12 @@ export default defineComponent({
       otherSloteNameList,
       loading,
       formState,
-      drawerRef,
-      formCompRef,
+      syDrawerRef,
+      syFormRef,
       defVisible,
       onSubmit,
-      close,
-      handleCloseDrawer
+      onClose,
+      onCloseDialog
     };
   }
 });

@@ -1,7 +1,9 @@
-import loginDataMoke from './datas/user';
+import loginData from './datas/user';
+import contentData from './datas/content';
 
 const mockData = {
-  ...loginDataMoke
+  ...loginData,
+  ...contentData
 };
 
 export default mockData;

@@ -142,6 +142,8 @@ export default defineComponent({
 }
 .field-list {
   width: 100%;
+  list-style: none;
+  padding-left: 0;
   li {
     line-height: 28px;
     .item-icon {
@@ -149,9 +151,6 @@ export default defineComponent({
       margin-right: 28px;
     }
   }
-  // .status {
-  //   background: #e6a23c;
-  // }
 }
 :deep(.ant-popover-inner-content) {
   padding: 5px;

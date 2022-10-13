@@ -44,6 +44,7 @@
     <div class="table-footer" v-if="showFooter">
       <a-pagination
         :page-num="page.pageNo"
+        :page-size="page.pageSize"
         :page-size-options="pageSizeOptions"
         show-quick-jumper
         show-size-changer
