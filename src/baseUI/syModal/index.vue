@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:visible="defVisible"
-    :title="title"
+    :title="defTitle"
     :okType="okType"
     :okText="okText"
     :width="width"
@@ -45,10 +45,12 @@ export default defineComponent({
   emits: ['update:visible', 'onClose', 'onSubmit'],
   setup(props, { emit, expose }) {
     const defVisible = ref(false);
+    const defTitle = ref(props.title);
     watch(
       () => props.visible,
       (val) => {
         defVisible.value = val;
+        defTitle.value = props.title;
       },
       {
         immediate: true
@@ -74,6 +76,7 @@ export default defineComponent({
 
     return {
       ...props,
+      defTitle,
       defVisible,
       handleOk,
       afterClose

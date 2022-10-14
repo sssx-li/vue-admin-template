@@ -1,7 +1,7 @@
 <template>
   <a-drawer
     v-model:visible="defVisible"
-    :title="title"
+    :title="defTitle"
     :width="drawerWidth"
     :destroyOnClose="destroyOnClose"
     @after-visible-change="afterVisibleChange"
@@ -54,10 +54,12 @@ export default defineComponent({
   emits: ['update:visible', 'onSubmit', 'onClose'],
   setup(props, { emit, expose }) {
     const defVisible = ref(false);
+    const defTitle = ref(props.title);
     watch(
       () => props.visible,
       (val) => {
         defVisible.value = val;
+        defTitle.value = props.title;
       },
       {
         immediate: true
@@ -86,6 +88,7 @@ export default defineComponent({
       ...props,
       defVisible,
       loadingText,
+      defTitle,
       afterVisibleChange,
       emit,
       onClose
