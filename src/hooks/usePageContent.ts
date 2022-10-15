@@ -65,6 +65,7 @@ function usePageContent(config: ITableConfig, pageQuery: any = {}) {
         url,
         params
       });
+      if (!res.data) return;
       const {
         data: { list, page }
       } = res;
