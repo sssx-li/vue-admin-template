@@ -23,7 +23,7 @@ module.exports = defineConfig({
     },
     plugins: [
       AutoImport({
-        dts: true,
+        dts: false,
         imports: [
           'vue',
           'vue-router',
@@ -38,7 +38,7 @@ module.exports = defineConfig({
           }
         ],
         eslintrc: {
-          enabled: true,
+          enabled: false,
           filepath: './.eslintrc-auto-import.json'
         }
       }),
