@@ -33,6 +33,7 @@ export interface IFormItem {
   afterContent?: any; // 输入框后置内容
   dateFormat?: string | []; // 日期格式(用于日期时间选择器)
   showTime?: boolean; // 是否增加时间选择功能
+  showCount?: boolean; // 是否显示文本域输入内容长度
 }
 
 export interface IForm {

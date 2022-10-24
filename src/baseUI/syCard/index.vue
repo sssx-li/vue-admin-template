@@ -11,26 +11,16 @@
   </a-card>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  name: 'syCard',
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    styles: {
-      type: Object,
-      default: () => ({
-        'border-radius': '6px',
-        'box-shadow': '0 1px 4px rgba(0, 21, 41, 0.08)'
-      })
-    }
-  },
-  setup() {
-    return {};
-  }
+<script setup lang="ts" name="syCard">
+interface Props {
+  title?: string;
+  styles?: object;
+}
+withDefaults(defineProps<Props>(), {
+  styles: () => ({
+    'border-radius': '6px',
+    'box-shadow': '0 1px 4px rgba(0, 21, 41, 0.08)'
+  })
 });
 </script>
 

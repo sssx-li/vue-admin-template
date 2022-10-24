@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:visible="defVisible"
-    :title="defTitle"
+    :title="title"
     :okType="okType"
     :okText="okText"
     :width="width"
@@ -16,72 +16,49 @@
   </a-modal>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
-
-export default defineComponent({
-  name: 'syModal',
-  props: {
-    title: String,
-    visible: Boolean,
-    footer: [String, Object],
-    okType: {
-      type: String,
-      default: 'primary'
-    },
-    okText: {
-      type: String,
-      default: '确定'
-    },
-    width: {
-      type: [String, Number],
-      default: '520px'
-    },
-    destroyOnClose: {
-      type: Boolean,
-      default: true
-    }
+<script setup lang="ts" name="syModal">
+interface Props {
+  title?: string;
+  visible?: boolean;
+  footer?: string | object;
+  okType?: string;
+  okText?: string;
+  width?: string | number;
+  destroyOnClose?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  okType: 'primary',
+  okText: '确定',
+  width: '520px',
+  destroyOnClose: true
+});
+const emit = defineEmits(['update:visible', 'onClose', 'onSubmit']);
+const defVisible = ref(false);
+watch(
+  () => props.visible,
+  (val) => {
+    defVisible.value = val as boolean;
   },
-  emits: ['update:visible', 'onClose', 'onSubmit'],
-  setup(props, { emit, expose }) {
-    const defVisible = ref(false);
-    const defTitle = ref(props.title);
-    watch(
-      () => props.visible,
-      (val) => {
-        defVisible.value = val;
-        defTitle.value = props.title;
-      },
-      {
-        immediate: true
-      }
-    );
-
-    const afterClose = () => {
-      emit('update:visible', false);
-      emit('onClose');
-    };
-
-    const onClose = () => {
-      defVisible.value = false;
-    };
-
-    const handleOk = () => {
-      emit('onSubmit');
-    };
-
-    expose({
-      onClose
-    });
-
-    return {
-      ...props,
-      defTitle,
-      defVisible,
-      handleOk,
-      afterClose
-    };
+  {
+    immediate: true
   }
+);
+
+const afterClose = () => {
+  emit('update:visible', false);
+  emit('onClose');
+};
+
+const onClose = () => {
+  defVisible.value = false;
+};
+
+const handleOk = () => {
+  emit('onSubmit');
+};
+
+defineExpose({
+  onClose
 });
 </script>
 

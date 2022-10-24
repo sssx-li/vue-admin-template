@@ -14,88 +14,58 @@
       <div class="floor-container" v-if="showFooter">
         <a-button :disabled="loading" block @click="onClose"> 取消 </a-button>
         <a-button :loading="loading" type="primary" block @click="emit('onSubmit')">
-          {{ loadingText }}
+          确定
         </a-button>
       </div>
     </div>
   </a-drawer>
 </template>
-<script lang="ts">
-import { defineComponent, ref, computed, watch } from 'vue';
 
-export default defineComponent({
-  name: 'syDrawer',
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    drawerWidth: {
-      type: String,
-      default: '520px'
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    visible: {
-      type: Boolean,
-      default: false
-    },
-    showFooter: {
-      type: Boolean,
-      default: true
-    },
-    destroyOnClose: {
-      type: Boolean,
-      default: true
-    }
+<script setup lang="ts" name="syDrawer">
+interface Props {
+  title?: string;
+  drawerWidth?: string;
+  loading?: boolean;
+  visible?: boolean;
+  showFooter?: boolean;
+  destroyOnClose?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  title: '',
+  drawerWidth: '520px',
+  loading: false,
+  visible: false,
+  showFooter: true,
+  destroyOnClose: true
+});
+const emit = defineEmits(['update:visible', 'onSubmit', 'onClose']);
+const defVisible = ref(false);
+const defTitle = ref(props.title);
+watch(
+  () => props.visible,
+  (val) => {
+    defVisible.value = val;
+    defTitle.value = props.title;
   },
-  emits: ['update:visible', 'onSubmit', 'onClose'],
-  setup(props, { emit, expose }) {
-    const defVisible = ref(false);
-    const defTitle = ref(props.title);
-    watch(
-      () => props.visible,
-      (val) => {
-        defVisible.value = val;
-        defTitle.value = props.title;
-      },
-      {
-        immediate: true
-      }
-    );
-
-    const afterVisibleChange = (bool: boolean) => {
-      if (!bool) {
-        emit('update:visible', false);
-        emit('onClose');
-      }
-    };
-    const loadingText = computed(() => {
-      return props.loading ? '提交中...' : '提交';
-    });
-
-    const onClose = () => {
-      defVisible.value = false;
-    };
-
-    expose({
-      onClose
-    });
-
-    return {
-      ...props,
-      defVisible,
-      loadingText,
-      defTitle,
-      afterVisibleChange,
-      emit,
-      onClose
-    };
+  {
+    immediate: true
   }
+);
+const afterVisibleChange = (bool: boolean) => {
+  if (!bool) {
+    emit('update:visible', false);
+    emit('onClose');
+  }
+};
+const onClose = () => {
+  defVisible.value = false;
+};
+
+defineExpose({
+  onClose
 });
 </script>
+
 <style lang="scss" scoped>
 .drawer-body {
   height: calc(100% - 50px);

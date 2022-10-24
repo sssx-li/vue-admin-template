@@ -3,39 +3,25 @@
     <div ref="echartDivRef" :style="{ width: width, height: height }"></div>
   </div>
 </template>
-<script lang="ts">
-import { ref, onMounted, watchEffect, PropType, defineComponent } from 'vue';
 
+<script setup lang="ts" name="syEchart">
 import { EChartsOption } from 'echarts';
 import { useEcharts } from '@/hooks/useEcharts';
-
-export default defineComponent({
-  name: 'syEchart',
-  props: {
-    options: {
-      type: Object as PropType<EChartsOption>
-    },
-    width: {
-      type: String,
-      default: '100%'
-    },
-    height: {
-      type: String,
-      default: '350px'
-    }
-  },
-  setup(props) {
-    const echartDivRef = ref<HTMLElement>();
-    onMounted(() => {
-      const { setOptions } = useEcharts(echartDivRef.value!);
-      watchEffect(() => {
-        setOptions(props.options!);
-      });
-    });
-    return {
-      echartDivRef
-    };
-  }
+interface Props {
+  options: EChartsOption;
+  width?: string;
+  height?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  width: '100%',
+  height: '350px'
+});
+const echartDivRef = ref<HTMLElement>();
+onMounted(() => {
+  const { setOptions } = useEcharts(echartDivRef.value!);
+  watchEffect(() => {
+    setOptions(props.options!);
+  });
 });
 </script>
 

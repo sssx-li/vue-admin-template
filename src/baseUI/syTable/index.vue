@@ -49,69 +49,43 @@
         show-quick-jumper
         show-size-changer
         :total="total"
-        :show-total="(total) => `共${total} 条`"
+        :show-total="(total:number) => `共${total} 条`"
         @change="handleSizeChange"
       />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({
-  name: 'syTable',
-  props: {
-    dataSource: {
-      type: Array,
-      required: true
-    },
-    columns: {
-      type: Array,
-      required: true
-    },
-    showFooter: {
-      type: Boolean,
-      default: false
-    },
-    page: {
-      type: Object,
-      default: () => ({
-        pageNo: 1,
-        pageSize: 10
-      })
-    },
-    total: {
-      type: Number,
-      default: 0
-    },
-    pageSizeOptions: {
-      type: Array,
-      default: () => ['5', '10', '20', '30', '40', '50']
-    },
-    bordered: {
-      type: Boolean,
-      default: false
-    },
-    scroll: {
-      type: Object,
-      default: () => ({ x: 600 })
-    },
-    rowClassName: Function,
-    size: {
-      type: String,
-      default: 'middle'
-    }
-  },
-  emits: ['handleSizeChange'],
-  setup(props, { emit }) {
-    const handleSizeChange = (pageNo: number, pageSize: number) => {
-      emit('handleSizeChange', { pageNo, pageSize });
-    };
-    return {
-      handleSizeChange
-    };
-  }
+<script setup lang="ts" name="syTable">
+import { IColumnsConfig } from './types';
+interface Props {
+  dataSource: any[];
+  columns: IColumnsConfig[] | any[];
+  showFooter?: boolean;
+  page?: { pageNo: number; pageSize: number };
+  total?: number;
+  pageSizeOptions?: string[];
+  bordered?: boolean;
+  scroll?: object;
+  rowClassName?: any;
+  size?: string;
+}
+withDefaults(defineProps<Props>(), {
+  showFooter: false,
+  page: () => ({
+    pageNo: 1,
+    pageSize: 10
+  }),
+  total: 0,
+  pageSizeOptions: () => ['5', '10', '20', '30', '40', '50'],
+  bordered: false,
+  scroll: () => ({ x: 600 }),
+  size: 'middle'
 });
+const emit = defineEmits(['handleSizeChange']);
+const handleSizeChange = (pageNo: number, pageSize: number) => {
+  emit('handleSizeChange', { pageNo, pageSize });
+};
 </script>
 
 <style lang="scss" scoped>

@@ -20,18 +20,11 @@
   </a-sub-menu>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'subMenu',
-  props: {
-    route: {
-      type: Object,
-      required: true
-    }
-  }
-});
+<script setup lang="ts" name="subMenu">
+interface Props {
+  route: any;
+}
+defineProps<Props>();
 </script>
 
 <style lang="scss" scoped></style>

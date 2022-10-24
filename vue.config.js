@@ -12,8 +12,6 @@ const IconsResolver = require('unplugin-icons/resolver');
 // 读取自定义svg文件
 const { FileSystemIconLoader } = require('unplugin-icons/loaders');
 
-const DefineOptions = require('unplugin-vue-define-options/webpack');
-
 module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: '/',
@@ -64,8 +62,7 @@ module.exports = defineConfig({
             svg.replace(/^<svg /, '<svg fill="currentColor" ')
           )
         }
-      }),
-      DefineOptions()
+      })
     ],
     devServer: {
       proxy: {

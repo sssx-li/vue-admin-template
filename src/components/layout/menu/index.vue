@@ -21,54 +21,37 @@
   </a-menu>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue';
+<script setup lang="ts" name="navMenu">
 import { useStore } from '@/store';
-import { useRoute, useRouter } from 'vue-router';
 import SubMenu from './subMenu.vue';
 
-export default defineComponent({
-  name: 'navMenu',
-  components: {
-    'sub-menu': SubMenu
-  },
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const store = useStore();
-    const menuInfo = computed(() => store.state.user.userMenus);
-    const openKeys = ref<any[]>([]);
-    const selectedKeys = ref<any[]>([]);
-    watch(
-      () => route.path,
-      (path) => {
-        selectedKeys.value = [route.path];
-        const keyList: any = path.slice(1).split('/');
-        if (keyList.length === 1) return [''];
-        for (let index = 0; index < path.length; index++) {
-          if (index !== 0 && path[index] === '/') {
-            openKeys.value.push(path.substr(0, index));
-          }
-        }
-        openKeys.value.shift();
-      },
-      {
-        immediate: true
+const route = useRoute();
+const router = useRouter();
+const store = useStore();
+const menuInfo = computed(() => store.state.user.userMenus);
+const openKeys = ref<any[]>([]);
+const selectedKeys = ref<any[]>([]);
+watch(
+  () => route.path,
+  (path) => {
+    selectedKeys.value = [route.path];
+    const keyList: any = path.slice(1).split('/');
+    if (keyList.length === 1) return [''];
+    for (let index = 0; index < path.length; index++) {
+      if (index !== 0 && path[index] === '/') {
+        openKeys.value.push(path.substr(0, index));
       }
-    );
-    const handleClick = (e: Event) => {
-      const path = (e as any).key;
-      router.push({ path });
-    };
-
-    return {
-      selectedKeys,
-      openKeys,
-      menuInfo,
-      handleClick
-    };
+    }
+    openKeys.value.shift();
+  },
+  {
+    immediate: true
   }
-});
+);
+const handleClick = (e: Event) => {
+  const path = (e as any).key;
+  router.push({ path });
+};
 </script>
 
 <style lang="scss" scoped></style>
