@@ -1,16 +1,7 @@
 <template>
-  <div class="about-secound-container">about-secound</div>
+  <div class="about-container">aboutSecound</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'aboutSecoundView',
-  setup() {
-    return {};
-  }
-});
-</script>
+<script lang="ts" name="aboutSecound"></script>
 
 <style lang="scss" scoped></style>

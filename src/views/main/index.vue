@@ -4,19 +4,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-  name: 'mainView',
-  components: {},
-  setup() {
-    const isCollapse = ref(false);
-    return {
-      isCollapse
-    };
-  }
-});
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 .main-container {

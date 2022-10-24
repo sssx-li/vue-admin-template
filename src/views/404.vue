@@ -5,16 +5,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'noFoundView',
-  setup() {
-    return {};
-  }
-});
-</script>
+<script setup lang="ts" name="noFound"></script>
 
 <style lang="scss" scoped>
 .no-found {

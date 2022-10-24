@@ -1,30 +1,21 @@
 <template>
   <div class="login-container">
-    <button @click="hancleClick">login</button>
+    <button @click="handleLogin">login</button>
   </div>
 </template>
 
-<script lang="ts">
-import { useStore } from '@/store';
-import { defineComponent, reactive } from 'vue';
+<script setup lang="ts" name="loginView">
+import { useUserStore } from '@/store/user';
+import { IAccount } from '@/service/types/user';
 
-export default defineComponent({
-  name: 'loginView',
-  setup() {
-    const store = useStore();
-    const loginForm = reactive({
-      username: 'admin',
-      password: 'admin'
-    });
-    // --- 方法 ---
-    const hancleClick = () => {
-      store.dispatch('user/loginAction', { ...loginForm });
-    };
-    return {
-      hancleClick
-    };
-  }
+const store = useUserStore();
+const loginForm = ref<IAccount>({
+  username: '',
+  password: ''
 });
+const handleLogin = async () => {
+  await store.loginAction(loginForm.value);
+};
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,8 +1,10 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
-import type { RequestConfig, RequestInterceptors } from './types';
 
-class Request {
+import type { RequestConfig, RequestInterceptors } from '@/service/types/axios';
+import { IDataModel } from '@/service/types/axios';
+
+class IRequest {
   instance: AxiosInstance;
   interceptors?: RequestInterceptors;
 
@@ -39,7 +41,7 @@ class Request {
     );
   }
   // 单个请求添加拦截器
-  request<T>(config: RequestConfig<T>): Promise<T> {
+  request<T = IDataModel>(config: RequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // 1.单个请求对请求config的处理
       if (config.interceptors?.requestInterceptor) {
@@ -60,32 +62,31 @@ class Request {
         });
     });
   }
-  get<T>(config: RequestConfig<T>): Promise<T> {
+  get<T = IDataModel>(config: RequestConfig<T>): Promise<T> {
     return this.request<T>({
       ...config,
       method: 'GET'
     });
   }
-  post<T>(config: RequestConfig<T>): Promise<T> {
-    console.log('config', config);
+  post<T = IDataModel>(config: RequestConfig<T>): Promise<T> {
     return this.request<T>({
       ...config,
       method: 'POST'
     });
   }
-  put<T>(config: RequestConfig<T>): Promise<T> {
+  put<T = IDataModel>(config: RequestConfig<T>): Promise<T> {
     return this.request<T>({
       ...config,
       method: 'PUT'
     });
   }
-  patch<T>(config: RequestConfig<T>): Promise<T> {
+  patch<T = IDataModel>(config: RequestConfig<T>): Promise<T> {
     return this.request<T>({
       ...config,
       method: 'PATCH'
     });
   }
-  delete<T>(config: RequestConfig<T>): Promise<T> {
+  delete<T = IDataModel>(config: RequestConfig<T>): Promise<T> {
     return this.request<T>({
       ...config,
       method: 'DELETE'
@@ -93,4 +94,4 @@ class Request {
   }
 }
 
-export default Request;
+export default IRequest;

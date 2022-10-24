@@ -8,11 +8,11 @@
  *
  * Copyright (c) 2022 by lizhiquan 842048365@qq.com, All Rights Reserved.
  */
-import { App } from 'vue';
-// import registerElement from './registerIcon';
-import registerProperties from './registerProperties';
+import type { App } from 'vue';
+import properties from './properties';
+import directives from './directives';
 
 export function globalRegister(app: App): void {
-  // app.use(registerElement);
-  app.use(registerProperties);
+  app.use(properties);
+  app.use(directives);
 }
