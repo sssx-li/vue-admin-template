@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <h2>Home</h2>
-    <icon-custom-logo width="30px" height="30px" />
+    <icon-sy-logo width="30px" height="30px" />
     <icon-ph-alien />
     <icon-ph-anchor-bold />
     <icon-mdi-account-plus />
