@@ -1,12 +1,5 @@
 import { App } from 'vue';
-import {
-  Avatar,
-  CircleClose,
-  HomeFilled,
-  Menu,
-  Tools,
-  Promotion
-} from '@element-plus/icons-vue';
+import { Avatar, CircleClose, HomeFilled, Menu, Tools, Promotion } from '@element-plus/icons-vue';
 
 const components = [Avatar, CircleClose, HomeFilled, Menu, Tools, Promotion];
 

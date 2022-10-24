@@ -17,12 +17,7 @@
         </el-form-item>
       </el-form>
       <div class="login-footer">
-        <el-button
-          type="primary"
-          class="login-btn"
-          size="large"
-          @click="loginAction"
-        >
+        <el-button type="primary" class="login-btn" size="large" @click="loginAction">
           立即登录
         </el-button>
       </div>

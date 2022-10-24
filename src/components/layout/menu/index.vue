@@ -9,9 +9,7 @@
     <template v-for="menu in menuList" :key="menu.path">
       <el-menu-item
         :index="menu.path"
-        v-if="
-          !menu.meta.isHidden && (!menu.children || menu.children.length === 0)
-        "
+        v-if="!menu.meta.isHidden && (!menu.children || menu.children.length === 0)"
         @click="handleClickMenu(menu)"
       >
         <el-icon v-if="menu.meta.icon">
