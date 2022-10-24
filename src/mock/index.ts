@@ -16,13 +16,7 @@ function mock(ax: AxiosInstance) {
           typeof (mockData as any)[key] === 'function'
             ? (mockData as any)[key](config.data || config.params)
             : (mockData as any)[key];
-        console.log(
-          '**mock**',
-          method,
-          pathname,
-          config.data || config.params,
-          res
-        );
+        console.log('**mock**', method, pathname, config.data || config.params, res);
         return [200, res];
       });
       return mo;
