@@ -11,7 +11,7 @@
       <template #footer>
         <slot />
       </template>
-      <!-- other 类型插槽 -->
+      <!-- other 类型插槽,主要用于文本、图片类型渲染，不涉及交互 -->
       <template
         v-for="item in otherSloteNameList"
         :key="item.field"
@@ -23,84 +23,57 @@
   </SyDrawer>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
+<script setup lang="ts" name="drawerForm">
 import { SyDrawer, SyForm } from '@/baseUI';
+import { IForm } from '@/baseUI/syForm/types';
 
-export default defineComponent({
-  name: 'drawerForm',
-  components: {
-    SyDrawer,
-    SyForm
-  },
-  props: {
-    title: String,
-    visible: Boolean,
-    show: Boolean,
-    formConfig: {
-      type: Object,
-      required: true
-    },
-    row: {
-      type: Object,
-      default: () => {}
-    }
-  },
-  emits: ['update:visible', 'update:show', 'onSubmit', 'onClose'],
-  setup(props, { emit, expose }) {
-    const syDrawerRef = ref();
-    const loading = ref(false);
-    const defVisible = ref(props.visible);
-    // 表单数据处理
-    const formState = ref<any>({});
-    const syFormRef = ref<InstanceType<typeof SyForm>>();
-    // 初始化表单数据
-    Object.assign(formState.value, { ...props.row });
-    // other 类型插槽
-    let otherSloteNameList = JSON.parse(JSON.stringify(props.formConfig.formItems || []));
-    otherSloteNameList = props.formConfig.formItems.filter((item: any) => {
-      return item.type === 'other';
-    });
+interface Props {
+  title?: string;
+  visible?: boolean;
+  show?: boolean;
+  formConfig: IForm;
+  row?: object | any;
+}
+const props = withDefaults(defineProps<Props>(), { row: () => ({}) });
+const emit = defineEmits(['update:visible', 'update:show', 'onSubmit', 'onClose']);
 
-    const onClose = () => {
-      formState.value = {};
-      emit('update:visible', false);
-      emit('update:show', false);
-      emit('onClose');
-    };
-    const onSubmit = () => {
-      syFormRef.value
-        ?.validate()
-        .then(() => {
-          loading.value = true;
-          emit('onSubmit', formState.value);
-        })
-        .catch(() => {});
-    };
-    const onCloseDialog = () => {
-      loading.value = false;
-      syDrawerRef.value.onClose();
-    };
+const syDrawerRef = ref();
+const loading = ref(false);
+const defVisible = ref(props.visible);
+// 表单数据处理
+const formState = ref<any>({});
+const syFormRef = ref<InstanceType<typeof SyForm>>();
+// 初始化表单数据
+Object.assign(formState.value, { ...props.row });
+// other 类型插槽
+let otherSloteNameList = JSON.parse(JSON.stringify(props.formConfig.formItems || []));
+otherSloteNameList = props.formConfig.formItems.filter((item: any) => {
+  return item.type === 'other';
+});
 
-    expose({
-      onCloseDialog,
-      loading
-    });
+const onClose = () => {
+  formState.value = {};
+  emit('update:visible', false);
+  emit('update:show', false);
+  emit('onClose');
+};
+const onSubmit = () => {
+  syFormRef.value
+    ?.validate()
+    .then(() => {
+      loading.value = true;
+      emit('onSubmit', formState.value);
+    })
+    .catch(() => {});
+};
+const onCloseDialog = () => {
+  loading.value = false;
+  syDrawerRef.value.onClose();
+};
 
-    return {
-      ...props,
-      otherSloteNameList,
-      loading,
-      formState,
-      syDrawerRef,
-      syFormRef,
-      defVisible,
-      onSubmit,
-      onClose,
-      onCloseDialog
-    };
-  }
+defineExpose({
+  onCloseDialog,
+  loading
 });
 </script>
 

@@ -60,92 +60,56 @@
   </SyCard>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
+<script setup lang="ts" name="pageContent">
 import { SyTable, SyCard } from '@/baseUI';
 import FieldOrder from '@/components/fieldOrder/index.vue';
 import RowDensity from '@/components/rowDensity/index.vue';
-
-import { usePageContent } from '@/hooks/usePageContent';
 import { ITableConfig } from '@/baseUI/syTable/types';
-export default defineComponent({
-  name: 'pageContent',
-  components: {
-    SyCard,
-    SyTable,
-    FieldOrder,
-    RowDensity
-  },
-  props: {
-    contentTableConfig: {
-      type: Object,
-      require: true
-    },
-    idName: {
-      type: String,
-      default: 'officeID'
-    },
-    pageQuery: {
-      type: Object,
-      default: () => {}
-    },
-    showRightIconsUtil: {
-      type: Boolean,
-      default: true
-    },
-    title: String
-  },
-  emits: ['onHandleEdit'],
-  setup(props, { expose, emit }) {
-    const {
-      pageInfo,
-      dataSource,
-      total,
-      tableState,
-      getPageData,
-      refresh,
-      handleSizeChange,
-      handleDelete,
-      handleEdit,
-      handleCreate
-    } = usePageContent(props.contentTableConfig as ITableConfig, props.pageQuery);
 
-    // 获取其他的动态插槽名称
-    let filterSlotNameList = JSON.parse(
-      JSON.stringify(props.contentTableConfig?.filterSlotNameList || [])
-    );
-    filterSlotNameList = filterSlotNameList.concat(['handler']);
-    const otherPropSlots = props.contentTableConfig?.columns.filter((item: any) => {
-      if (filterSlotNameList.includes(item.slotName)) return false;
-      return item.slotName;
-    });
+interface Props {
+  contentTableConfig: ITableConfig;
+  idName?: string;
+  pageQuery?: object;
+  showRightIconsUtil?: boolean;
+  title?: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  pageQuery: () => ({}),
+  showRightIconsUtil: true
+});
+const emit = defineEmits(['onHandleEdit']);
 
-    getPageData();
+const {
+  pageInfo,
+  dataSource,
+  total,
+  tableState,
+  getPageData,
+  refresh,
+  handleSizeChange,
+  handleDelete,
+  handleEdit,
+  handleCreate
+} = usePageContent(props.contentTableConfig as ITableConfig, props.pageQuery);
 
-    expose({
-      getPageData,
-      refresh,
-      handleEdit,
-      handleDelete,
-      handleCreate
-    });
+// 获取其他的动态插槽名称
+let filterSlotNameList = JSON.parse(
+  JSON.stringify(props.contentTableConfig?.filterSlotNameList || [])
+);
+filterSlotNameList = filterSlotNameList.concat(['handler']);
+const otherPropSlots = props.contentTableConfig?.columns.filter((item: any) => {
+  if (filterSlotNameList.includes(item.slotName)) return false;
+  return item.slotName;
+});
 
-    return {
-      tableState,
-      dataSource,
-      total,
-      otherPropSlots,
-      pageInfo,
-      emit,
-      getPageData,
-      handleSizeChange,
-      handleDelete,
-      handleEdit,
-      handleCreate,
-      refresh
-    };
-  }
+getPageData();
+
+defineExpose({
+  getPageData,
+  refresh,
+  handleEdit,
+  handleDelete,
+  handleCreate
 });
 </script>
 

@@ -2,7 +2,7 @@ import Request from '@/service';
 
 import { IAccount, ILoginResult } from './types';
 import { IDataModel } from '../types';
-import localCache from '@/utils/catch';
+import localCache from '@/utils/localCache';
 import { User } from '@/service/api';
 import { tokenKey } from '@/common';
 

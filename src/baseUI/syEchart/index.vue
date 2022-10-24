@@ -6,7 +6,7 @@
 
 <script setup lang="ts" name="syEchart">
 import { EChartsOption } from 'echarts';
-import { useEcharts } from '@/hooks/useEcharts';
+
 interface Props {
   options: EChartsOption;
   width?: string;

@@ -1,6 +1,6 @@
 import { message } from 'ant-design-vue';
 
-function useMessage() {
+export default function useMessage() {
   const success = (msg: string, duration?: number) => {
     message.success(msg, duration);
   };
@@ -24,5 +24,3 @@ function useMessage() {
     loading
   };
 }
-
-export { useMessage };

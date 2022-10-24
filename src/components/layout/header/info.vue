@@ -1,6 +1,6 @@
 <template>
   <a-dropdown class="info-container" :overlayStyle="{ width: '150px' }">
-    <span class="avatar" @click="showUserInfo" @click.prevent>
+    <span class="avatar" @click.prevent>
       <a-avatar :src="userInfo.avatar">
         <template #icon><UserOutlined /></template>
       </a-avatar>
@@ -16,41 +16,27 @@
   </a-dropdown>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue';
-import { message } from 'ant-design-vue';
-
-import localCache from '@/utils/catch';
-import { useConfirm } from '@/hooks/useConfirm';
+<script setup lang="ts">
+import localCache from '@/utils/localCache';
 import { useStore } from '@/store';
 
-export default defineComponent({
-  name: 'infoComp',
-  setup() {
-    const store = useStore();
-    const confirm = useConfirm();
-    const userInfo = computed(() => store.state.user.userInfo);
-
-    const onClick = (obj: any) => {
-      const { key } = obj;
-      if (key === 'logout') {
-        confirm({ content: '确定要退出登录吗' })
-          .then(() => {
-            localCache.clearCache();
-            window.location.reload();
-          })
-          .catch(() => {});
-      } else if (key === 'userInfo') {
-        message.info('个人信息');
-      }
-    };
-
-    return {
-      userInfo,
-      onClick
-    };
+const store = useStore();
+const confirm = useConfirm();
+const { info } = useMessage();
+const userInfo = computed(() => store.state.user.userInfo);
+const onClick = (obj: any) => {
+  const { key } = obj;
+  if (key === 'logout') {
+    confirm({ content: '确定要退出登录吗' })
+      .then(() => {
+        localCache.clearCache();
+        window.location.reload();
+      })
+      .catch(() => {});
+  } else if (key === 'userInfo') {
+    info('个人信息');
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>

@@ -2,7 +2,7 @@ import { ref, reactive, watch } from 'vue';
 import Request from '@/service';
 import { message } from 'ant-design-vue';
 
-import { IConfirm, useConfirm } from './useConfirm';
+import { IConfirm } from './useConfirm';
 
 import { IDataModel, ITableList } from '@/service/api/types';
 import { ITableConfig } from '@/baseUI/syTable/types';
@@ -16,7 +16,7 @@ import { ITableConfig } from '@/baseUI/syTable/types';
  * @param pageQuery 当前页面请求参数
  *
  */
-function usePageContent(config: ITableConfig, pageQuery: any = {}) {
+export default function usePageContent(config: ITableConfig, pageQuery: any = {}) {
   const { url, columns, showFooter } = config;
   const confirm = useConfirm();
 
@@ -147,5 +147,3 @@ function usePageContent(config: ITableConfig, pageQuery: any = {}) {
     handleEdit
   };
 }
-
-export { usePageContent };

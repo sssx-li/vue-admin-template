@@ -8,38 +8,23 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+<script setup lang="ts" name="layoutHeader">
 import Info from './info.vue';
-export default defineComponent({
-  name: 'headerComp',
-  components: {
-    Info
-  },
-  props: {
-    collapsed: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: ['update:collapsed'],
-  setup(props, { emit }) {
-    const isCollapsed = ref(props.collapsed);
-    watch(
-      () => props.collapsed,
-      (val) => {
-        isCollapsed.value = val;
-      }
-    );
-    const changeCollapsed = () => {
-      emit('update:collapsed', !isCollapsed.value);
-    };
-    return {
-      isCollapsed,
-      changeCollapsed
-    };
-  }
+
+const props = defineProps({
+  collapsed: Boolean
 });
+const emit = defineEmits(['update:collapsed']);
+const isCollapsed = ref(props.collapsed);
+watch(
+  () => props.collapsed,
+  (val) => {
+    isCollapsed.value = val;
+  }
+);
+const changeCollapsed = () => {
+  emit('update:collapsed', !isCollapsed.value);
+};
 </script>
 
 <style lang="scss" scoped>

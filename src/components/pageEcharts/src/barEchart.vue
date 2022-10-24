@@ -4,50 +4,34 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts" name="barEchart">
+import type { XAXisComponentOption, YAXisComponentOption, EChartsOption } from 'echarts';
 import { SyEchart } from '@/baseUI';
 
-import { defineComponent, PropType } from 'vue';
+const props = defineProps<{
+  xAxis: XAXisComponentOption | XAXisComponentOption[];
+  yAxis: YAXisComponentOption | YAXisComponentOption[];
+}>();
 
-export default defineComponent({
-  name: 'barEchartComp',
-  components: {
-    SyEchart
+const options = {
+  xAxis: {
+    type: 'category',
+    data: props.xAxis
   },
-  props: {
-    xAxis: {
-      type: Array as PropType<string[]>,
-      required: true
-    },
-    yAxis: {
-      type: Array as PropType<any[]>
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: [120, 200, 150, 80, 70, 110, 130],
+      type: 'bar',
+      showBackground: true,
+      backgroundStyle: {
+        color: 'rgba(180, 180, 180, 0.2)'
+      }
     }
-  },
-  setup(props) {
-    const options = {
-      xAxis: {
-        type: 'category',
-        data: props.xAxis
-      },
-      yAxis: {
-        type: 'value'
-      },
-      series: [
-        {
-          data: [120, 200, 150, 80, 70, 110, 130],
-          type: 'bar',
-          showBackground: true,
-          backgroundStyle: {
-            color: 'rgba(180, 180, 180, 0.2)'
-          }
-        }
-      ]
-    };
-    return {
-      options
-    };
-  }
-});
+  ]
+} as EChartsOption;
 </script>
 
 <style lang="scss" scoped></style>

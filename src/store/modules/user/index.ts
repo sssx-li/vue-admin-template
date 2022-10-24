@@ -2,7 +2,7 @@ import { Module } from 'vuex';
 import { message } from 'ant-design-vue';
 
 import router from '@/router';
-import localCache from '@/utils/catch';
+import localCache from '@/utils/localCache';
 import { IUserState } from './types';
 import { IRootState } from '@/store/types';
 import { getUserInfo, login, getUserMenu } from '@/service/api/user';

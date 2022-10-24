@@ -14,14 +14,14 @@
     <template #content>
       <ul class="field-list">
         <li
-          v-for="(item, index) in copyColumns"
+          v-for="(item, index) in state.copyColumns"
           draggable="true"
           @dragstart="dragStart($event, index)"
           @dragenter="dragenter($event, index)"
-          @dragover.prevent="dragover($event, index)"
+          @dragover.prevent="dragover($event)"
           @dragend="dragend($event, index)"
           :class="{
-            status: dropStatus && dropIndex === index
+            status: state.dropStatus && state.dropIndex === index
           }"
           :key="item.dataIndex"
         >
@@ -39,96 +39,77 @@
     </a-tooltip>
   </a-popover>
 </template>
-<script>
-import { defineComponent, toRaw, reactive, ref, toRefs } from 'vue';
-/* eslint-disable */
-export default defineComponent({
-  name: 'fieldOrder',
-  props: {
-    columns: {
-      type: Array,
-      default: () => []
-    }
-  },
-  setup(props, { emit }) {
-    const allChecked = ref(true);
-    const visible = ref(false);
-    const initColumns = JSON.parse(JSON.stringify(props.columns));
-    const state = reactive({
-      dropIndex: -1,
-      dropStatus: false, // 拖拽状态
-      copyColumns: toRaw(props.columns).map((v) => {
-        const temp = Object.assign({}, v);
-        temp.isChecked = true;
-        return temp;
-      })
-    });
 
-    // 1. 开始拖元素触发，作用于拖拽元素
-    const dragStart = (ev, index) => {
-      state.dropIndex = index;
-      state.dropStatus = true;
-    };
-    // 2. 元素拖进可drop元素（绑定drop事件的元素）时触发，作用于目标元素
-    const dragenter = (ev, index) => {
-      const column = state.copyColumns[state.dropIndex];
-      state.copyColumns.splice(state.dropIndex, 1);
-      state.copyColumns.splice(index, 0, column);
-      state.dropIndex = index;
-      const tempArr = state.copyColumns
-        .filter((v) => v.isChecked)
-        .map((v) => {
-          const temp = Object.assign({}, v);
-          delete temp.isChecked;
-          return temp;
-        });
-      emit('changeColumns', tempArr);
-    };
-    // 3. 当元素拖动到drop元素上时触发，作用于目标元素
-    const dragover = (ev) => {
-      ev.preventDefault();
-    };
-    // 4. 放开拖动元素时触发，作用于目标元素
-    const dragend = (ev, index) => {
-      state.dropStatus = false;
-    };
-    const changeChecked = () => {
-      allChecked.value = !state.copyColumns.some((v) => !v.isChecked);
-      const tempArr = state.copyColumns
-        .filter((v) => v.isChecked)
-        .map((v) => {
-          const temp = Object.assign({}, v);
-          delete temp.isChecked;
-          return temp;
-        });
-      emit('changeColumns', tempArr.length ? tempArr : [{ title: '', dataIndex: 'empty' }]);
-    };
-    const clickCheckedAll = () => {
-      state.copyColumns.forEach((v) => {
-        v.isChecked = allChecked.value;
-      });
-      changeChecked();
-    };
-    const handleReset = () => {
-      allChecked.value = true;
-      state.copyColumns = initColumns.map((item) => ({ ...item, isChecked: true }));
-      clickCheckedAll();
-    };
-    return {
-      ...toRefs(state),
-      allChecked,
-      visible,
-      handleReset,
-      dragStart,
-      dragenter,
-      dragover,
-      dragend,
-      changeChecked,
-      clickCheckedAll
-    };
-  }
+<script setup lang="ts" name="fieldOrder">
+/* eslint-disable */
+const props = defineProps<{ columns: any[] }>();
+const emit = defineEmits(['changeColumns']);
+
+const allChecked = ref(true);
+const visible = ref(false);
+const initColumns = JSON.parse(JSON.stringify(props.columns));
+const state = reactive({
+  dropIndex: -1,
+  dropStatus: false, // 拖拽状态
+  copyColumns: toRaw(props.columns).map((v) => {
+    const temp: any = Object.assign({}, v);
+    temp.isChecked = true;
+    return temp;
+  })
 });
+
+// 1. 开始拖元素触发，作用于拖拽元素
+const dragStart = (ev: DragEvent, index: number) => {
+  state.dropIndex = index;
+  state.dropStatus = true;
+};
+// 2. 元素拖进可drop元素（绑定drop事件的元素）时触发，作用于目标元素
+const dragenter = (ev: DragEvent, index: number) => {
+  const column = state.copyColumns[state.dropIndex];
+  state.copyColumns.splice(state.dropIndex, 1);
+  state.copyColumns.splice(index, 0, column);
+  state.dropIndex = index;
+  const tempArr = state.copyColumns
+    .filter((v) => v.isChecked)
+    .map((v) => {
+      const temp = Object.assign({}, v);
+      delete temp.isChecked;
+      return temp;
+    });
+  emit('changeColumns', tempArr);
+};
+// 3. 当元素拖动到drop元素上时触发，作用于目标元素
+const dragover = (ev: DragEvent) => {
+  ev.preventDefault();
+};
+// 4. 放开拖动元素时触发，作用于目标元素
+const dragend = (ev: DragEvent, index: number) => {
+  state.dropStatus = false;
+};
+const changeChecked = () => {
+  allChecked.value = !state.copyColumns.some((v) => !v.isChecked);
+  const tempArr = state.copyColumns
+    .filter((v) => v.isChecked)
+    .map((v) => {
+      const temp = Object.assign({}, v);
+      delete temp.isChecked;
+      return temp;
+    });
+  emit('changeColumns', tempArr.length ? tempArr : [{ title: '', dataIndex: 'empty' }]);
+};
+const clickCheckedAll = () => {
+  state.copyColumns.forEach((v) => {
+    v.isChecked = allChecked.value;
+  });
+  changeChecked();
+};
+const handleReset = () => {
+  allChecked.value = true;
+  state.copyColumns = initColumns.map((item: object) => ({ ...item, isChecked: true }));
+  clickCheckedAll();
+};
 </script>
+
 <style lang="scss" scoped>
 .icon {
   font-size: 1.2rem;

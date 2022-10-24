@@ -1,6 +1,6 @@
 import Request from './request';
 import mock from './mock';
-import localCache from '@/utils/catch';
+import localCache from '@/utils/localCache';
 
 import { tokenKey } from '@/common';
 

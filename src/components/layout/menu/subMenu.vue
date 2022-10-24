@@ -1,16 +1,16 @@
 <template>
-  <a-sub-menu :key="route.path" v-if="!route.meta.isHidden">
-    <template #icon v-if="route.meta.icon">
-      <component :is="route.meta.icon"></component>
+  <a-sub-menu :key="route.path" v-if="!route.meta?.isHidden">
+    <template #icon v-if="route.meta!.icon">
+      <component :is="route.meta?.icon"></component>
     </template>
-    <template #title>{{ route.meta.title }}</template>
+    <template #title>{{ route.meta?.title }}</template>
     <template v-for="item in route.children" :key="item.path">
-      <template v-if="!item.meta.isHidden && (!item.children || item.children.length === 0)">
+      <template v-if="!item.meta?.isHidden && (!item.children || item.children.length === 0)">
         <a-menu-item :key="item.path">
-          <template #icon v-if="item.meta.icon">
-            <component :is="item.meta.icon"></component>
+          <template #icon v-if="item.meta?.icon">
+            <component :is="item.meta?.icon"></component>
           </template>
-          {{ item.meta.title }}
+          {{ item.meta?.title }}
         </a-menu-item>
       </template>
       <template v-else>
@@ -21,10 +21,8 @@
 </template>
 
 <script setup lang="ts" name="subMenu">
-interface Props {
-  route: any;
-}
-defineProps<Props>();
+import { RouterItem } from '@/router';
+defineProps<{ route: RouterItem }>();
 </script>
 
 <style lang="scss" scoped></style>
