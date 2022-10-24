@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts" name="dashboard">
-import localCache from '@/utils/catch';
+import localCache from '@/utils/localCache';
 const handleLogout = () => {
   localCache.clearCache();
   window.location.reload();
