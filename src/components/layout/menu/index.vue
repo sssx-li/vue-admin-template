@@ -23,10 +23,10 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store';
 import { useRoute, useRouter } from 'vue-router';
 import { computed, defineComponent } from 'vue';
 import SubMenu from './subMenu.vue';
+import { useUserStore } from '@/store/user';
 export default defineComponent({
   name: 'menuComp',
   components: {
@@ -34,11 +34,11 @@ export default defineComponent({
   },
   setup() {
     // --- 属性 ---
-    const store = useStore();
+    const store = useUserStore();
     const route = useRoute();
     const router = useRouter();
     const defaultActive = computed(() => route.path);
-    const menuList = computed(() => store.state.user.userMenus);
+    const menuList = computed(() => store.userMenus);
 
     // --- 方法 ---
     const handleClickMenu = (menu: any) => {

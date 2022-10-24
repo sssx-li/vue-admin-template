@@ -4,10 +4,19 @@ import '@/assets/styles/index.scss';
 
 import App from './App.vue';
 import router from './router';
-import store, { setupStore } from './store';
+import store from './store';
 import { globalRegister } from '@/registers/index';
-setupStore();
+import { useUserStore } from './store/user';
 
-const app = createApp(App);
-app.use(globalRegister).use(store).use(router);
-app.mount('#app');
+async function mount() {
+  const app = createApp(App);
+  app.use(store);
+  const userStore = useUserStore();
+  await userStore.loadLocalLogin();
+
+  app.use(router);
+  app.use(globalRegister);
+  app.mount('#app');
+}
+
+mount();

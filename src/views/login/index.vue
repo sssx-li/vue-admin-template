@@ -17,7 +17,7 @@
         </el-form-item>
       </el-form>
       <div class="login-footer">
-        <el-button type="primary" class="login-btn" size="large" @click="loginAction">
+        <el-button type="primary" class="login-btn" size="large" @click="handleLogin">
           立即登录
         </el-button>
       </div>
@@ -25,37 +25,25 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
+<script setup lang="ts" name="login">
 import { rules } from './config/config';
 import type { FormInstance } from 'element-plus';
-import { useStore } from '@/store';
-export default defineComponent({
-  name: 'loginView',
-  setup() {
-    // --- 属性 ---
-    const store = useStore();
-    const loginForm = reactive({
-      username: '',
-      password: ''
-    });
-    const loginRuleFormRef = ref<FormInstance>();
+import { useUserStore } from '@/store/user';
+import { IAccount } from '@/service/types/user';
 
-    // --- 方法 ---
-    const loginAction = async () => {
-      await loginRuleFormRef.value?.validate((valid) => {
-        if (!valid) return;
-        store.dispatch('user/loginAction', { ...loginForm });
-      });
-    };
-    return {
-      loginForm,
-      loginRuleFormRef,
-      rules,
-      loginAction
-    };
-  }
+const store = useUserStore();
+const loginForm = ref<IAccount>({
+  username: '',
+  password: ''
 });
+const loginRuleFormRef = ref<FormInstance>();
+
+const handleLogin = async () => {
+  await loginRuleFormRef.value?.validate((valid) => {
+    if (!valid) return;
+    store.loginAction(loginForm.value);
+  });
+};
 </script>
 
 <style lang="scss" scoped>

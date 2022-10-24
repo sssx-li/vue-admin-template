@@ -1,8 +1,21 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw, RouteMeta } from 'vue-router';
 import mainStaticRoute from './modules';
-import localCache from '@/utils/catch';
+import localCache from '@/utils/localCache';
 import { tokenKey } from '@/common';
 import { firstMenuPath } from '@/utils/mapMenus';
+
+interface IMeta extends RouteMeta {
+  isHidden: boolean;
+}
+
+export interface RouterItem {
+  path?: string;
+  component?: any;
+  meta?: IMeta;
+  name?: string;
+  redirect?: string;
+  children?: RouterItem[];
+}
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/main',
     name: 'main',
     component: () => import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
-    children: [mainStaticRoute]
+    children: [...mainStaticRoute]
   },
   {
     path: '/login',

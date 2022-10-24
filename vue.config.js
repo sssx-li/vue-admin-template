@@ -24,14 +24,31 @@ module.exports = defineConfig({
     plugins: [
       AutoImport({
         dts: false,
-        resolvers: [ElementPlusResolver()]
+        imports: [
+          'vue',
+          'vue-router',
+          {
+            '/src/hooks': [
+              'useMessage',
+              'useConfirm',
+              'useEcharts',
+              'useFormValidate',
+              'usePageContent'
+            ]
+          }
+        ],
+        resolvers: [ElementPlusResolver()],
+        eslintrc: {
+          enabled: false,
+          filepath: './.eslintrc-auto-import.json'
+        }
       }),
       Components({
         dts: false,
         resolvers: [
           IconsResolver({
             componentPrefix: 'icon',
-            customCollections: ['custom']
+            customCollections: ['sy']
           }),
           ElementPlusResolver()
         ]

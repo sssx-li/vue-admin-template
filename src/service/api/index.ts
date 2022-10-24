@@ -1,6 +1,12 @@
 enum User {
   LOGIN = '/login',
+  USER = '/user',
   USEMENU = '/use/menu'
 }
 
-export { User };
+enum ContentApis {
+  DASHBOARD = '/dashboard',
+  TABLE = '/table'
+}
+
+export { User, ContentApis };

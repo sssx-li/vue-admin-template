@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { UserFilled } from '@element-plus/icons-vue';
-import localCache from '@/utils/catch';
+import localCache from '@/utils/localCache';
 import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'layoutHeaderComp',
