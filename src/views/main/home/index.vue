@@ -80,7 +80,7 @@
     v-model:show="modalFormParams.show"
     v-model:visible="modalFormParams.visible"
     :title="modalFormParams.title"
-    :row="modalFormParams.row"
+    :row="modalFormParams.row!"
     :formConfig="formConfig"
     @onClose="onCloseDialogForm"
     @onSubmit="onSubmitDialogForm"
@@ -91,7 +91,7 @@
     v-model:show="drawerFormParams.show"
     v-model:visible="drawerFormParams.visible"
     :title="drawerFormParams.title"
-    :row="drawerFormParams.row"
+    :row="drawerFormParams.row!"
     :formConfig="formConfig"
     @onClose="onCloseDialogForm"
     @onSubmit="onSubmitDialogForm"
@@ -100,15 +100,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
-import { message } from 'ant-design-vue';
-
 import { SyForm, SyTable, SyModal, SyDrawer, SyCard } from '@/baseUI';
 import DrawerForm from '@/components/drawerForm/index.vue';
 import ModalForm from '@/components/modalForm/index.vue';
 import PageContent from '@/components/pageContent/index.vue';
-
-import { useConfirm } from '@/hooks/useConfirm';
 import { formConfig, searchFormConfig } from './config/config.form';
 import { contentTableConfig } from './config/config.content';
 interface IDialogForm {
@@ -130,6 +125,7 @@ export default defineComponent({
     PageContent
   },
   setup() {
+    const message = useMessage();
     const handleMessage = () => {
       message.success('这是一条成功的消息');
     };

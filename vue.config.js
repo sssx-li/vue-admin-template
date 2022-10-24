@@ -11,6 +11,9 @@ const Icons = require('unplugin-icons/webpack');
 const IconsResolver = require('unplugin-icons/resolver');
 // 读取自定义svg文件
 const { FileSystemIconLoader } = require('unplugin-icons/loaders');
+
+const DefineOptions = require('unplugin-vue-define-options/webpack');
+
 module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: '/',
@@ -24,7 +27,24 @@ module.exports = defineConfig({
     plugins: [
       AutoImport({
         dts: false,
-        resolvers: [AntDesignVueResolver()]
+        imports: [
+          'vue',
+          'vue-router',
+          {
+            '/src/hooks': [
+              'useMessage',
+              'useConfirm',
+              'useEcharts',
+              'useFormValidate',
+              'usePageContent'
+            ]
+          }
+        ],
+        resolvers: [AntDesignVueResolver()],
+        eslintrc: {
+          enabled: false,
+          filepath: './.eslintrc-auto-import.json'
+        }
       }),
       Components({
         dts: false,
@@ -44,7 +64,8 @@ module.exports = defineConfig({
             svg.replace(/^<svg /, '<svg fill="currentColor" ')
           )
         }
-      })
+      }),
+      DefineOptions()
     ],
     devServer: {
       proxy: {

@@ -1,15 +1,11 @@
 <template>
-  <div class="config-config">config</div>
+  <div class="config-container">config</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'configView',
-  setup() {
-    return {};
-  }
+<script setup lang="ts">
+defineOptions({
+  name: 'Foo',
+  inheritAttrs: false
 });
 </script>
 
