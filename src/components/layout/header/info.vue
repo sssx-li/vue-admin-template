@@ -17,13 +17,13 @@
 </template>
 
 <script setup lang="ts">
+import { message } from 'ant-design-vue';
 import localCache from '@/utils/localCache';
-import { useStore } from '@/store';
+import { useUserStore } from '@/store/user';
 
-const store = useStore();
+const store = useUserStore();
 const confirm = useConfirm();
-const { info } = useMessage();
-const userInfo = computed(() => store.state.user.userInfo);
+const userInfo = computed(() => store.userInfo);
 const onClick = (obj: any) => {
   const { key } = obj;
   if (key === 'logout') {
@@ -34,7 +34,7 @@ const onClick = (obj: any) => {
       })
       .catch(() => {});
   } else if (key === 'userInfo') {
-    info('个人信息');
+    message.info('个人信息');
   }
 };
 </script>

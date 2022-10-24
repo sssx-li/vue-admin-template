@@ -9,13 +9,13 @@ const aboutRoutes: RouteRecordRaw[] = [
       title: '关于',
       icon: 'FolderOutlined',
       url: '/main/about',
-      sort: 2
+      sort: 5
     },
     children: [
       {
         path: '/main/about/first',
         name: 'aboutFirst',
-        component: () => import('@/views/main/about/index.vue'),
+        component: () => import('@/views/main/about/first.vue'),
         meta: {
           title: '关于1-1',
           icon: 'SnippetsOutlined',

@@ -1,5 +1,5 @@
 <template>
-  <div class="config-container">config</div>
+  <div class="demo">config</div>
 </template>
 
 <script setup lang="ts"></script>

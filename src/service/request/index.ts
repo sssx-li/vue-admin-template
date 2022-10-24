@@ -1,10 +1,10 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-import type { RequestConfig, RequestInterceptors } from './types';
-import { IDataModel } from '../api/types';
+import type { RequestConfig, RequestInterceptors } from '@/service/types/axios';
+import { IDataModel } from '@/service/types/axios';
 
-class Request {
+class IRequest {
   instance: AxiosInstance;
   interceptors?: RequestInterceptors;
 
@@ -69,7 +69,6 @@ class Request {
     });
   }
   post<T = IDataModel>(config: RequestConfig<T>): Promise<T> {
-    console.log('config', config);
     return this.request<T>({
       ...config,
       method: 'POST'
@@ -95,4 +94,4 @@ class Request {
   }
 }
 
-export default Request;
+export default IRequest;

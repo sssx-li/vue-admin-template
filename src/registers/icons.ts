@@ -1,4 +1,4 @@
-import { App } from 'vue';
+import type { App } from 'vue';
 import {
   LoginOutlined,
   UserOutlined,
@@ -7,9 +7,11 @@ import {
   FolderOutlined,
   SnippetsOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  FileOutlined,
+  TableOutlined,
+  UnorderedListOutlined
 } from '@ant-design/icons-vue';
-
 const components = [
   LoginOutlined,
   UserOutlined,
@@ -18,7 +20,10 @@ const components = [
   FolderOutlined,
   SnippetsOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  FileOutlined,
+  TableOutlined,
+  UnorderedListOutlined
 ];
 
 export default function (app: App): void {

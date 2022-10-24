@@ -1,74 +1,65 @@
 <template>
   <div class="login-container">
-    <div class="content">
-      <h2 class="title">后台管理系统</h2>
-      <a-form
-        :model="formState"
-        name="basic"
-        :label-col="{ style: { width: '100px' } }"
-        :wrapper-col="{ style: { width: '330px' } }"
-        autocomplete="off"
-        @finish="onFinish"
+    <SyCard class="login-card">
+      <h2 class="login-title">后台管理系统</h2>
+      <SyForm
+        :show-form-footer="false"
+        v-bind="formConfig"
+        v-model="loginForm"
+        ref="loginFormRef"
+      />
+      <a-button
+        @click="handleLogin"
+        class="submit-btn"
+        size="large"
+        type="primary"
+        :loading="loading"
       >
-        <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名' }]">
-          <a-input size="large" v-model:value="formState.username" />
-        </a-form-item>
-        <a-form-item name="password" :rules="[{ required: true, message: '请输入密码' }]">
-          <a-input-password size="large" v-model:value="formState.password" />
-        </a-form-item>
-        <a-form-item :wrapper-col="{ style: { width: '330px' } }">
-          <a-button size="large" type="primary" html-type="submit" class="login-btn">
-            登录
-          </a-button>
-        </a-form-item>
-      </a-form>
-    </div>
+        登录
+      </a-button>
+    </SyCard>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive } from 'vue';
-import { useStore } from '@/store';
+<script setup lang="ts">
+import { SyCard, SyForm } from '@/baseUI';
+import { formConfig } from './config/config.form';
+import { useUserStore } from '@/store/user';
+import { IAccount } from '@/service/types/user';
 
-export default defineComponent({
-  name: 'loginView',
-  setup() {
-    const store = useStore();
-    const formState = reactive({
-      username: '',
-      password: ''
-    });
-    const onFinish = (values: any) => {
-      store.dispatch('user/loginAction', values);
-    };
-    return {
-      formState,
-      onFinish
-    };
-  }
+const store = useUserStore();
+const loginForm = ref<IAccount>({
+  username: '',
+  password: ''
 });
+const loading = ref(false);
+const loginFormRef = ref();
+const handleLogin = async () => {
+  await loginFormRef.value.validate();
+  loading.value = true;
+  await store.loginAction(loginForm.value);
+  loading.value = false;
+};
 </script>
 
 <style lang="scss" scoped>
 .login-container {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   background: #f0f2f5;
-  background-position: center 110px;
-  background-size: 100%;
-  .content {
-    width: 330px;
-    .title {
-      height: 44px;
-      line-height: 44px;
+  .login-card {
+    padding: 20px 40px;
+    box-shadow: 0 0px 10px 2px rgba(0, 0, 0, 0.1) !important;
+    .login-title {
       text-align: center;
-      font-size: 32px;
+      font-size: 28px;
+      margin-bottom: 50px;
     }
-    .login-btn {
-      width: 100%;
-    }
+  }
+  .submit-btn {
+    width: 100%;
   }
 }
 </style>

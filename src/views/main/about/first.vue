@@ -1,5 +1,5 @@
 <template>
-  <div class="demo">secound</div>
+  <div class="demo">first</div>
 </template>
 
 <script setup lang="ts"></script>

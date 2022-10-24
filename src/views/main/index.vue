@@ -18,25 +18,11 @@
   </a-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
 import LayoutHeader from '@/components/layout/header/index.vue';
 import LayoutMenu from '@/components/layout/menu/index.vue';
 import logo from '@/assets/images/logo.png';
-export default defineComponent({
-  name: 'mainView',
-  components: {
-    LayoutHeader,
-    LayoutMenu
-  },
-  setup() {
-    const collapsed = ref(false);
-    return {
-      logo,
-      collapsed
-    };
-  }
-});
+const collapsed = ref(false);
 </script>
 
 <style lang="scss" scoped>

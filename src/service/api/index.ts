@@ -5,7 +5,8 @@ enum User {
 }
 
 enum ContentApis {
-  DASHBOARD = '/dashboard'
+  DASHBOARD = '/dashboard',
+  TABLE = '/table'
 }
 
 export { User, ContentApis };
