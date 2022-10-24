@@ -1,10 +1,6 @@
-import { ref, reactive, watch } from 'vue';
 import Request from '@/service';
-import { message } from 'ant-design-vue';
-
-import { IConfirm } from './useConfirm';
-
-import { IDataModel, ITableList } from '@/service/api/types';
+import { IDataModel } from '@/service/types/axios';
+import { ITableList } from '@/service/types/table';
 import { ITableConfig } from '@/baseUI/syTable/types';
 
 /**
@@ -19,6 +15,7 @@ import { ITableConfig } from '@/baseUI/syTable/types';
 export default function usePageContent(config: ITableConfig, pageQuery: any = {}) {
   const { url, columns, showFooter } = config;
   const confirm = useConfirm();
+  const { success, error } = useMessage();
 
   const pageInfo = reactive({ pageNo: 1, pageSize: 10 });
   const dataSource = ref<any[]>([]);
@@ -65,14 +62,13 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
         url,
         params
       });
-      if (!res.data) return;
       const {
         data: { list, page }
       } = res;
       dataSource.value = list;
       total.value = page.count;
-    } catch (error) {
-      message.error('获取数据失败，请刷新重试');
+    } catch (err) {
+      error('获取数据失败，请刷新重试');
     }
   };
 
@@ -80,15 +76,13 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
   const handleEdit = async (data: any, id: string | number, curUrl?: string) => {
     try {
       await Request.put<IDataModel>({
-        url: curUrl || `${url}/${id}`,
-        data: {
-          ...data
-        }
+        url: curUrl || `${url}?id=${id}`,
+        data
       });
-      message.success('操作成功');
+      success('操作成功');
       refresh();
-    } catch (error) {
-      message.error('操作失败，请稍后再试');
+    } catch (err) {
+      error('操作失败，请稍后再试');
     }
   };
 
@@ -99,29 +93,28 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
         url,
         data
       });
-      message.success('添加成功');
+      success('添加成功');
       refresh();
-    } catch (error) {
-      message.error('添加失败，请稍后再试');
+    } catch (err) {
+      error('添加失败，请稍后再试');
     }
   };
 
   // 删除
   const handleDelete = (row: any, contentTip?: string) => {
-    const confirmParams: IConfirm = {
+    confirm({
       title: '删除',
       content: contentTip || '删除之后无法恢复哦，确定删除吗?',
       okType: 'danger'
-    };
-    confirm(confirmParams)
+    })
       .then(async () => {
         try {
           await Request.delete({
-            url: `${url}/${row.id}`
+            url: `${url}?id=${row.id}`
           });
-          message.success('删除成功');
-        } catch (error) {
-          message.error('删除失败，请稍后再试');
+          success('删除成功');
+        } catch (err) {
+          error('删除失败，请稍后再试');
         }
         refresh();
       })
