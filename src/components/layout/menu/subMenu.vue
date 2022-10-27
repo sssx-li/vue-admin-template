@@ -11,7 +11,7 @@
       <el-menu-item
         :index="menu.path"
         @click="handleMenuItemClick(menu)"
-        v-if="!menu.meta.isHidden && (!menu.children || menu.children === 0)"
+        v-if="!menu.meta.isHidden && (!menu.children || menu.children.length === 0)"
       >
         <el-icon :size="20" v-if="menu.meta.icon">
           <component :is="menu.meta.icon"></component>
@@ -23,27 +23,15 @@
   </el-sub-menu>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts" name="subMenu">
+import { RouterItem } from '@/router';
 
-export default defineComponent({
-  name: 'subMenu',
-  props: {
-    menuInfo: {
-      type: Object,
-      required: true
-    }
-  },
-  emits: ['handleClickMenu'],
-  setup(props, { emit }) {
-    const handleMenuItemClick = (menu: any) => {
-      emit('handleClickMenu', menu);
-    };
-    return {
-      handleMenuItemClick
-    };
-  }
-});
+defineProps<{ menuInfo: RouterItem }>();
+const emit = defineEmits(['handleClickMenu']);
+
+const handleMenuItemClick = (menu: any) => {
+  emit('handleClickMenu', menu);
+};
 </script>
 
 <style lang="scss" scoped></style>

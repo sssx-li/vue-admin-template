@@ -1,4 +1,5 @@
 import type { PropType } from 'vue';
+import type { RouteRecord } from 'vue-router';
 import { defineStore } from 'pinia';
 import { tokenKey } from '@/common';
 import { login, getUserMenu, getUserInfo } from '@/service/api/user';
@@ -6,7 +7,6 @@ import { IAccount } from '@/service/types/user';
 import localCache from '@/utils/localCache';
 import router from '@/router';
 import { mapMenusToRoutes } from '@/utils/mapMenus';
-import { RouteRecord } from 'vue-router';
 
 export const useUserStore = defineStore('user', {
   state: () => {
@@ -44,7 +44,6 @@ export const useUserStore = defineStore('user', {
           routes.forEach((route: any) => {
             router.addRoute('main', route);
           });
-        console.log('router', router);
       } catch (error) {
         return error;
       }

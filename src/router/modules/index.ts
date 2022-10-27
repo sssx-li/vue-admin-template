@@ -1,6 +1,6 @@
-import { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
-const mainStaticRoute: RouteRecordRaw[] = [
+const dashboardRoute: RouteRecordRaw[] = [
   {
     path: '/main/dashboard',
     name: 'dashboard',
@@ -9,4 +9,4 @@ const mainStaticRoute: RouteRecordRaw[] = [
   }
 ];
 
-export default mainStaticRoute;
+export default dashboardRoute;

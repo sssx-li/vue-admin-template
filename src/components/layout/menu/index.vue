@@ -3,9 +3,15 @@
     active-text-color="#0a60bd"
     background-color="#001529"
     class="menu-container"
+    :collapse="isCollapse"
     :default-active="defaultActive"
     text-color="#b7bdc3"
   >
+    <div class="fl fl-center fl-column tac p-10">
+      <el-icon :size="isCollapse ? 30 : 40">
+        <i-sy-vue />
+      </el-icon>
+    </div>
     <template v-for="menu in menuList" :key="menu.path">
       <el-menu-item
         :index="menu.path"
@@ -17,46 +23,35 @@
         </el-icon>
         <span>{{ menu.meta.title }}</span>
       </el-menu-item>
-      <sub-menu :menuInfo="menu" @handleClickMenu="handleClickMenu" v-else />
+      <SubMenu :menuInfo="menu" @handleClickMenu="handleClickMenu" v-else />
     </template>
   </el-menu>
 </template>
 
-<script lang="ts">
-import { useRoute, useRouter } from 'vue-router';
-import { computed, defineComponent } from 'vue';
+<script setup lang="ts">
 import SubMenu from './subMenu.vue';
 import { useUserStore } from '@/store/user';
-export default defineComponent({
-  name: 'menuComp',
-  components: {
-    SubMenu
-  },
-  setup() {
-    // --- 属性 ---
-    const store = useUserStore();
-    const route = useRoute();
-    const router = useRouter();
-    const defaultActive = computed(() => route.path);
-    const menuList: any = computed(() => store.userMenus);
+import type { RouteRecord } from 'vue-router';
 
-    // --- 方法 ---
-    const handleClickMenu = (menu: any) => {
-      router.push({ path: menu.path });
-    };
-    return {
-      defaultActive,
-      menuList,
-      handleClickMenu
-    };
-  }
-});
+defineProps<{ isCollapse: boolean }>();
+
+const store = useUserStore();
+const route = useRoute();
+const router = useRouter();
+const defaultActive = computed(() => route.path);
+const menuList: any = computed(() => store.userMenus);
+const handleClickMenu = (menu: RouteRecord) => {
+  router.push({ path: menu.path });
+};
 </script>
 
 <style lang="scss" scoped>
 .menu-container {
   height: 100%;
-  width: 100%;
+  &:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
   .el-sub-menu {
     background-color: #001529 !important;
     // 二级菜单 ( 默认背景 )

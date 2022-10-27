@@ -1,4 +1,4 @@
-import LayoutHeader from './header/index.vue';
+import LayoutHeader from './header.vue';
 import NavMenu from './menu/index.vue';
 
 export { LayoutHeader, NavMenu };

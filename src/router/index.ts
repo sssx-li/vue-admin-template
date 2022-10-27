@@ -1,17 +1,18 @@
-import { createRouter, createWebHistory, RouteRecordRaw, RouteMeta } from 'vue-router';
-import mainStaticRoute from './modules';
-import localCache from '@/utils/localCache';
+import { createRouter, createWebHistory, RouteMeta, RouteRecordRaw } from 'vue-router';
 import { tokenKey } from '@/common';
-import { firstMenuPath } from '@/utils/mapMenus';
+import localCache from '@/utils/localCache';
+import { useUserStore } from '@/store/user';
+
+import dashboardRoute from './modules';
 
 interface IMeta extends RouteMeta {
   isHidden: boolean;
 }
 
 export interface RouterItem {
-  path?: string;
-  component?: any;
-  meta?: IMeta;
+  path: string;
+  component: any;
+  meta: IMeta;
   name?: string;
   redirect?: string;
   children?: RouterItem[];
@@ -26,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/main',
     name: 'main',
     component: () => import(/* webpackChunkName: "main" */ '@/views/main/index.vue'),
-    children: [...mainStaticRoute]
+    children: [...dashboardRoute]
   },
   {
     path: '/login',
@@ -52,8 +53,10 @@ router.beforeEach((to) => {
   } else {
     !isToLogin && router.push('/login');
   }
+
   if (to.path === '/main') {
-    return firstMenuPath;
+    const store = useUserStore();
+    return store.firstMenuPath;
   }
 });
 
