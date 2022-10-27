@@ -38,7 +38,7 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const defaultActive = computed(() => route.path);
-    const menuList = computed(() => store.userMenus);
+    const menuList: any = computed(() => store.userMenus);
 
     // --- 方法 ---
     const handleClickMenu = (menu: any) => {

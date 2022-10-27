@@ -23,20 +23,9 @@ module.exports = defineConfig({
     },
     plugins: [
       AutoImport({
+        // dts: './src/types/auto-imports.d.ts',
         dts: false,
-        imports: [
-          'vue',
-          'vue-router',
-          {
-            '/src/hooks': [
-              'useMessage',
-              'useConfirm',
-              'useEcharts',
-              'useFormValidate',
-              'usePageContent'
-            ]
-          }
-        ],
+        imports: ['vue', 'vue-router'],
         resolvers: [ElementPlusResolver()],
         eslintrc: {
           enabled: false,
