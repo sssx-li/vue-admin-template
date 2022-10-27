@@ -1,16 +1,7 @@
 <template>
-  <div class="about-container">about</div>
+  <div class="first-container">first</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'aboutView',
-  setup() {
-    return {};
-  }
-});
-</script>
+<script setup lang="ts" name="first"></script>
 
 <style lang="scss" scoped></style>
