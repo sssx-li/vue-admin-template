@@ -36,7 +36,6 @@ module.exports = defineConfig({
         dts: false,
         resolvers: [
           IconsResolver({
-            componentPrefix: 'icon',
             customCollections: ['sy']
           }),
           ElementPlusResolver()
@@ -46,7 +45,7 @@ module.exports = defineConfig({
         compiler: 'vue3',
         autoInstall: true,
         customCollections: {
-          custom: FileSystemIconLoader('src/assets/svgs', (svg) =>
+          sy: FileSystemIconLoader('src/assets/svgs', (svg) =>
             svg.replace(/^<svg /, '<svg fill="currentColor" ')
           )
         }

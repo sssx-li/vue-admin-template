@@ -58,13 +58,13 @@ pnpm run lint
 ```
   1. 下载svg文件，并存放在src/assets/svgs目录下(该项目指定在此目录，可以在vue.config.js文件中进行修改)
 
-  2. 使用: icon-custom-{{svgName}}
-    <!-- icon 及 custom (前缀名)均可在vue.config.js进行修改，根据个人喜好设置 -->
-    <icon-custom-logo />
+  2. 使用: i-sy-{{svgName}}
+    <!-- i 及 sy (前缀名)均可在vue.config.js进行修改，根据个人喜好设置 -->
+    <i-sy-logo />
 
-    <el-icon :size="20" style="color: #f60">
-      <icon-custom-logo />
-    </el-icon>
+    <el-i :size="20" style="color: #f60">
+      <i-sy-logo />
+    </el-i>
 ```
 
 #### iconify([访问地址](https://icon-sets.iconify.design/))

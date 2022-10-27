@@ -7,7 +7,7 @@
     :default-active="defaultActive"
     text-color="#b7bdc3"
   >
-    <div class="fl fl-center fl-column tac p-10">
+    <div class="icon">
       <el-icon :size="isCollapse ? 30 : 40">
         <i-sy-vue />
       </el-icon>
@@ -51,6 +51,12 @@ const handleClickMenu = (menu: RouteRecord) => {
   &:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
+  }
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
   }
   .el-sub-menu {
     background-color: #001529 !important;
