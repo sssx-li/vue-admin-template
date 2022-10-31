@@ -24,11 +24,12 @@ module.exports = defineConfig({
     },
     plugins: [
       AutoImport({
-        dts: './src/types/auto.imports.d.ts',
+        // dts: './src/types/auto.imports.d.ts',
+        dts: false,
         imports: ['vue', 'vue-router'],
         resolvers: [AntDesignVueResolver()],
         eslintrc: {
-          enabled: true,
+          enabled: false,
           filepath: './.eslintrc-auto-import.json'
         }
       }),
