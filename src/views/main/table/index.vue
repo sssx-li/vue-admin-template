@@ -51,6 +51,8 @@ import { SyTable, SyForm, SyCard } from '@/baseUI';
 import PageContent from '@/components/pageContent/index.vue';
 import { contentTableConfig } from './config/config.content';
 import { formConfig, searchFormConfig } from './config/config.form';
+import { useMessage, useConfirm } from '@/hooks';
+
 interface IDialogForm {
   show: boolean;
   visible: boolean;
@@ -58,9 +60,7 @@ interface IDialogForm {
   row: null | object;
   type: string;
 }
-
 const { success } = useMessage();
-
 const confirm = useConfirm();
 const drawerFormRef = ref();
 // 基础表格

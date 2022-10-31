@@ -2,6 +2,7 @@ import Request from '@/service';
 import { IDataModel } from '@/service/types/axios';
 import { ITableList } from '@/service/types/table';
 import { ITableConfig } from '@/baseUI/syTable/types';
+import { useMessage, useConfirm } from '@/hooks';
 
 /**
  *

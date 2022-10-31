@@ -24,23 +24,11 @@ module.exports = defineConfig({
     },
     plugins: [
       AutoImport({
-        dts: false,
-        imports: [
-          'vue',
-          'vue-router',
-          {
-            '/src/hooks': [
-              'useMessage',
-              'useConfirm',
-              'useEcharts',
-              'useFormValidate',
-              'usePageContent'
-            ]
-          }
-        ],
+        dts: './src/types/auto.imports.d.ts',
+        imports: ['vue', 'vue-router'],
         resolvers: [AntDesignVueResolver()],
         eslintrc: {
-          enabled: false,
+          enabled: true,
           filepath: './.eslintrc-auto-import.json'
         }
       }),

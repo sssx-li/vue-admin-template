@@ -106,6 +106,8 @@ import ModalForm from '@/components/modalForm/index.vue';
 import PageContent from '@/components/pageContent/index.vue';
 import { formConfig, searchFormConfig } from './config/config.form';
 import { contentTableConfig } from './config/config.content';
+import { useMessage, useConfirm } from '@/hooks';
+
 interface IDialogForm {
   show: boolean;
   visible: boolean;
@@ -125,14 +127,14 @@ export default defineComponent({
     PageContent
   },
   setup() {
-    const message = useMessage();
+    const { success } = useMessage();
     const handleMessage = () => {
-      message.success('这是一条成功的消息');
+      success('这是一条成功的消息');
     };
     const confirm = useConfirm();
     const handleConfirm = async () => {
       await confirm();
-      message.success('成功');
+      success('成功');
     };
     // 1. 弹窗
     const syModalRef = ref();
@@ -201,12 +203,12 @@ export default defineComponent({
       if (isPageContent.value) {
         // 新增
         await pageContentRef.value.handleCreate(data);
-        message.success('添加成功');
+        success('添加成功');
         drawerFormRef.value.onCloseDialog();
         return;
       }
       // 这里发送请求...
-      message.success('操作成功');
+      success('操作成功');
       if (dialogType.value === 'modal') {
         modalFormRef.value.onCloseDialog();
       } else {
@@ -219,7 +221,7 @@ export default defineComponent({
     const onSubmit = async () => {
       await syFormRef.value?.validate();
       console.log('formState', formState.value);
-      message.success('成功');
+      success('成功');
     };
     // 4. 基础表格
     const dataSource = reactive<any[]>([

@@ -20,6 +20,7 @@
 import { message } from 'ant-design-vue';
 import localCache from '@/utils/localCache';
 import { useUserStore } from '@/store/user';
+import { useConfirm } from '@/hooks';
 
 const store = useUserStore();
 const confirm = useConfirm();

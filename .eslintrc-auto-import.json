@@ -44,20 +44,14 @@
     "triggerRef": true,
     "unref": true,
     "useAttrs": true,
-    "useConfirm": true,
     "useCssModule": true,
     "useCssVars": true,
-    "useEcharts": true,
-    "useFormValidate": true,
-    "useMessage": true,
-    "usePageContent": true,
     "useRoute": true,
     "useRouter": true,
     "useSlots": true,
     "watch": true,
     "watchEffect": true,
     "watchPostEffect": true,
-    "watchSyncEffect": true,
-    "defineOptions": true
+    "watchSyncEffect": true
   }
 }

@@ -156,6 +156,7 @@
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import { IFormItem } from './types';
+import { useFormValidate } from '@/hooks';
 
 const dateType = ['datepicker', 'monthpicker', 'rangepicker', 'weekpicker'];
 interface Props {
