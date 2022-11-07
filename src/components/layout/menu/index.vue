@@ -7,7 +7,7 @@
     :default-active="defaultActive"
     text-color="#b7bdc3"
   >
-    <div class="icon">
+    <div class="log-box">
       <el-icon :size="isCollapse ? 30 : 40">
         <i-sy-vue />
       </el-icon>
@@ -52,12 +52,6 @@ const handleClickMenu = (menu: RouteRecord) => {
     width: 200px;
     min-height: 400px;
   }
-  .icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-  }
   .el-sub-menu {
     background-color: #001529 !important;
     // 二级菜单 ( 默认背景 )
@@ -80,6 +74,12 @@ const handleClickMenu = (menu: RouteRecord) => {
     color: #fff !important;
     background-color: #0a60bd !important;
   }
+}
+.log-box {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
 }
 .el-menu {
   border-right: none;

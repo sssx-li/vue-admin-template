@@ -1,14 +1,14 @@
 <template>
-  <div class="layout-header-container">
+  <div class="header-container">
     <div class="left-icon">
       <el-icon size="20px">
         <component @click="changeCollapse" :is="isCollapse ? `Expand` : 'Fold'" />
       </el-icon>
     </div>
     <el-dropdown class="right-action-info" @command="handleCommand">
-      <span class="el-dropdown-link">
+      <span class="avatar-box">
         <el-avatar icon="UserFilled" :size="34" />
-        <span class="nickname">超级管理员</span>
+        <span class="user-name">超级管理员</span>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -46,31 +46,33 @@ const changeCollapse = () => {
 </script>
 
 <style lang="scss" scoped>
-.layout-header-container {
+.left {
+  flex: 0 0 20px;
+}
+.right-action-info {
   display: flex;
-  height: 50px;
-  line-height: 50;
-  color: #000;
+  align-items: center;
+  flex: 0 0 120px;
+}
+.header-container {
+  display: flex;
   justify-content: space-between;
+  height: 50px;
+  line-height: 50px;
+  color: #000;
   .left-icon {
-    flex: 0 0 20px;
     display: flex;
     align-items: center;
     cursor: pointer;
   }
-  .right-action-info {
-    display: flex;
-    align-items: center;
-    flex: 0 0 120px;
-  }
-  .el-dropdown-link {
+  .avatar-box {
     display: flex;
     align-items: center;
     cursor: pointer;
-  }
-  .nickname {
-    margin-left: 10px;
-    color: #000;
+    .user-name {
+      margin-left: 10px;
+      color: #000;
+    }
   }
 }
 </style>
