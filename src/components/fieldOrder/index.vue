@@ -45,12 +45,12 @@ const state = reactive({
 });
 
 // 1. 开始拖元素触发，作用于拖拽元素
-const dragStart = (ev: any, index: number): any => {
+const dragStart = (ev: DragEvent, index: number) => {
   state.dropIndex = index;
   state.dropStatus = true;
 };
 // 2. 元素拖进可drop元素（绑定drop事件的元素）时触发，作用于目标元素
-const dragenter = (ev: Event, index: number) => {
+const dragenter = (ev: DragEvent, index: number) => {
   const column = state.copyColumns[state.dropIndex];
   state.copyColumns.splice(state.dropIndex, 1);
   state.copyColumns.splice(index, 0, column);
@@ -65,7 +65,7 @@ const dragenter = (ev: Event, index: number) => {
   emit('changeColumns', tempArr);
 };
 // 3. 当元素拖动到drop元素上时触发，作用于目标元素
-const dragover = (ev: Event) => {
+const dragover = (ev: DragEvent) => {
   ev.preventDefault();
 };
 // 4. 放开拖动元素时触发，作用于目标元素
