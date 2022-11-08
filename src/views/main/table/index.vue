@@ -51,7 +51,7 @@ import { SyCard, SyTable } from '@/baseUI';
 import PageContent from '@/components/pageContent/index.vue';
 import DrawerForm from '@/components/drawerForm/index.vue';
 import { IPage } from '@/baseUI/syTable/types';
-import { useConfirm, useMessage } from '@/hooks';
+import { useConfirm } from '@/hooks';
 import { tableConfig, contentTableConfig } from './config/config.table';
 import { formConfig } from './config/config.form';
 interface IUser {
@@ -65,7 +65,6 @@ interface IEditForm {
   sex: 0 | 1;
   createTime: string;
 }
-const { success } = useMessage();
 const confirm = useConfirm();
 // ------- 1.基础表格 --------
 const data = reactive<IUser[]>([
@@ -85,7 +84,6 @@ const pageInfo = reactive<IPage>({
 });
 const handlerEdit = (row: IUser) => {
   console.log('handlerEdit', row);
-  success('编辑成功');
 };
 const handlerDelete = async (row: IUser) => {
   await confirm({
@@ -93,7 +91,6 @@ const handlerDelete = async (row: IUser) => {
     content: `确定要删除${row.name}吗?`,
     type: 'warning'
   });
-  success('删除成功!');
 };
 const currentChange = (val: number) => {
   pageInfo.currentPage = val;
@@ -136,7 +133,6 @@ const onSubmit = async (data: IEditForm) => {
     await pageContentRef.value?.handleCreate(data);
   } else {
     await pageContentRef.value?.handleEdit(data, data.id!);
-    success('修改成功');
   }
   await pageContentRef.value?.getPageData();
   drawerFormRef.value.closeModal();
