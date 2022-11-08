@@ -21,7 +21,7 @@
       </el-table-column>
     </template>
   </el-table>
-  <div v-if="showFooter" class="mt-14px flex justify-end">
+  <div v-if="showFooter" class="footer-box">
     <el-pagination
       v-bind="defPage"
       @size-change="handleSizeChange"
@@ -70,4 +70,10 @@ const handleCurrentChange = (val: number) => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.footer-box {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+</style>
