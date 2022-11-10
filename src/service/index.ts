@@ -1,4 +1,4 @@
-import Request from './request';
+import IRequest from './request';
 import mock from '@/mock';
 import localCache from '@/utils/localCache';
 
@@ -6,7 +6,7 @@ import { tokenKey } from '@/common';
 
 const TIMEOUT = 5000;
 
-const IRequest = new Request({
+const Request = new IRequest({
   baseURL: process.env.VUE_APP_BASE_URL,
   timeout: TIMEOUT,
   interceptors: {
@@ -21,7 +21,7 @@ const IRequest = new Request({
 });
 
 if (process.env.VUE_APP_ENV === 'mock') {
-  mock(IRequest.instance);
+  mock(Request.instance);
 }
 
-export default IRequest;
+export default Request;

@@ -99,7 +99,7 @@
   ></DrawerForm>
 </template>
 
-<script lang="ts">
+<script setup lang="ts" name="homeView">
 import { SyForm, SyTable, SyModal, SyDrawer, SyCard } from '@/baseUI';
 import DrawerForm from '@/components/drawerForm/index.vue';
 import ModalForm from '@/components/modalForm/index.vue';
@@ -114,217 +114,161 @@ interface IDialogForm {
   title: string;
   row: null | object;
 }
-export default defineComponent({
-  name: 'homeView',
-  components: {
-    SyCard,
-    SyModal,
-    SyDrawer,
-    SyForm,
-    SyTable,
-    DrawerForm,
-    ModalForm,
-    PageContent
-  },
-  setup() {
-    const { success } = useMessage();
-    const handleMessage = () => {
-      success('这是一条成功的消息');
-    };
-    const confirm = useConfirm();
-    const handleConfirm = async () => {
-      await confirm();
-      success('成功');
-    };
-    // 1. 弹窗
-    const syModalRef = ref();
-    const syDrawerRef = ref();
-    const modalParams = reactive({
-      visible: false,
-      title: '这是一个modal弹窗'
-    });
-    const drawerParams = reactive({
-      visible: false,
-      title: '这是一个drawer弹窗'
-    });
-    const handleOpenkDialog = (type: string) => {
-      if (type === 'modal') {
-        modalParams.visible = true;
-      } else {
-        drawerParams.visible = true;
-      }
-    };
-    const onSubmitFromModal = () => {
-      syModalRef.value.onClose();
-    };
-    const onSubmitFromDrawer = () => {
-      syDrawerRef.value.onClose();
-    };
-    // 2. 表单弹窗
-    const modalFormRef = ref();
-    const drawerFormRef = ref();
-    const dialogType = ref<null | string>(null);
-    const modalFormParams = reactive<IDialogForm>({
-      show: false,
-      visible: false,
-      row: null,
-      title: '表单弹窗modalForm'
-    });
-    const drawerFormParams = reactive<IDialogForm>({
-      show: false,
-      visible: false,
-      row: null,
-      title: '表单弹窗drawerForm'
-    });
-    const handleOpenkDialogForm = (type: string) => {
-      dialogType.value = type;
-      const row = {
-        name: '小王',
-        age: 20,
-        sex: 1,
-        dateTime: '2022-02-15 11:31:23'
-      };
-      if (type === 'modal') {
-        modalFormParams.row = row;
-        modalFormParams.show = true;
-        modalFormParams.visible = true;
-      } else {
-        drawerFormParams.row = row;
-        drawerFormParams.show = true;
-        drawerFormParams.visible = true;
-      }
-    };
-    const onCloseDialogForm = () => {
-      drawerFormParams.row = null;
-      modalFormParams.row = null;
-    };
-    const onSubmitDialogForm = async (data: any) => {
-      console.log('data', data);
-      if (isPageContent.value) {
-        // 新增
-        await pageContentRef.value.handleCreate(data);
-        success('添加成功');
-        drawerFormRef.value.onCloseDialog();
-        return;
-      }
-      // 这里发送请求...
-      success('操作成功');
-      if (dialogType.value === 'modal') {
-        modalFormRef.value.onCloseDialog();
-      } else {
-        drawerFormRef.value.onCloseDialog();
-      }
-    };
-    // 3. 基础表单
-    const syFormRef = ref<InstanceType<typeof SyForm>>();
-    const formState = ref<any>({});
-    const onSubmit = async () => {
-      await syFormRef.value?.validate();
-      console.log('formState', formState.value);
-      success('成功');
-    };
-    // 4. 基础表格
-    const dataSource = reactive<any[]>([
-      {
-        id: 1,
-        name: '小强',
-        sex: 1,
-        age: 18,
-        dateTime: '2022-02-15 11:31:23'
-      },
-      {
-        id: 2,
-        name: '小红',
-        sex: 0,
-        age: 18,
-        dateTime: '2022-02-15 11:31:23'
-      }
-    ]);
-    const pageInfo = reactive({
-      pageNo: 1,
-      pageSize: 20
-    });
-    const total = 20;
-    const handleSizeChange = (val: any) => {
-      const { pageNo, pageSize } = val;
-      pageInfo.pageNo = pageNo;
-      pageInfo.pageSize = pageSize;
-    };
-    const handleEdit = (row: any) => {
-      dialogType.value = 'drawer';
-      drawerFormParams.row = row;
-      drawerFormParams.show = true;
-      drawerFormParams.visible = true;
-    };
-    const handleDelete = async (row: any) => {
-      await confirm({
-        title: '删除',
-        content: `确定删除名称为“${row.name}”的这条记录吗?`,
-        okType: 'danger'
-      });
-      // 发送请求...
-    };
-    // 5. 内容组件(增删改查)
-    const queryFormRef = ref();
-    const querForm = ref({});
-    const pageQuery = ref({});
-    const pageContentRef = ref();
-    const isPageContent = ref(false);
-    // 新增
-    const handleCreate = () => {
-      isPageContent.value = true;
-      drawerFormParams.row = {};
-      drawerFormParams.show = true;
-      drawerFormParams.visible = true;
-    };
-    // 查
-    const handleSearch = async () => {
-      await queryFormRef.value.validate();
-      pageContentRef.value.getPageData(querForm.value);
-    };
-    return {
-      handleMessage,
-      handleConfirm,
-      // 弹窗
-      syModalRef,
-      syDrawerRef,
-      modalParams,
-      drawerParams,
-      handleOpenkDialog,
-      onSubmitFromModal,
-      onSubmitFromDrawer,
-      // 表单弹窗
-      modalFormRef,
-      drawerFormRef,
-      modalFormParams,
-      drawerFormParams,
-      handleOpenkDialogForm,
-      onCloseDialogForm,
-      onSubmitDialogForm,
-      // 基础表单
-      syFormRef,
-      formState,
-      formConfig,
-      onSubmit,
-      // 基础表格
-      contentTableConfig,
-      dataSource,
-      total,
-      pageInfo,
-      handleSizeChange,
-      handleEdit,
-      handleDelete,
-      // 内容组件
-      queryFormRef,
-      pageContentRef,
-      querForm,
-      pageQuery,
-      searchFormConfig,
-      handleSearch,
-      handleCreate
-    };
-  }
+const { success } = useMessage();
+const handleMessage = () => {
+  success('这是一条成功的消息');
+};
+const confirm = useConfirm();
+const handleConfirm = async () => {
+  await confirm();
+  success('成功');
+};
+// 1. 弹窗
+const syModalRef = ref();
+const syDrawerRef = ref();
+const modalParams = reactive({
+  visible: false,
+  title: '这是一个modal弹窗'
 });
+const drawerParams = reactive({
+  visible: false,
+  title: '这是一个drawer弹窗'
+});
+const handleOpenkDialog = (type: string) => {
+  if (type === 'modal') {
+    modalParams.visible = true;
+  } else {
+    drawerParams.visible = true;
+  }
+};
+const onSubmitFromModal = () => {
+  syModalRef.value.onClose();
+};
+const onSubmitFromDrawer = () => {
+  syDrawerRef.value.onClose();
+};
+// 2. 表单弹窗
+const modalFormRef = ref();
+const drawerFormRef = ref();
+const dialogType = ref<null | string>(null);
+const modalFormParams = reactive<IDialogForm>({
+  show: false,
+  visible: false,
+  row: null,
+  title: '表单弹窗modalForm'
+});
+const drawerFormParams = reactive<IDialogForm>({
+  show: false,
+  visible: false,
+  row: null,
+  title: '表单弹窗drawerForm'
+});
+const handleOpenkDialogForm = (type: string) => {
+  dialogType.value = type;
+  const row = {
+    name: '小王',
+    age: 20,
+    sex: 1,
+    dateTime: '2022-02-15 11:31:23'
+  };
+  if (type === 'modal') {
+    modalFormParams.row = row;
+    modalFormParams.show = true;
+    modalFormParams.visible = true;
+  } else {
+    drawerFormParams.row = row;
+    drawerFormParams.show = true;
+    drawerFormParams.visible = true;
+  }
+};
+const onCloseDialogForm = () => {
+  drawerFormParams.row = null;
+  modalFormParams.row = null;
+};
+const onSubmitDialogForm = async (data: any) => {
+  console.log('data', data);
+  if (isPageContent.value) {
+    // 新增
+    await pageContentRef.value.handleCreate(data);
+    success('添加成功');
+    drawerFormRef.value.onCloseDialog();
+    return;
+  }
+  // 这里发送请求...
+  success('操作成功');
+  if (dialogType.value === 'modal') {
+    modalFormRef.value.onCloseDialog();
+  } else {
+    drawerFormRef.value.onCloseDialog();
+  }
+};
+// 3. 基础表单
+const syFormRef = ref<InstanceType<typeof SyForm>>();
+const formState = ref<any>({});
+const onSubmit = async () => {
+  await syFormRef.value?.validate();
+  console.log('formState', formState.value);
+  success('成功');
+};
+// 4. 基础表格
+const dataSource = reactive<any[]>([
+  {
+    id: 1,
+    name: '小强',
+    sex: 1,
+    age: 18,
+    dateTime: '2022-02-15 11:31:23'
+  },
+  {
+    id: 2,
+    name: '小红',
+    sex: 0,
+    age: 18,
+    dateTime: '2022-02-15 11:31:23'
+  }
+]);
+const pageInfo = reactive({
+  pageNo: 1,
+  pageSize: 20
+});
+const total = 20;
+const handleSizeChange = (val: any) => {
+  const { pageNo, pageSize } = val;
+  pageInfo.pageNo = pageNo;
+  pageInfo.pageSize = pageSize;
+};
+const handleEdit = (row: any) => {
+  dialogType.value = 'drawer';
+  drawerFormParams.row = row;
+  drawerFormParams.show = true;
+  drawerFormParams.visible = true;
+};
+const handleDelete = async (row: any) => {
+  await confirm({
+    title: '删除',
+    content: `确定删除名称为“${row.name}”的这条记录吗?`,
+    okType: 'danger'
+  });
+  // 发送请求...
+};
+// 5. 内容组件(增删改查)
+const queryFormRef = ref();
+const querForm = ref({});
+const pageQuery = ref({});
+const pageContentRef = ref();
+const isPageContent = ref(false);
+// 新增
+const handleCreate = () => {
+  isPageContent.value = true;
+  drawerFormParams.row = {};
+  drawerFormParams.show = true;
+  drawerFormParams.visible = true;
+};
+// 查
+const handleSearch = async () => {
+  await queryFormRef.value.validate();
+  pageContentRef.value.getPageData(querForm.value);
+};
 </script>
 
 <style lang="scss" scoped>
