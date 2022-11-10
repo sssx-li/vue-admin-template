@@ -5,6 +5,7 @@ specifiers:
   '@commitlint/cli': ^17.0.3
   '@commitlint/config-conventional': ^17.0.3
   '@types/node': ^18.8.2
+  '@types/nprogress': ^0.2.0
   '@types/webpack-env': ^1.18.0
   '@typescript-eslint/eslint-plugin': ^5.4.0
   '@typescript-eslint/parser': ^5.4.0
@@ -29,6 +30,7 @@ specifiers:
   eslint-plugin-vue: ^8.0.3
   husky: ^8.0.1
   normalize.css: ^8.0.1
+  nprogress: ^0.2.0
   pinia: ^2.0.23
   prettier: ^2.4.1
   sass: ^1.32.7
@@ -48,6 +50,7 @@ dependencies:
   dayjs: 1.11.5
   echarts: 5.4.0
   normalize.css: 8.0.1
+  nprogress: 0.2.0
   pinia: 2.0.23_6vtjvms3zif276s4ubmshfmvli
   vue: 3.2.40
   vue-router: 4.1.5_vue@3.2.40
@@ -56,6 +59,7 @@ devDependencies:
   '@commitlint/cli': 17.1.2
   '@commitlint/config-conventional': 17.1.0
   '@types/node': 18.8.4
+  '@types/nprogress': 0.2.0
   '@types/webpack-env': 1.18.0
   '@typescript-eslint/eslint-plugin': 5.40.0_cwdmytl2veedn66no7wptweoty
   '@typescript-eslint/parser': 5.40.0_sgaiclxgc5mltnpgmg7py4v6ca
@@ -1414,7 +1418,7 @@ packages:
       cosmiconfig-typescript-loader: 4.1.1_vfayau7oz5qy4giwqlppd3j3ti
       lodash: 4.17.21
       resolve-from: 5.0.0
-      ts-node: 10.9.1_jcmx33t3olsvcxopqdljsohpme
+      ts-node: 10.9.1_ywle555unw6z7rgcj44zhyix7u
       typescript: 4.8.4
     transitivePeerDependencies:
       - '@swc/core'
@@ -1811,6 +1815,10 @@ packages:
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
+    dev: true
+
+  /@types/nprogress/0.2.0:
+    resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
     dev: true
 
   /@types/parse-json/4.0.0:
@@ -3743,7 +3751,7 @@ packages:
     dependencies:
       '@types/node': 14.18.32
       cosmiconfig: 7.0.1
-      ts-node: 10.9.1_jcmx33t3olsvcxopqdljsohpme
+      ts-node: 10.9.1_ywle555unw6z7rgcj44zhyix7u
       typescript: 4.8.4
     dev: true
 
@@ -6096,6 +6104,10 @@ packages:
       path-key: 3.1.1
     dev: true
 
+  /nprogress/0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
+    dev: false
+
   /nth-check/2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
     dependencies:
@@ -7770,7 +7782,7 @@ packages:
       webpack: 5.74.0
     dev: true
 
-  /ts-node/10.9.1_jcmx33t3olsvcxopqdljsohpme:
+  /ts-node/10.9.1_ywle555unw6z7rgcj44zhyix7u:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -7789,14 +7801,14 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 14.18.32
+      '@types/node': 18.8.4
       acorn: 8.8.0
       acorn-walk: 8.2.0
       arg: 4.1.3
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 4.8.4
+      typescript: 4.5.5
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: true
