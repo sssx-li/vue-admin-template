@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <SyCard class="login-card">
-      <h2 class="login-title">后台管理系统</h2>
+      <h2 class="login-title">{{ globalConfig.title }}</h2>
       <SyForm
         :show-form-footer="false"
         v-bind="formConfig"
@@ -26,6 +26,7 @@ import { SyCard, SyForm } from '@/baseUI';
 import { formConfig } from './config/config.form';
 import { useUserStore } from '@/store/user';
 import { IAccount } from '@/service/types/user';
+import { globalConfig } from '@/config';
 
 const store = useUserStore();
 const loginForm = ref<IAccount>({

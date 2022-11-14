@@ -3,7 +3,7 @@
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <div class="logo-box">
         <img :src="logo" alt="log" :class="[collapsed ? 'small-logo' : 'logo']" />
-        <h2 class="title" v-show="!collapsed">后台管理系统</h2>
+        <h2 class="title" v-show="!collapsed">{{ globalConfig.title }}</h2>
       </div>
       <LayoutMenu />
     </a-layout-sider>
@@ -22,6 +22,8 @@
 import LayoutHeader from '@/components/layout/header/index.vue';
 import LayoutMenu from '@/components/layout/menu/index.vue';
 import logo from '@/assets/images/logo.png';
+import { globalConfig } from '@/config';
+
 const collapsed = ref(false);
 </script>
 
