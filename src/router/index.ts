@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import mainStaticRoute from './modules';
 import localCache from '@/utils/localCache';
 import { tokenKey } from '@/common';
-import { firstMenuPath } from '@/utils/mapMenus';
+import { useUserStore } from '@/store/user';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -31,16 +31,24 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to) => {
+router.beforeEach((to, from, next) => {
   const token = localCache.getCache(tokenKey);
   const isToLogin = to.path === '/login';
   if (token) {
-    isToLogin && router.push('/');
+    if (isToLogin) {
+      next({ path: '/' });
+    } else if (to.path === '/main') {
+      const store = useUserStore();
+      next({ path: store.firstMenuPath });
+    } else {
+      next();
+    }
   } else {
-    !isToLogin && router.push('/login');
-  }
-  if (to.path === '/main') {
-    return firstMenuPath;
+    if (!isToLogin) {
+      next({ path: '/login' });
+    } else {
+      next();
+    }
   }
 });
 
