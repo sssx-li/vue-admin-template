@@ -5,7 +5,7 @@ NProgress.configure({ showSpinner: false });
 import mainStaticRoute from './modules';
 import localCache from '@/utils/localCache';
 import { tokenKey } from '@/common';
-import { firstMenuPath } from '@/utils/mapMenus';
+import { useUserStore } from '@/store/user';
 
 interface IMeta extends RouteMeta {
   isHidden: boolean;
@@ -55,7 +55,8 @@ router.beforeEach((to, from, next) => {
     if (isToLogin) {
       next({ path: '/' });
     } else if (to.path === '/main') {
-      next({ path: firstMenuPath });
+      const store = useUserStore();
+      next({ path: store.firstMenuPath });
     } else {
       next();
     }

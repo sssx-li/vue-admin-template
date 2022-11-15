@@ -1,8 +1,8 @@
 import mainStaticRoute from '@/router/modules';
+import { useUserStore } from '@/store/user';
 
 import { RouteRecord } from 'vue-router';
 
-let firstMenuPath = '';
 export function mapMenusToRoutes(userMenus: any[]): RouteRecord[] {
   const routes: any[] = [];
   // 加载所有菜单路由
@@ -34,9 +34,8 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecord[] {
   Object.assign(routes, [...mainStaticRoute, ...permissionRoutes]);
   routes.sort((a, b) => a.meta?.sort - b.meta?.sort);
   if (routes && routes.length > 0) {
-    firstMenuPath = routes[0].redirect ?? routes[0].path;
+    const store = useUserStore();
+    store.firstMenuPath = routes[0].redirect ?? routes[0].path;
   }
   return routes;
 }
-
-export { firstMenuPath };
