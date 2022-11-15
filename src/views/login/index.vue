@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-content">
-      <h2 class="title">后台管理系统</h2>
+      <h2 class="title">{{ globalConfig.title }}</h2>
       <el-form :model="loginForm" :rules="rules" size="large" ref="loginRuleFormRef">
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" />
@@ -29,6 +29,7 @@
 import type { FormInstance, FormRules } from 'element-plus';
 import { useUserStore } from '@/store/user';
 import { IAccount } from '@/service/types/user';
+import { globalConfig } from '@/config';
 
 const rules = reactive<FormRules>({
   username: [
