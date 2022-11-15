@@ -14,8 +14,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecord[] {
   });
   // 根据权限菜单获取routes
   const _filterPermissionRoutes = (routes: any[]) => {
-    if (!routes || routes.length === 0 || !userMenus || userMenus.length === 0)
-      return [];
+    if (!routes || routes.length === 0 || !userMenus || userMenus.length === 0) return [];
     const routeList = routes.filter((route) => {
       let curRoute: any = {};
       userMenus.forEach((menu) => {
