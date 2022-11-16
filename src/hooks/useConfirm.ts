@@ -1,7 +1,7 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-
-import { Modal } from 'ant-design-vue';
 import { createVNode } from 'vue';
+import { Modal } from 'ant-design-vue';
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import 'ant-design-vue/es/modal/style/css';
 
 type ButtonType = 'link' | 'default' | 'primary' | 'ghost' | 'dashed' | 'text' | 'danger';
 
