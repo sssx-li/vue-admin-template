@@ -5,16 +5,16 @@
 </template>
 
 <script setup lang="ts" name="loginView">
-import { useUserStore } from '@/store/user';
 import { IAccount } from '@/service/types/user';
+import { useStore } from '@/store';
 
-const store = useUserStore();
+const store = useStore();
 const loginForm = ref<IAccount>({
   username: '',
   password: ''
 });
 const handleLogin = async () => {
-  await store.loginAction(loginForm.value);
+  await store.user.loginAction(loginForm.value);
 };
 </script>
 

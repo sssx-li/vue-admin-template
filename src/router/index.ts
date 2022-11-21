@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import mainStaticRoute from './modules';
 import localCache from '@/utils/localCache';
 import { tokenKey } from '@/common';
-import { useUserStore } from '@/store/user';
+import { useStore } from '@/store';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -38,8 +38,8 @@ router.beforeEach((to, from, next) => {
     if (isToLogin) {
       next({ path: '/' });
     } else if (to.path === '/main') {
-      const store = useUserStore();
-      next({ path: store.firstMenuPath });
+      const store = useStore();
+      next({ path: store.user.firstMenuPath });
     } else {
       next();
     }
