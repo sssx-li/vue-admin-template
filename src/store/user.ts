@@ -8,7 +8,7 @@ import localCache from '@/utils/localCache';
 import router from '@/router';
 import { mapMenusToRoutes } from '@/utils/mapMenus';
 
-export const useUserStore = defineStore('user', {
+const useUserStore = defineStore('user', {
   state: () => {
     return {
       token: '',
@@ -66,3 +66,5 @@ export const useUserStore = defineStore('user', {
     }
   }
 });
+
+export default useUserStore;
