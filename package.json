@@ -1,5 +1,5 @@
 {
-  "name": "{{name}}",
+  "name": "element",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -21,6 +21,7 @@
     "axios": "0.21.1",
     "core-js": "^3.8.3",
     "dayjs": "^1.11.5",
+    "echarts": "^5.4.0",
     "element-plus": "^2.2.14",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
