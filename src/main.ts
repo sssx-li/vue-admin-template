@@ -1,18 +1,19 @@
 import { createApp } from 'vue';
 import 'normalize.css';
 import '@/assets/styles/index.scss';
+import { createPinia } from 'pinia';
 
 import App from './App.vue';
 import router from './router';
-import store from './store';
+const pinia = createPinia();
 import { globalRegister } from '@/registers/index';
-import { useUserStore } from './store/user';
+import { useStore } from './store';
 
 async function mount() {
   const app = createApp(App);
-  app.use(store);
-  const userStore = useUserStore();
-  await userStore.loadLocalLogin();
+  app.use(pinia);
+  const store = useStore();
+  await store.user.loadLocalLogin();
 
   app.use(router);
   app.use(globalRegister);

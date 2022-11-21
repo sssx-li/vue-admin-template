@@ -24,11 +24,11 @@
 <script setup lang="ts">
 import { SyCard, SyForm } from '@/baseUI';
 import { formConfig } from './config/config.form';
-import { useUserStore } from '@/store/user';
 import { IAccount } from '@/service/types/user';
 import { globalConfig } from '@/config';
+import { useStore } from '@/store';
 
-const store = useUserStore();
+const store = useStore();
 const loginForm = ref<IAccount>({
   username: '',
   password: ''
@@ -38,7 +38,7 @@ const loginFormRef = ref();
 const handleLogin = async () => {
   await loginFormRef.value.validate();
   loading.value = true;
-  await store.loginAction(loginForm.value);
+  await store.user.loginAction(loginForm.value);
   loading.value = false;
 };
 </script>

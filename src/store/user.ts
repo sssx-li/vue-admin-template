@@ -8,7 +8,7 @@ import router from '@/router';
 import { mapMenusToRoutes } from '@/utils/mapMenus';
 import { RouteRecord } from 'vue-router';
 
-export const useUserStore = defineStore('user', {
+const useUserStore = defineStore('user', {
   state: () => {
     return {
       token: '',
@@ -67,3 +67,5 @@ export const useUserStore = defineStore('user', {
     }
   }
 });
+
+export default useUserStore;
