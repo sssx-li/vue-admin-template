@@ -51,7 +51,7 @@ const collapsed = ref(false);
     .title {
       margin: 14px 0 20px;
       font-size: 18px;
-      color: #fff !important;
+      color: #fff;
     }
   }
   .ant-layout-content {

@@ -1,0 +1,37 @@
+$themes: (
+  light: (
+    // ---------------字体颜色---------------
+    font_default: #262626,
+    font_default_sub: #b0b6bb,
+    font_primary: #1890ff,
+    font_success: #67c23a,
+    font_danger: #ff4d4f,
+
+    // ---------------背景色---------------
+    bg_color: #f9f9f9,
+    bg_color_sub: #ffffff,
+    bg_color_menu_active: #c6c5c5,
+    bg_color_header: #c3c0c0,
+    bg_color_active: #cecece,
+
+    // ---------------边框色---------------
+    border_color1: #333
+  ),
+  dark: (
+    // ---------------字体颜色---------------
+    font_default: #e3e3e3,
+    font_default_sub: #7c7c7c,
+    font_primary: #1890ff,
+    font_success: #67c23a,
+    font_danger: #ff4d4f,
+
+    // ---------------背景色---------------
+    bg_color: #1a1a1a,
+    bg_color_sub: #242424,
+    bg_color_active: #3b3a3a,
+    bg_color_header: #313131,
+
+    // ---------------边框色---------------
+    border1: #555
+  )
+);

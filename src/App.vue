@@ -23,7 +23,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.message-content {
+  .ant-btn {
+    margin-right: 10px;
+  }
+}
 .app {
   height: 100%;
 }
 </style>
+<style lang="scss"></style>

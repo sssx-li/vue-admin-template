@@ -8,3 +8,54 @@ body {
 #app {
   height: 100vh;
 }
+
+@import '@/assets/styles/handle.scss';
+.ant-layout-sider,
+.ant-menu.ant-menu-dark,
+.ant-menu-dark .ant-menu-sub,
+.ant-menu.ant-menu-dark .ant-menu-sub {
+  @include background_color('bg_color');
+}
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  @include background_color('bg_color_active');
+}
+.logo-box .title {
+  @include font_color('font_default');
+}
+.ant-menu-dark .ant-menu-item,
+.ant-menu-dark .ant-menu-item-group-title,
+.ant-menu-dark .ant-menu-item > a,
+.ant-menu-dark .ant-menu-item > span > a,
+.ant-menu.ant-menu-dark,
+.ant-menu-dark .ant-menu-sub,
+.ant-menu.ant-menu-dark .ant-menu-sub,
+.ant-menu-dark .ant-menu-item-active,
+.ant-menu-dark .ant-menu-submenu-active,
+.ant-menu-dark .ant-menu-submenu-open,
+.ant-menu-dark .ant-menu-submenu-selected {
+  @include font_color('font_default');
+}
+.ant-menu-dark .ant-menu-item:hover,
+.ant-menu-dark .ant-menu-submenu-title:hover {
+  @include font_color('font_default_sub');
+}
+
+.ant-layout {
+  @include background_color('bg_color_sub');
+}
+
+.main-container .header {
+  @include background_color('bg_color');
+}
+.header-container .anticon,
+.info-container .user-name {
+  @include font_color('font_default');
+}
+.info-container .ant-avatar {
+  @include background_color('bg_color_active');
+  @include font_color('font_default');
+}
+.header-container .ant-switch,
+.header-container .ant-switch-checked {
+  @include background_color('bg_color_active');
+}

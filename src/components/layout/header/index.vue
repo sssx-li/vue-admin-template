@@ -4,7 +4,15 @@
       :is="isCollapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'"
       @click="changeCollapsed"
     />
-    <Info />
+    <div class="right-box">
+      <a-switch
+        v-model:checked="themeCheck"
+        checked-children="亮"
+        un-checked-children="暗"
+        @change="themeChange"
+      />
+      <Info />
+    </div>
   </div>
 </template>
 
@@ -25,6 +33,11 @@ watch(
 const changeCollapsed = () => {
   emit('update:collapsed', !isCollapsed.value);
 };
+const themeCheck = ref(true);
+const themeChange = (checked: boolean) => {
+  window.document.documentElement.setAttribute('data-theme', checked ? 'light' : 'dark');
+};
+themeChange(true);
 </script>
 
 <style lang="scss" scoped>
