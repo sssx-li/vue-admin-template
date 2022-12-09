@@ -8,6 +8,7 @@
     :maxCount="1"
     :show-upload-list="false"
   >
+    <close-outlined class="close-icon" v-if="imgUrl" @click.stop="removeImg" />
     <img :src="imgUrl" alt="" v-if="imgUrl" v-bind="imgWH" />
     <icon-eps-upload-image v-bind="iconWH" v-else />
   </a-upload>
@@ -20,6 +21,7 @@
 import { ref, watch } from 'vue';
 import { getBase64 } from './index';
 import { message, UploadProps } from 'ant-design-vue';
+import { CloseOutlined } from '@ant-design/icons-vue';
 const props = withDefaults(
   defineProps<{
     fileList: any[];
@@ -86,6 +88,25 @@ const handleChange = async ({ file, fileList }: any) => {
   emit('update:imgUrl', url);
   emit('update:fileList', fileList);
 };
+const removeImg = () => {
+  emit('update:imgUrl', '');
+  emit('update:fileList', []);
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+:deep(.ant-upload-picture-card-wrapper) {
+  .ant-upload {
+    position: relative;
+    .close-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      color: #f81d22;
+    }
+  }
+}
+</style>
