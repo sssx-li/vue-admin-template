@@ -5,11 +5,9 @@ import { useMessage, useConfirm } from '@/hooks';
 
 /**
  *
- * @param config 表格配置数据
- *    url: 请求地址
- *    columns: 表格数据
- *    showFooter: 是否分页
- * @param pageQuery 当前页面请求参数
+ * @param   url: 请求地址
+ * @param   columns: 表格数据
+ * @param   showFooter: 是否分页
  *
  */
 export default function usePageing(url: string, formState: Record<string, any>, showFooter = true) {

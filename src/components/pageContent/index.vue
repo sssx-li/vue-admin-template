@@ -66,7 +66,7 @@
   </div>
 </template>
 
-<script setup lang="ts" name="syTable">
+<script setup lang="ts" name="pageContent">
 import { SyTable } from '@/baseUI';
 import { IColumns, IHandlerOption, ITableState, IOptions } from '@/baseUI/syTable/types';
 
