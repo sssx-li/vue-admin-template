@@ -112,7 +112,8 @@ const handleReset = () => {
 
 <style lang="scss" scoped>
 .icon {
-  font-size: 1.2rem;
+  font-size: 18px;
+  margin-left: 6px;
   color: rgba(0, 0, 0, 0.75);
 }
 .top {

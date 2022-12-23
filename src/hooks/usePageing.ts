@@ -1,7 +1,6 @@
 import Request from '@/service';
 import { IDataModel } from '@/service/types/axios';
 import { ITableList } from '@/service/types/table';
-import { ITableConfig } from '@/baseUI/syTable/types';
 import { useMessage, useConfirm } from '@/hooks';
 
 /**
@@ -13,28 +12,22 @@ import { useMessage, useConfirm } from '@/hooks';
  * @param pageQuery 当前页面请求参数
  *
  */
-export default function usePageContent(config: ITableConfig, pageQuery: any = {}) {
-  const { url, columns, showFooter } = config;
+export default function usePageing(url: string, formState: Record<string, any>, showFooter = true) {
   const confirm = useConfirm();
   const { success, error } = useMessage();
 
-  const pageInfo = reactive({ pageNo: 1, pageSize: 10 });
+  const pageInfo = ref({ pageNo: 1, pageSize: 10 });
   const dataSource = ref<any[]>([]);
   const total = ref(0);
+  const loading = ref(false);
 
-  const tableState = reactive({
-    columns, // 表格字段
-    size: 'middle', // 表格大小
-    changeSize: (size: string) => {
-      // 表格间距
-      tableState.size = size;
+  watch(
+    pageInfo,
+    () => {
+      getPageData();
     },
-    changeColumns: (columns: any[]) => {
-      tableState.columns = columns;
-    }
-  });
-
-  watch(pageInfo, () => getPageData());
+    { deep: true }
+  );
 
   // 改变页码
   const handleSizeChange = (page: any) => {
@@ -45,62 +38,78 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
    *
    * @param query 用于覆盖原有参数值，通常用于通过ref调用该方法时传入
    */
-  const getPageData = async (query?: any) => {
-    query = query ?? {};
-    let params: any = {
-      ...pageQuery,
-      ...pageInfo,
-      ...query
+  const getPageData = async () => {
+    let params: Record<string, any> = {
+      ...formState,
+      ...pageInfo.value
     };
     if (!showFooter) {
       params = {
-        ...pageQuery,
-        ...query
+        ...formState
       };
     }
+    for (const key in params) {
+      if (params[key] !== 0 && params[key] !== false && !params[key]) {
+        delete params[key];
+      }
+    }
     try {
+      loading.value = true;
       const res = await Request.get<IDataModel<ITableList>>({
         url,
         params
       });
       const {
-        data: { list, page }
+        code,
+        data: { list, page },
+        message
       } = res;
-      dataSource.value = list;
-      total.value = page.count;
+      if (code === 0) {
+        dataSource.value = list;
+        total.value = page.count;
+      } else {
+        error(message || '获取数据失败，请稍后再试');
+      }
+      loading.value = false;
     } catch (err) {
+      loading.value = false;
       error('获取数据失败，请刷新重试');
     }
   };
-
   // 编辑
-  const handleEdit = async (data: any, id: string | number, curUrl?: string) => {
+  const handleEdit = async (_url: string, data: any) => {
     try {
-      await Request.put<IDataModel>({
-        url: curUrl || `${url}?id=${id}`,
+      const { code, message } = await Request.put({
+        url: _url,
         data
       });
-      success('操作成功');
-      refresh();
+      if (code === 0) {
+        success('操作成功');
+        refresh();
+      } else {
+        error(message || '操作失败，请稍后再试');
+      }
     } catch (err) {
       error('操作失败，请稍后再试');
     }
   };
-
   // 新增
   const handleCreate = async (data: any) => {
     try {
-      await Request.post<IDataModel>({
+      const { code, message } = await Request.post({
         url,
         data
       });
-      success('添加成功');
-      refresh();
+      if (code === 0) {
+        success('添加成功');
+        refresh();
+      } else {
+        error(message || '添加失败，请稍后再试');
+      }
     } catch (err) {
       error('添加失败，请稍后再试');
     }
   };
-
   // 删除
   const handleDelete = (row: any, contentTip?: string) => {
     confirm({
@@ -110,29 +119,34 @@ export default function usePageContent(config: ITableConfig, pageQuery: any = {}
     })
       .then(async () => {
         try {
-          await Request.delete({
+          const { code, message } = await Request.delete({
             url: `${url}?id=${row.id}`
           });
-          success('删除成功');
+          if (code === 0) {
+            success('删除成功');
+            refresh();
+          } else {
+            error(message || '删除失败，请稍后再试');
+          }
         } catch (err) {
           error('删除失败，请稍后再试');
         }
-        refresh();
       })
       .catch(() => {});
   };
-
   // 刷新数据
   const refresh = () => {
-    pageInfo.pageNo = 1;
-    getPageData();
+    if (pageInfo.value.pageNo === 1) {
+      getPageData();
+    } else {
+      pageInfo.value.pageNo = 1;
+    }
   };
-
   return {
     pageInfo,
     dataSource,
     total,
-    tableState,
+    loading,
     getPageData,
     refresh,
     handleSizeChange,
